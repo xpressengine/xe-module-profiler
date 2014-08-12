@@ -1,5 +1,7 @@
 <?php
-class optimizer extends ModuleObject
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
+class profiler extends ModuleObject
 {
 	function moduleInstall()
 	{

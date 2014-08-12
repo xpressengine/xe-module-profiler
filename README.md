@@ -1,4 +1,2 @@
-xe-module-optimizer
-===================
-
-XE Optimizer
+XpressEngine Profiler
+=====================

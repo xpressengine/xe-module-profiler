@@ -1,15 +1,15 @@
 {
-  "name": "XE-Optimizer",
+  "name": "XE-Profiler",
   "version": "0.1",
   "author": "NAVER",
-  "keywords": ["XpressEngine", "XE", "Optimizer"],
+  "keywords": ["XpressEngine", "XE", "Profiler"],
   "license": "GNU LGPL",
   "repository": {
     "type": "git",
-    "url": "git://github.com/xpressengine/xe-module-optimizer.git"
+    "url": "git://github.com/xpressengine/xe-module-profiler.git"
   },
   "bugs": {
-    "url": "https://github.com/xpressengine/xe-module-optimizer/issues"
+    "url": "https://github.com/xpressengine/xe-module-profiler/issues"
   },
   "devDependencies": {
     "grunt": ">0.4.0",
