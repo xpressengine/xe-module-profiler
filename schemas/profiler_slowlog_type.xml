@@ -1,0 +1,8 @@
+<table name="profiler_slowlog_type">
+	<column name="id" type="number" notnull="notnull" primary_key="primary_key" auto_increment="auto_increment" />
+	<column name="type" type="varchar" size="50" notnull="notnull" index="idx_type" />
+	<column name="hash_id" type="varchar" size="100" notnull="notnull" />
+	<column name="caller" type="varchar" size="250" notnull="notnull" />
+	<column name="called" type="varchar" size="250" notnull="notnull" />
+	<column name="called_extension" type="varchar" size="100" index="idx_extension" />
+</table>

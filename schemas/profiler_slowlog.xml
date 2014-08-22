@@ -1,0 +1,6 @@
+<table name="profiler_slowlog">
+	<column name="id" type="number" notnull="notnull" primary_key="primary_key" auto_increment="auto_increment" />
+	<column name="type_hash_id" type="varchar" size="100" notnull="notnull" index="idx_type_hash_id" />
+	<column name="elapsed_time" type="float" notnull="notnull" />
+	<column name="logged_timestamp" type="number" notnull="notnull" index="idx_logged_timestamp" />
+</table>
