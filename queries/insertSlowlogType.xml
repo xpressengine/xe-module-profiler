@@ -1,0 +1,12 @@
+<query id="insertSlowlogType" action="insert">
+	<tables>
+		<table name="profiler_slowlog_type" />
+	</tables>
+	<columns>
+		<column name="type" var="type" notnull="notnull" />
+		<column name="hash_id" var="hash_id" notnull="notnull" />
+		<column name="caller" var="caller" notnull="notnull" />
+		<column name="called" var="called" notnull="notnull" />
+		<column name="called_extension" var="called_extension" />
+	</columns>
+</query>
