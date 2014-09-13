@@ -18,6 +18,10 @@ class profilerAdminView extends profiler
 	function dispProfilerAdminDashboard()
 	{
 	}
+	
+	function dispProfilerAdminConfig()
+	{
+	}
 }
 
 /* End of file profiler.admin.view.php */

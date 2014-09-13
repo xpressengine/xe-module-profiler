@@ -4,6 +4,8 @@
 	<permissions />
 	<actions>
 		<action name="dispProfilerAdminDashboard" type="view" menu_name="profiler" admin_index="true" />
+		<action name="dispProfilerAdminConfig" type="view" menu_name="profiler" />
+		<action name="procProfilerAdminInsertConfig" type="controller" ruleset="insertConfig" />
 	</actions>
 	<menus>
 		<menu name="profiler" type="all">
