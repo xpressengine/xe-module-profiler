@@ -1,6 +1,12 @@
 <?php
 /* Copyright (C) NAVER <http://www.navercorp.com> */
 
+/**
+ * @class  profilerAdminView
+ * @author NAVER (developers@xpressengine.com)
+ * @brief  Profiler module admin view class.
+ */
+
 class profilerAdminView extends profiler
 {
 	function init()
@@ -13,4 +19,6 @@ class profilerAdminView extends profiler
 	{
 	}
 }
-/* End of file */
+
+/* End of file profiler.admin.view.php */
+/* Location: ./modules/profiler/profiler.admin.view.php */
