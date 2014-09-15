@@ -1,6 +1,12 @@
 <?php
 /* Copyright (C) NAVER <http://www.navercorp.com> */
 
+/**
+ * @class  profilerController
+ * @author NAVER (developers@xpressengine.com)
+ * @brief  Profiler module controller class.
+ */
+
 class profilerController extends profiler
 {
 	function init()
@@ -42,4 +48,6 @@ class profilerController extends profiler
 		$output = executeQuery('profiler.insertSlowlog', $slowlog);
 	}
 }
-/* End of file */
+
+/* End of file profiler.controller.php */
+/* Location: ./modules/profiler/profiler.controller.php */

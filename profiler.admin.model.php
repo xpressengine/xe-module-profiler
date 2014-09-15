@@ -37,4 +37,6 @@ class profilerAdminModel extends profiler
 		return $output;
 	}
 }
-/* End of file */
+
+/* End of file profiler.admin.model.php */
+/* Location: ./modules/profiler/profiler.admin.model.php */
