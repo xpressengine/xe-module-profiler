@@ -9,6 +9,10 @@
 
 class profiler extends ModuleObject
 {
+	private $triggers = array(
+		array('XE.writeSlowlog', 'profiler', 'controller', 'triggerWriteSlowlog', 'after')
+	);
+
 	function moduleInstall()
 	{
 		return new Object();
@@ -16,12 +20,27 @@ class profiler extends ModuleObject
 
 	function checkUpdate()
 	{
+		$oModuleModel = getModel('module');
+
+		foreach ($this->triggers as $trigger) {
+			if (!$oModuleModel->getTrigger($trigger[0], $trigger[1], $trigger[2], $trigger[3], $trigger[4])) return TRUE;
+		}
+
 		return false;
 	}
 
 	function moduleUpdate()
 	{
-		return new Object();
+		$oModuleModel = getModel('module');
+		$oModuleController = getController('module');
+
+		foreach ($this->triggers as $trigger) {
+			if (!$oModuleModel->getTrigger($trigger[0], $trigger[1], $trigger[2], $trigger[3], $trigger[4])) {
+				$oModuleController->insertTrigger($trigger[0], $trigger[1], $trigger[2], $trigger[3], $trigger[4]);
+			}
+		}
+
+		return new Object(0, 'success_updated');
 	}
 }
 
