@@ -17,17 +17,27 @@ class profilerAdminController extends profiler
 	{
 	}
 
-	function procProfilerAdminDeleteTrigger()
+	function procProfilerAdminDeleteTriggerList()
 	{
 		$trigger_list = executeQueryArray('profiler.getTriggerModule');
 		$trigger_module = $trigger_list->data;
-		debugPrint($trigger_module);
-		$module_list[] = FileHandler::readDir(modules);
 
 		foreach($trigger_module as $modules)
 		{
+			$module_controller = getController($modules->module);
+			if(!$module_controller)
+			{
+				$deleted = $modules->module;
+				$args->module = $deleted;
+				$output = executeQuery('profiler.deleteTriggerModuleList', $args);
+			}
+		}
 
-
+		if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminDashboard');
+			header('location: ' . $returnUrl);
+			return;
 		}
 	}
 }
