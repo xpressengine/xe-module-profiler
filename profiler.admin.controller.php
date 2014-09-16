@@ -12,7 +12,7 @@ class profilerAdminController extends profiler
 	function init()
 	{
 	}
-	
+
 	function procProfilerAdminInsertConfig()
 	{
 	}

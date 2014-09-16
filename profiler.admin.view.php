@@ -14,11 +14,11 @@ class profilerAdminView extends profiler
 		$this->setTemplatePath($this->module_path . 'tpl');
 		$this->setTemplateFile(strtolower(str_replace('dispProfilerAdmin', '', $this->act)));
 	}
-	
+
 	function dispProfilerAdminDashboard()
 	{
 	}
-	
+
 	function dispProfilerAdminConfig()
 	{
 	}
