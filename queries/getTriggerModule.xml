@@ -1,0 +1,8 @@
+<query id="getTriggerModule" action="select">
+	<tables>
+		<table name="module_trigger" />
+	</tables>
+	<columns>
+		<column name="module" />
+	</columns>
+</query>
