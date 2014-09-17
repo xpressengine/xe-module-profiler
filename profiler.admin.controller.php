@@ -24,7 +24,7 @@ class profilerAdminController extends profiler
 
 		foreach($trigger_module as $modules)
 		{
-			$module_controller = getController($modules->module);
+			$module_class = getClass($modules->module);
 			if(!$module_controller)
 			{
 				$deleted = $modules->module;
