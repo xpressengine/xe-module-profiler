@@ -14,8 +14,70 @@ class profilerAdminModel extends profiler
 	}
 
 	/**
-	 * slowlog 데이터 반환
-	 *
+	 * @brief 페이징 네비게이션
+	 * @param array $args
+	 * @param int $page
+	 * @param int $page_count
+	 * @param int $list_count
+	 * @return stdClass
+	 */
+	function getPageNavigation($args = array(), $page = 1, $page_count = 10, $list_count = 20)
+	{
+		if ((int)$page)
+		{
+			$page = (int)$page;
+		}
+		else
+		{
+			$page = 1;
+		}
+		if ((int)$page_count)
+		{
+			$page_count = (int)$page_count;
+		}
+		else
+		{
+			$page_count = 10;
+		}
+		if ((int)$list_count)
+		{
+			$list_count = (int)$list_count;
+		}
+		else
+		{
+			$list_count = 20;
+		}
+
+		$total_count = count($args);
+		if ($total_count)
+		{
+			$total_page = (int)(($total_count - 1) / (int)$list_count) + 1;
+		}
+		else
+		{
+			$total_page = 1;
+		}
+
+		$output = new Object();
+		$output->total_count = $total_count;
+		$output->total_page = $total_page;
+		$output->page = $page;
+		$output->page_navigation = new PageHandler($total_count, $total_page,$page, $page_count);
+
+		if ($page > $total_page)
+		{
+			$output->data = array();
+		}
+		else
+		{
+			$output->data = array_slice($args, ($page - 1) * $list_count, $list_count);
+		}
+
+		return $output;
+	}
+
+	/**
+	 * @brief Slowlog 데이터 반환
 	 * @param stdClass $args
 	 * @return array
 	 */
@@ -36,7 +98,7 @@ class profilerAdminModel extends profiler
 	}
 
 	/**
-	 * @brief 설치된 모듈 이름 반환
+	 * @brief 설치된 모듈 이름 목록 반환
 	 * @return array
 	 */
 	function getModuleList()
@@ -54,7 +116,7 @@ class profilerAdminModel extends profiler
 	}
 
 	/**
-	 * @brief DB에 저장되어 있는 트리거 반환
+	 * @brief DB에 저장되어 있는 트리거 목록 반환
 	 * @param stdClass $args
 	 * @param array $column_list
 	 * @return array
