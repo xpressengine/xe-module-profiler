@@ -19,9 +19,9 @@ class profilerAdminModel extends profiler
 	 * @param stdClass $args
 	 * @return array
 	 */
-	function getStaticsSlowlog($type, $args = null)
+	function getStaticsSlowlog($type, $args = NULL)
 	{
-		$cond = new stdClass;
+		$cond = new stdClass();
 		$cond->type = $type;
 		$cond->hash_id = $args->hash_id;
 
@@ -32,7 +32,10 @@ class profilerAdminModel extends profiler
 		$cond->end = $args->end;
 
 		$output = executeQueryArray('profiler.getStatisticSlowlog', $cond);
-		if(!$output->data) $output->data = array();
+		if (!$output->data)
+		{
+			$output->data = array();
+		}
 
 		return $output;
 	}
