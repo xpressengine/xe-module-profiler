@@ -29,7 +29,7 @@ class profilerAdminController extends profiler
 		// 트리거 삭제
 		foreach ($delete_trigger_list as $trigger)
 		{
-			$output = executeQueryArray('profiler.deleteTrigger', $trigger);
+			$output = executeQuery('profiler.deleteTrigger', $trigger);
 			if (!$output->toBool())
 			{
 				return $output;
