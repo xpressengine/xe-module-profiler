@@ -5,10 +5,10 @@
 	<actions>
 		<action name="dispProfilerAdminDashboard" type="view" menu_name="profiler" admin_index="true" />
 		<action name="dispProfilerAdminConfig" type="view" menu_name="profiler" />
-		<action name="dispProfilerAdminSlowlogTrigger" type="view" />
-
+		<action name="dispProfilerAdminSlowlogTrigger" type="view" menu_name="profiler" />
+		<action name="dispProfilerAdminTriggerList" type="view" menu_name="profiler" />
 		<action name="procProfilerAdminInsertConfig" type="controller" ruleset="insertConfig" />
-		<action name="procProfilerAdminDeleteTriggerList" type="controller" />
+		<action name="procProfilerAdminDeleteTrigger" type="controller" ruleset="deleteTrigger" />
 	</actions>
 	<menus>
 		<menu name="profiler" type="all">

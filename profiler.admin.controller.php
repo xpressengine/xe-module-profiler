@@ -17,28 +17,27 @@ class profilerAdminController extends profiler
 	{
 	}
 
-	function procProfilerAdminDeleteTriggerList()
+	function procProfilerAdminDeleteTrigger()
 	{
-		$trigger_list = executeQueryArray('profiler.getTriggerModule');
-		$trigger_module = $trigger_list->data;
+		// 고급 삭제 옵션
+		$advanced = Context::get('advanced') == 'Y' ? TRUE : FALSE;
 
-		foreach($trigger_module as $modules)
+		// 삭제할 트리거 목록 불러오기
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$delete_trigger_list = $oProfilerAdminModel->getDeleteTriggerList($advanced);
+
+		// 트리거 삭제
+		foreach ($delete_trigger_list as $trigger)
 		{
-			$module_class = getClass($modules->module);
-			if(!$module_class)
+			$output = executeQueryArray('profiler.deleteTrigger', $trigger);
+			if (!$output->toBool())
 			{
-				$deleted = $modules->module;
-				$args->module = $deleted;
-				$output = executeQuery('profiler.deleteTriggerModuleList', $args);
+				return $output;
 			}
 		}
 
-		if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON')))
-		{
-			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminDashboard');
-			header('location: ' . $returnUrl);
-			return;
-		}
+		$this->setMessage('success_deleted');
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTriggerList', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
 	}
 }
 
