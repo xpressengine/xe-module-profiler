@@ -22,6 +22,14 @@ class profilerAdminView extends profiler
 	function dispProfilerAdminConfig()
 	{
 	}
+
+	function dispProfilerAdminSlowlogTrigger()
+	{
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$slowlog = $oProfilerAdminModel->getStaticsSlowlog('trigger');
+		Context::set('slowlog', $slowlog);
+		debugPrint($slowlog);
+	}
 }
 
 /* End of file profiler.admin.view.php */
