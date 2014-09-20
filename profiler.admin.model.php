@@ -62,7 +62,7 @@ class profilerAdminModel extends profiler
 		$output->total_count = $total_count;
 		$output->total_page = $total_page;
 		$output->page = $page;
-		$output->page_navigation = new PageHandler($total_count, $total_page,$page, $page_count);
+		$output->page_navigation = new PageHandler($total_count, $total_page, $page, $page_count);
 
 		if ($page > $total_page)
 		{
