@@ -40,6 +40,16 @@ class profilerAdminController extends profiler
 			return;
 		}
 	}
+
+	function procProfilerAdminGetTemporaryDocumentCount()
+	{
+		
+	}
+
+	function procProfilerAdminDeleteTemporaryDocument()
+	{
+
+	}
 }
 
 /* End of file profiler.admin.controller.php */

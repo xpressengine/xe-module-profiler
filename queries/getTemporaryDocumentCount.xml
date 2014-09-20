@@ -1,0 +1,15 @@
+<query id="getTemporaryDocumentCount" action="select">
+	<tables>
+		<table name="documents" />
+	</tables>
+	<columns>
+		<column name="COUNT(*)" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="status" default="TEMP" />
+		<group pipe="and">
+			<condition operation="more" column="regdate" var="" ruleset="number" />
+			<condition operation="less" column="regdate" var="" ruleset="number" pipe="and" />
+		</group>
+	</conditions>
+</query>

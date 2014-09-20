@@ -1,0 +1,9 @@
+<query id="deleteAutosaveDocuments" action="delete">
+	<tables>
+		<table name="editor_autosave" />
+	</tables>
+	<conditions>
+		<condition operation="more" column="regdate" var="start_time" ruleset="number" notnull="notnull" />
+		<condition operation="less" column="regdate" var="end_time" pipe="and" ruleset="number" notnull="notnull" />
+	</conditions>
+</query>
