@@ -51,7 +51,7 @@ class profilerAdminModel extends profiler
 		$total_count = count($args);
 		if ($total_count)
 		{
-			$total_page = (int)(($total_count - 1) / (int)$list_count) + 1;
+			$total_page = (int)(($total_count - 1) / $list_count) + 1;
 		}
 		else
 		{
