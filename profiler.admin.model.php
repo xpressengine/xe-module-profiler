@@ -98,6 +98,24 @@ class profilerAdminModel extends profiler
 	}
 
 	/**
+	 * @brief 설치된 모듈 이름 목록 반환
+	 * @return array
+	 */
+	function getModuleList()
+	{
+		$oModuleModel = getModel('module');
+		$modules_info = $oModuleModel->getModuleList();
+
+		foreach ($modules_info as $module_info)
+ 		{
+			// 모듈 이름만 배열에 추가
+			$module_list[] = $module_info->module;
+ 		}
+
+		return $module_list;
+	}
+
+	/**
 	 * @brief 삭제해도 상관없는 트리거 목록 반환
 	 * @param boolean $advanced
 	 * @return array
@@ -110,12 +128,7 @@ class profilerAdminModel extends profiler
 		$trigger_list = $oModuleModel->getTriggers();
 
 		// 설치되어 있는 모듈 목록
-		$modules_info = $oModuleModel->getModuleList();
-		foreach ($modules_info as $module_info)
-		{
-			// 모듈 이름만 배열에 추가
-			$module_list[] = $module_info->module;
-		}
+		$module_list = $this->getModuleList();
 
 		// 삭제해도 상관없는 트리거 목록
 		$triggers_deleted = array();
@@ -142,44 +155,29 @@ class profilerAdminModel extends profiler
 		return $triggers_deleted;
 	}
 
+	/**
+	 * @brief 삭제해도 상관없는 모듈 설정 목록 반환
+	 * @return array
+	 */
 	function getModuleConfigToBeDeleted()
 	{
+		// DB 상의 모듈 설정 목록
 		$output = executeQueryArray('profiler.getModuleConfig');
 		$module_config = $output->data;
 
-		$oModuleModel = getModel('module');
-		$modules_info = $oModuleModel->getModuleList();
+		// 설치되어 있는 모듈 목록
+		$module_list = $this->getModuleList();
 
-		foreach($modules_info as $key => $module)
+		// 삭제해도 상관없는 모듈 설정 목록
+		foreach ($module_config as $config)
 		{
-			$module_list[] = $module->module;
-		}
-
-		foreach($module_config as $module_info)
-		{
-			
-			if(!in_array($module_info->module, $module_list))
+			if (!in_array($config->module, $module_list))
 			{
-				$delete_module_list[] = $module_info->module;
+				$config_deleted[] = $config;
 			}
 		}
 
-		return $delete_module_list;
-	}
-
-	function getModuleList()
-	{
-		$oModuleModel = getModel('module');
-		$modules_info = $oModuleModel->getModuleList();
-
-		foreach ($modules_info as $module_info)
- 		{
-			// 모듈 이름만 배열에 추가
-			$module_list[] = $module_info->module;
- 		}
- 
- 
-		return $module_list;
+		return $config_deleted;
 	}
 }
 

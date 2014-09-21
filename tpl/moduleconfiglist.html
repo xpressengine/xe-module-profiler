@@ -2,7 +2,7 @@
 <include target="./_header.html" />
 
 <!--// BODY -->
-<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/moduleconfigs/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/moduleconfiglist/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 
@@ -12,18 +12,23 @@
 	</caption>
 	<thead>
 		<tr>
-			<th scope="col" style="text-align: center;">Module</th>
+			<th scope="col" style="white-space:nowrap">Module</th>
+			<th scope="col" style="white-space:nowrap">Site srl</th>
+			<th scope="col" style="white-space:nowrap">Config</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr loop="$module_list=>$module" >
-			<td style="text-align: center;">{$module}</td>
+		<tr loop="$module_config_list=>$module_config">
+			<td>{$module_config->module}</td>
+			<td>{$module_config->site_srl}</td>
+			<td><pre style="margin-bottom:0">{$module_config->config}</pre></td>
 		</tr>
-		<tr cond="!$module_list">
-			<td>{$lang->about_profiler_no_module_configs}</td>
+		<tr cond="!$module_config_list">
+			<td>{$lang->about_profiler_no_module_config}</td>
 		</tr>
 	</tbody>
 </table>
+
 <div class="x_clearfix">
 	<form class="x_pagination x_pull-left" style="margin-top:0" action="{Context::getUrl('')}" method="post" no-error-return-url="true">
 		<input loop="$param=>$key,$val" cond="!in_array($key, array('mid', 'vid', 'act'))" type="hidden" name="{$key}" value="{$val}" />
@@ -38,12 +43,10 @@
 	<form class="x_pull-right" style="margin-top:0" action="{Context::getUrl('')}" method="post">
 		<input type="hidden" name="module" value="profiler" />
 		<input type="hidden" name="act" value="procProfilerAdminDeleteModuleConfig" />
-		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/moduleconfigs/1" />
-
-		<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_profiler_delete_module_configs}</button>
+		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/moduleconfiglist/1" />
+		<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_delete}</button>
 	</form>
 </div>
-<a href="{getUrl('','module','admin','act','procProfilerAdminDeleteModuleConfig')}">deleteModuleConfig</a>
 
 <!--// FOOTER -->
 <include target="./_footer.html" />

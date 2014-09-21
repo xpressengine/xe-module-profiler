@@ -43,28 +43,22 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminDeleteModuleConfig()
 	{
-		$output = executeQueryArray('profiler.getModuleConfig');
-		$module_config = $output->data;
+		// 삭제할 모듈 설정 목록 불러오기
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$config_deleted = $oProfilerAdminModel->getModuleConfigToBeDeleted();
 
-		$oModuleModel = getModel('module');
-		$modules_info = $oModuleModel->getModuleList();
-
-		foreach($modules_info as $key => $module)
+		// 모듈 설정 삭제
+		foreach ($config_deleted as $module_config)
 		{
-			$module_list[] = $module->module;
-		}
-
-		foreach($module_config as $module_info)
-		{
-			
-			if(!in_array($module_info->module, $module_list))
+			$output = executeQuery('profiler.deleteModuleConfig', $module_config);
+			if (!$output->toBool())
 			{
-				$args = new stdClass();
-				$args->module = $module_info->module;
-				$delete = executeQuery('profiler.deleteModuleConfig', $args);
+				return $output;
 			}
 		}
-		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfigs', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
+
+		$this->setMessage('success_deleted');
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfigList', 'page', Context::get('page')));
 	}
 }
 
