@@ -40,6 +40,32 @@ class profilerAdminController extends profiler
 		$this->setMessage('success_deleted');
 		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTriggerList', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
 	}
+
+	function procProfilerAdminDeleteModuleConfig()
+	{
+		$output = executeQueryArray('profiler.getModuleConfig');
+		$module_config = $output->data;
+
+		$oModuleModel = getModel('module');
+		$modules_info = $oModuleModel->getModuleList();
+
+		foreach($modules_info as $key => $module)
+		{
+			$module_list[] = $module->module;
+		}
+
+		foreach($module_config as $module_info)
+		{
+			
+			if(!in_array($module_info->module, $module_list))
+			{
+				$args = new stdClass();
+				$args->module = $module_info->module;
+				$delete = executeQuery('profiler.deleteModuleConfig', $args);
+			}
+		}
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfigs', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
+	}
 }
 
 /* End of file profiler.admin.controller.php */

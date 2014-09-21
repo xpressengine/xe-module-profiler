@@ -23,6 +23,21 @@ class profilerAdminView extends profiler
 	{
 	}
 
+	function dispProfilerAdminModuleConfigs()
+	{
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$deleteModuleConfig = $oProfilerAdminModel->getModuleConfigToBeDeleted();
+
+		$paging = $oProfilerAdminModel->getPageNavigation($deleteModuleConfig, Context::get('page'));
+
+		// 템플릿 엔진으로 값 전달
+		Context::set('total_count', $paging->total_count);
+		Context::set('total_page', $paging->total_page);
+		Context::set('page', $paging->page);
+		Context::set('module_list', $paging->data);
+		Context::set('page_navigation', $paging->page_navigation);
+	}
+
 	function dispProfilerAdminSlowlogTrigger()
 	{
 		$oProfilerAdminModel = getAdminModel('profiler');

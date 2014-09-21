@@ -141,6 +141,46 @@ class profilerAdminModel extends profiler
 
 		return $triggers_deleted;
 	}
+
+	function getModuleConfigToBeDeleted()
+	{
+		$output = executeQueryArray('profiler.getModuleConfig');
+		$module_config = $output->data;
+
+		$oModuleModel = getModel('module');
+		$modules_info = $oModuleModel->getModuleList();
+
+		foreach($modules_info as $key => $module)
+		{
+			$module_list[] = $module->module;
+		}
+
+		foreach($module_config as $module_info)
+		{
+			
+			if(!in_array($module_info->module, $module_list))
+			{
+				$delete_module_list[] = $module_info->module;
+			}
+		}
+
+		return $delete_module_list;
+	}
+
+	function getModuleList()
+	{
+		$oModuleModel = getModel('module');
+		$modules_info = $oModuleModel->getModuleList();
+
+		foreach ($modules_info as $module_info)
+ 		{
+			// 모듈 이름만 배열에 추가
+			$module_list[] = $module_info->module;
+ 		}
+ 
+ 
+		return $module_list;
+	}
 }
 
 /* End of file profiler.admin.model.php */

@@ -1,0 +1,8 @@
+<query id="getModuleConfig" action="select">
+    <tables>
+        <table name="module_config" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+</query>
