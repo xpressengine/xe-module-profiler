@@ -15,6 +15,13 @@ class profiler extends ModuleObject
 
 	function moduleInstall()
 	{
+		$oModuleController = getController('module');
+
+		foreach ($this->triggers as $trigger)
+		{
+			$oModuleController->insertTrigger($trigger[0], $trigger[1], $trigger[2], $trigger[3], $trigger[4]);
+		}
+
 		return new Object();
 	}
 
@@ -47,6 +54,16 @@ class profiler extends ModuleObject
 		}
 
 		return new Object(0, 'success_updated');
+	}
+
+	function moduleUninstall()
+	{
+		return new Object();
+	}
+
+	function recompileCache()
+	{
+		return new Object();
 	}
 }
 

@@ -37,8 +37,8 @@ class profilerAdminView extends profiler
 
 		// 삭제할 수 있는 트리거 목록
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$delete_trigger_list = $oProfilerAdminModel->getDeleteTriggerList($advanced);
-		$paging = $oProfilerAdminModel->getPageNavigation($delete_trigger_list, Context::get('page'));
+		$triggers_deleted = $oProfilerAdminModel->getTriggersToBeDeleted($advanced);
+		$paging = $oProfilerAdminModel->getPageNavigation($triggers_deleted, Context::get('page'));
 
 		// 템플릿 엔진으로 값 전달
 		Context::set('total_count', $paging->total_count);

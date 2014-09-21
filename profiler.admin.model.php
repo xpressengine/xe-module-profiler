@@ -98,62 +98,27 @@ class profilerAdminModel extends profiler
 	}
 
 	/**
-	 * @brief 설치된 모듈 이름 목록 반환
+	 * @brief 삭제해도 상관없는 트리거 목록 반환
+	 * @param boolean $advanced
 	 * @return array
 	 */
-	function getModuleList()
+	function getTriggersToBeDeleted($advanced = FALSE)
 	{
 		$oModuleModel = getModel('module');
-		$modules_info = $oModuleModel->getModuleList();
 
+		// DB 상의 트리거 목록
+		$trigger_list = $oModuleModel->getTriggers();
+
+		// 설치되어 있는 모듈 목록
+		$modules_info = $oModuleModel->getModuleList();
 		foreach ($modules_info as $module_info)
 		{
 			// 모듈 이름만 배열에 추가
 			$module_list[] = $module_info->module;
 		}
 
-		return $module_list;
-	}
-
-	/**
-	 * @brief DB에 저장되어 있는 트리거 목록 반환
-	 * @param stdClass $args
-	 * @param array $column_list
-	 * @return array
-	 */
-	function getTriggerList($args, $column_list = array())
-	{
-		// 잘못된 인자 검사
-		if (!is_object($args))
-		{
-			$args = new stdClass();
-		}
-		if (!is_array($column_list))
-		{
-			$column_list = array();
-		}
-
-		$output = executeQueryArray('profiler.getTrigger', $args, $column_list);
-		$trigger_list = $output->data;
-
-		return $trigger_list;
-	}
-
-	/**
-	 * @brief 삭제해도 상관없는 트리거 목록 반환
-	 * @param boolean $advanced
-	 * @return array
-	 */
-	function getDeleteTriggerList($advanced = FALSE)
-	{
-		// DB 상의 트리거 목록
-		$trigger_list = $this->getTriggerList();
-
-		// 설치되어 있는 모듈 목록
-		$module_list = $this->getModuleList();
-
 		// 삭제해도 상관없는 트리거 목록
-		$delete_trigger_list = array();
+		$triggers_deleted = array();
 		foreach ($trigger_list as $trigger)
 		{
 			if (in_array($trigger->module, $module_list))
@@ -164,17 +129,17 @@ class profilerAdminModel extends profiler
 					$oModule = getModule($trigger->module, strtolower($trigger->type));
 					if (!@method_exists($oModule, $trigger->called_method))
 					{
-						$delete_trigger_list[] = $trigger;
+						$triggers_deleted[] = $trigger;
 					}
 				}
 			}
 			else
 			{
-				$delete_trigger_list[] = $trigger;
+				$triggers_deleted[] = $trigger;
 			}
 		}
 
-		return $delete_trigger_list;
+		return $triggers_deleted;
 	}
 }
 

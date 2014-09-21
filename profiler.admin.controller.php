@@ -24,12 +24,13 @@ class profilerAdminController extends profiler
 
 		// 삭제할 트리거 목록 불러오기
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$delete_trigger_list = $oProfilerAdminModel->getDeleteTriggerList($advanced);
+		$triggers_deleted = $oProfilerAdminModel->getTriggersToBeDeleted($advanced);
 
 		// 트리거 삭제
-		foreach ($delete_trigger_list as $trigger)
+		$oModuleController = getController('module');
+		foreach ($triggers_deleted as $trigger)
 		{
-			$output = executeQuery('profiler.deleteTrigger', $trigger);
+			$output = $oModuleController->deleteTrigger($trigger->trigger_name, $trigger->module, $trigger->type, $trigger->called_method, $trigger->called_position);
 			if (!$output->toBool())
 			{
 				return $output;
