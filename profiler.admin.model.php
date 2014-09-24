@@ -169,6 +169,7 @@ class profilerAdminModel extends profiler
 		$module_list = $this->getModuleList();
 
 		// 삭제해도 상관없는 모듈 설정 목록
+		$config_deleted = array();
 		foreach ($module_config as $config)
 		{
 			if (!in_array($config->module, $module_list))
