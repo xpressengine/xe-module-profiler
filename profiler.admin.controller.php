@@ -15,6 +15,15 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminInsertConfig()
 	{
+		$oModuleController = getController('module');
+
+		$config->slowlogconfig = Context::get('slowlogconfig');
+
+		$oModuleController->updateModuleConfig('profiler', $config);
+
+		$this->setMessage('success_updated');
+
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig'));
 	}
 
 	function procProfilerAdminDeleteTrigger()

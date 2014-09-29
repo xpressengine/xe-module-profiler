@@ -21,6 +21,10 @@ class profilerAdminView extends profiler
 
 	function dispProfilerAdminConfig()
 	{
+		$oProfilerAdminModel = getAdminModel('profiler');
+
+		$config = $oProfilerAdminModel->getConfig();
+		Context::set('config', $config);
 	}
 
 	function dispProfilerAdminSlowlogTrigger()

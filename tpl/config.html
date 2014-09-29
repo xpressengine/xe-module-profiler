@@ -2,6 +2,34 @@
 <include target="./_header.html" />
 
 <!--// BODY -->
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/config/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<form action="{Context::getUrl('')}" method="post" class="x_form-horizontal" id="fo_profiler">
+	<input type="hidden" name="module" value="profiler" />
+	<input type="hidden" name="act" value="procProfilerAdminInsertConfig" />
+	<section class="section">
+		<h1>Slow log Config</h1>
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->config_profiler_trigger_slowlog}</label>
+			<div class="x_controls">
+				<label class="x_inline">
+					<input type="radio" name="slowlogconfig" value="Y" checked="checked"|cond="$config->slowlogconfig == 'Y'" /> {$lang->about_use}
+				</label>
+				<label class="x_inline">
+					<input type="radio" name="slowlogconfig" value="N" checked="checked"|cond="$config->slowlogconfig == 'N'" /> {$lang->about_not_use}
+				</label>
+				<p class="x_help-block">{$lang->about_profiler_slowlog_setting}</p>
+			</div>
+		</div>
+	</section>
+	<div class="x_clearfix btnArea">
+		<div class="x_pull-right">
+			<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_registration}</button>
+		</div>
+	</div>
+</form>
 
 <!--// FOOTER -->
 <include target="./_footer.html" />
