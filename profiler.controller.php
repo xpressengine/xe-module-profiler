@@ -20,6 +20,12 @@ class profilerController extends profiler
 	 */
 	function triggerWriteSlowlog($args)
 	{
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$config = $oProfilerAdminModel->getConfig();
+
+		// 슬로우 로그를 쓰지 않을경우 리턴
+		if ($config->slowlogconfig != 'Y') return new Object();
+
 		// 잘못된 인자 검사
 		if (!is_object($args))
 		{
