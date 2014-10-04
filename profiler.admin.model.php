@@ -137,7 +137,8 @@ class profilerAdminModel extends profiler
 
 				foreach($temp as $val)
 				{
-					$table_list[] = explode($oDB->prefix, $val->table_name)[1];
+					$arr = explode($oDB->prefix, $val->table_name);
+					$table_list[] = $arr[1];
 				}
 				break;
 			/*
