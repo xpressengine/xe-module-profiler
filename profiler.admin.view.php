@@ -80,6 +80,22 @@ class profilerAdminView extends profiler
 		Context::set('table_list', $paging->data);
 		Context::set('page_navigation', $paging->page_navigation);
 	}
+
+	function dispProfilerAdminAddonConfigList()
+	{
+		// 삭제할 수 있는 모듈 설정 목록
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$invalid_addon_config = $oProfilerAdminModel->getAddonConfigToBeDeleted();
+		$paging = $oProfilerAdminModel->getPageNavigation($invalid_addon_config, Context::get('page'));
+
+		// 템플릿 엔진으로 값 전달
+		Context::set('total_count', $paging->total_count);
+		Context::set('total_page', $paging->total_page);
+		Context::set('page', $paging->page);
+		Context::set('addon_config_list', $paging->data);
+		Context::set('page_navigation', $paging->page_navigation);
+	}
+
 }
 
 /* End of file profiler.admin.view.php */

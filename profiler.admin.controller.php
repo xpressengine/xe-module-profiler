@@ -112,6 +112,23 @@ class profilerAdminController extends profiler
 		$this->setMessage('success_deleted');
 		$this->setRedirectUrl(getNotEncodedUrl('module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
 	}
+
+	function procProfilerAdminDeleteAddonConfig()
+	{
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$invalid_addon_config = $oProfilerAdminModel->getAddonConfigToBeDeleted();
+
+		// 애드온 설정 삭제
+		foreach ($invalid_addon_config as $addon_config)
+		{
+			$addon_name->addon = $addon_config->addon;
+			$output = executeQuery('profiler.deleteAddonConfig', $addon_name);
+			if (!$output->toBool())
+			{
+				return $output;
+			}
+		}
+	}
 }
 
 /* End of file profiler.admin.controller.php */

@@ -1,0 +1,8 @@
+<query id="getAddonConfigList" action="select">
+	<tables>
+		<table name="addons_site" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+</query>

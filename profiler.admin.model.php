@@ -263,6 +263,33 @@ class profilerAdminModel extends profiler
 
 		return $invalid_table_list;
 	}
+
+	function getAddonConfigToBeDeleted()
+	{
+		$oAddonAdminModel = getAdminModel('addon');
+		$addon_foreach = $oAddonAdminModel->getAddonList();
+
+		foreach($addon_foreach as $list)
+		{
+			$addon_list[] = $list->addon;
+		}
+		
+
+		$output = executeQueryArray('profiler.getAddonConfigList');
+		$addon_config = $output->data;
+
+		foreach($addon_config as $config)
+		{
+			$addons_j_list[] = $config->addon;
+			if(!in_array($config->addon, $addon_list))
+			{
+				$invalid_addon_config[] = $config;
+			}
+
+		}
+
+		return $invalid_addon_config;
+	}
 }
 
 /* End of file profiler.admin.model.php */

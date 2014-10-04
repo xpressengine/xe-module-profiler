@@ -8,11 +8,13 @@
 		<action name="dispProfilerAdminSlowlogTrigger" type="view" menu_name="profiler" />
 		<action name="dispProfilerAdminTriggerList" type="view" menu_name="profiler" />
 		<action name="dispProfilerAdminModuleConfigList" type="view" menu_name="profiler" />
+		<action name="dispProfilerAdminAddonConfigList" type="view" menu_name="profiler" />
 		<action name="dispProfilerAdminTable" type="view" menu_name="profiler" />
 		<action name="procProfilerAdminInsertConfig" type="controller" ruleset="insertConfig" />
 		<action name="procProfilerAdminDeleteTrigger" type="controller" ruleset="deleteTrigger" />
 		<action name="procProfilerAdminDeleteModuleConfig" type="controller" />
 		<action name="procProfilerAdminDeleteTable" type="controller" />
+		<action name="procProfilerAdminDeleteAddonConfig" type="controller" />
 	</actions>
 	<menus>
 		<menu name="profiler" type="all">

@@ -1,0 +1,8 @@
+<query id="deleteAddonConfig" action="delete">
+	<tables>
+		<table name="addons_site" />
+	</tables>
+	<conditions>
+		<condition operation="equal" column="addon" var="addon" notnull="notnull" />
+	</conditions>
+</query>
