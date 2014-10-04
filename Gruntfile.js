@@ -9,9 +9,10 @@ module.exports = function(grunt) {
 				options: {
 					phpCmd: "php",
 				},
+
 				src: [
-					"*.php",
-					"!node_modules/**",
+					"**/*.php",
+					"!node_modules/**"
 				],
 			},
 		}
@@ -19,5 +20,6 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-phplint');
 
-	grunt.registerTask('default', ['phplint']);
+	grunt.registerTask('default', ['lint']);
+	grunt.registerTask('lint', ['phplint']);
 };
