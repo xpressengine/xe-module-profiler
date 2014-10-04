@@ -22,7 +22,6 @@ class profilerAdminController extends profiler
 		$oModuleController->updateModuleConfig('profiler', $config);
 
 		$this->setMessage('success_updated');
-
 		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig'));
 	}
 
