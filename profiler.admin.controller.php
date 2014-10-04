@@ -16,7 +16,7 @@ class profilerAdminController extends profiler
 	function procProfilerAdminInsertConfig()
 	{
 		$oModuleController = getController('module');
-		$oProfilerModel = getController('profiler');
+		$oProfilerModel = getModel('profiler');
 
 		$vars = Context::getRequestVars();
 		$section = $vars->_config_section;
