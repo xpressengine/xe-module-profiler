@@ -6,7 +6,6 @@
  * @author NAVER (developers@xpressengine.com)
  * @brief  Profiler module admin view class.
  */
-
 class profilerAdminView extends profiler
 {
 	function init()
@@ -21,15 +20,16 @@ class profilerAdminView extends profiler
 
 	function dispProfilerAdminConfig()
 	{
-		$oProfilerAdminModel = getAdminModel('profiler');
+		$oProfilerModel = getModel('profiler');
 
-		$config = $oProfilerAdminModel->getConfig();
+		$config = $oProfilerModel->getConfig();
 		Context::set('config', $config);
 	}
 
 	function dispProfilerAdminSlowlogTrigger()
 	{
 		$oProfilerAdminModel = getAdminModel('profiler');
+
 		$slowlog = $oProfilerAdminModel->getStaticsSlowlog('trigger');
 		Context::set('slowlog', $slowlog);
 	}

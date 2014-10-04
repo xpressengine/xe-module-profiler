@@ -9,28 +9,8 @@
 
 class profilerAdminModel extends profiler
 {
-	var $config;
-
 	function init()
 	{
-	}
-
-	function getConfig()
-	{
-		if (!$this->config)
-		{
-			$oModuleModel = getModel('module');
-			$config = $oModuleModel->getModuleConfig('profiler');
-
-			if (!$config->slowlogconfig)
-			{
-				$config->slowlogconfig = 'N';
-			}
-			
-			$this->config = $config;
-		}
-
-		return $this->config;
 	}
 
 	/**
