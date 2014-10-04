@@ -26,7 +26,7 @@ class profilerAdminModel extends profiler
 			{
 				$config->slowlogconfig = 'N';
 			}
-			
+
 			$this->config = $config;
 		}
 
@@ -135,6 +135,49 @@ class profilerAdminModel extends profiler
 		return $module_list;
 	}
 
+	function getTableList()
+	{
+		$table_list = array();
+
+		$oDB = DB::getInstance();
+		switch($oDB->db_type)
+		{
+			case 'mysql':
+			case 'mysql_innodb':
+			case 'mysqli':
+			case 'mysqli_innodb':
+				$query[] = "SELECT table_name AS 'table_name'";
+				$query[] = 'FROM information_schema.tables';
+				$query[] = 'WHERE table_schema = DATABASE()';
+				$query[] = "AND table_name LIKE '" . $oDB->prefix . "%'";
+				$query = implode(' ', $query);
+
+				$result = $oDB->_query($query);
+				$temp = $oDB->_fetch($result);
+
+				foreach($temp as $val)
+				{
+					$table_list[] = explode($oDB->prefix, $val->table_name)[1];
+				}
+				break;
+			/*
+			// 아래 쿼리문은 테스트 환경이 없어서 작성하지 못 함
+			// 차후에 테스트 환경을 구축해서 쿼리문 작성 요망
+			case 'mssql':
+				break;
+
+			case 'cubrid':
+				$query[] = "SELECT class_name AS 'table_name'";
+				$query[] = 'FROM db_class';
+				$query[] = "WHERE class_name LIKE '" . $oDB->prefix . "%'";
+
+				break;
+			*/
+		}
+
+		return $table_list;
+	}
+
 	/**
 	 * @brief 삭제해도 상관없는 트리거 목록 반환
 	 * @param boolean $advanced
@@ -151,7 +194,7 @@ class profilerAdminModel extends profiler
 		$module_list = $this->getModuleList();
 
 		// 삭제해도 상관없는 트리거 목록
-		$triggers_deleted = array();
+		$invalid_trigger_list = array();
 		foreach ($trigger_list as $trigger)
 		{
 			if (in_array($trigger->module, $module_list))
@@ -162,17 +205,17 @@ class profilerAdminModel extends profiler
 					$oModule = getModule($trigger->module, strtolower($trigger->type));
 					if (!@method_exists($oModule, $trigger->called_method))
 					{
-						$triggers_deleted[] = $trigger;
+						$invalid_trigger_list[] = $trigger;
 					}
 				}
 			}
 			else
 			{
-				$triggers_deleted[] = $trigger;
+				$invalid_trigger_list[] = $trigger;
 			}
 		}
 
-		return $triggers_deleted;
+		return $invalid_trigger_list;
 	}
 
 	/**
@@ -189,16 +232,55 @@ class profilerAdminModel extends profiler
 		$module_list = $this->getModuleList();
 
 		// 삭제해도 상관없는 모듈 설정 목록
-		$config_deleted = array();
+		$invalid_module_config = array();
 		foreach ($module_config as $config)
 		{
 			if (!in_array($config->module, $module_list))
 			{
-				$config_deleted[] = $config;
+				$invalid_module_config[] = $config;
 			}
 		}
 
-		return $config_deleted;
+		return $invalid_module_config;
+	}
+
+	/**
+	 * @brief 삭제해도 상관없는 테이블 목록 반환
+	 * @return array
+	 */
+	function getTableToBeDeleted()
+	{
+		$oDB = DB::getInstance();
+
+		// 설치되어 있는 모듈 목록
+		$module_list = $this->getModuleList();
+
+		// DB 상의 테이블 목록
+		$table_list = $this->getTableList();
+
+		// 실제 사용하고 있는 테이블 목록
+		$valid_table_list = array();
+		foreach($module_list as $key => $module_name)
+		{
+			$module_path = ModuleHandler::getModulePath($module_name);
+			if(file_exists(FileHandler::getRealPath($module_path . 'schemas')))
+			{
+				$table_files = FileHandler::readDir($module_path . 'schemas', '/(\.xml)$/');
+				for($i = 0; $i < count($table_files); $i++)
+				{
+					list($table_name) = explode('.', $table_files[$i]);
+					if($oDB->isTableExists($table_name))
+					{
+						$valid_table_list[] = $table_name;
+					}
+				}
+			}
+		}
+
+		// 삭제해도 상관없는 테이블 목록
+		$invalid_table_list = array_diff($table_list, $valid_table_list);
+
+		return $invalid_table_list;
 	}
 }
 

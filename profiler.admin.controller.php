@@ -32,11 +32,11 @@ class profilerAdminController extends profiler
 
 		// 삭제할 트리거 목록 불러오기
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$triggers_deleted = $oProfilerAdminModel->getTriggersToBeDeleted($advanced);
+		$invalid_trigger_list = $oProfilerAdminModel->getTriggersToBeDeleted($advanced);
 
 		// 트리거 삭제
 		$oModuleController = getController('module');
-		foreach ($triggers_deleted as $trigger)
+		foreach ($invalid_trigger_list as $trigger)
 		{
 			$output = $oModuleController->deleteTrigger($trigger->trigger_name, $trigger->module, $trigger->type, $trigger->called_method, $trigger->called_position);
 			if (!$output->toBool())
@@ -53,10 +53,10 @@ class profilerAdminController extends profiler
 	{
 		// 삭제할 모듈 설정 목록 불러오기
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$config_deleted = $oProfilerAdminModel->getModuleConfigToBeDeleted();
+		$invalid_module_config = $oProfilerAdminModel->getModuleConfigToBeDeleted();
 
 		// 모듈 설정 삭제
-		foreach ($config_deleted as $module_config)
+		foreach ($invalid_module_config as $module_config)
 		{
 			$output = executeQuery('profiler.deleteModuleConfig', $module_config);
 			if (!$output->toBool())
@@ -67,6 +67,26 @@ class profilerAdminController extends profiler
 
 		$this->setMessage('success_deleted');
 		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfigList', 'page', Context::get('page')));
+	}
+
+	/**
+	 * @comment 테이블을 삭제하기 전에 강력한 경고문을 보여줄 것. 현재 구현되어 있지 않음
+	 */
+	function procProfilerAdminDeleteTable()
+	{
+		// 삭제할 테이블 목록 불러오기
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$invalid_table_list = $oProfilerAdminModel->getTableToBeDeleted();
+
+		// DB 테이블 삭제
+		$oDB = DB::getInstance();
+		foreach($invalid_table_list as $table_name)
+		{
+			$oDB->dropTable($table_name);
+		}
+
+		$this->setMessage('success_deleted');
+		$this->setRedirectUrl(getNotEncodedUrl('module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
 	}
 }
 

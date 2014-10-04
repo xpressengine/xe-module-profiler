@@ -22,7 +22,6 @@ class profilerAdminView extends profiler
 	function dispProfilerAdminConfig()
 	{
 		$oProfilerAdminModel = getAdminModel('profiler');
-
 		$config = $oProfilerAdminModel->getConfig();
 		Context::set('config', $config);
 	}
@@ -41,8 +40,8 @@ class profilerAdminView extends profiler
 
 		// 삭제할 수 있는 트리거 목록
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$triggers_deleted = $oProfilerAdminModel->getTriggersToBeDeleted($advanced);
-		$paging = $oProfilerAdminModel->getPageNavigation($triggers_deleted, Context::get('page'));
+		$invalid_trigger_list = $oProfilerAdminModel->getTriggersToBeDeleted($advanced);
+		$paging = $oProfilerAdminModel->getPageNavigation($invalid_trigger_list, Context::get('page'));
 
 		// 템플릿 엔진으로 값 전달
 		Context::set('total_count', $paging->total_count);
@@ -56,14 +55,29 @@ class profilerAdminView extends profiler
 	{
 		// 삭제할 수 있는 모듈 설정 목록
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$config_deleted = $oProfilerAdminModel->getModuleConfigToBeDeleted();
-		$paging = $oProfilerAdminModel->getPageNavigation($config_deleted, Context::get('page'));
+		$invalid_module_config = $oProfilerAdminModel->getModuleConfigToBeDeleted();
+		$paging = $oProfilerAdminModel->getPageNavigation($invalid_module_config, Context::get('page'));
 
 		// 템플릿 엔진으로 값 전달
 		Context::set('total_count', $paging->total_count);
 		Context::set('total_page', $paging->total_page);
 		Context::set('page', $paging->page);
 		Context::set('module_config_list', $paging->data);
+		Context::set('page_navigation', $paging->page_navigation);
+	}
+
+	function dispProfilerAdminTable()
+	{
+		// 삭제할 수 있는 테이블 목록
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$invalid_table_list = $oProfilerAdminModel->getTableToBeDeleted();
+		$paging = $oProfilerAdminModel->getPageNavigation($invalid_table_list, Context::get('page'));
+
+		// 템플릿 엔진으로 값 전달
+		Context::set('total_count', $paging->total_count);
+		Context::set('total_page', $paging->total_page);
+		Context::set('page', $paging->page);
+		Context::set('table_list', $paging->data);
 		Context::set('page_navigation', $paging->page_navigation);
 	}
 }
