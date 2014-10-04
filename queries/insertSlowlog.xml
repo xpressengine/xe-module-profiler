@@ -8,4 +8,3 @@
 		<column name="logged_timestamp" var="logged_timestamp" notnull="notnull" />
 	</columns>
 </query>
-
