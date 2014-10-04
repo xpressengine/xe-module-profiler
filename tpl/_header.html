@@ -7,37 +7,20 @@
 
 <p id="descModule" class="x_alert x_alert-info" hidden="hidden">{$lang->about_profiler}</p>
 
-{@
-	$menu_array = array(
-		array(
-			'act' => 'dispProfilerAdminDashboard',
-			'lang' => $lang->cmd_profiler_dashboard
-		),
-		array(
-			'act' => 'dispProfilerAdminConfig',
-			'lang' => $lang->cmd_profiler_config
-		),
-		array(
-			'act' => 'dispProfilerAdminSlowlogTrigger',
-			'lang' => $lang->cmd_profiler_slowlog
-		),
-		array(
-			'act' => 'dispProfilerAdminTriggerList',
-			'lang' => $lang->cmd_profiler_arrange_triggers
-		),
-		array(
-			'act' => 'dispProfilerAdminModuleConfigList',
-			'lang' => $lang->cmd_profiler_arrange_module_config
-		)
-	);
-
-	foreach ($menu_array as $key => $val):
-		$act_array[] = $val['act'];
-	endforeach;
-}
-
-<ul cond="in_array($act, $act_array)" class="x_nav x_nav-tabs">
-	<li loop="$menu_array=>$key,$val" class="x_active"|cond="$act == $val['act']">
-		<a href="{getUrl('', 'module', 'admin', 'act', $val['act'])}">{$val['lang']}</a>
+<ul class="x_nav x_nav-tabs">
+	<li class="x_active"|cond="$act == 'dispProfilerAdminDashboard'">
+		<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminDashboard')}">{$lang->cmd_profiler_dashboard}</a>
+	</li>
+	<li class="x_active"|cond="$act == 'dispProfilerAdminConfig'">
+		<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig')}">{$lang->cmd_profiler_config}</a>
+	</li>
+	<li class="x_active"|cond="$act == 'dispProfilerAdminSlowlogTrigger'">
+		<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminSlowlogTrigger')}">{$lang->cmd_profiler_slowlog}</a>
+	</li>
+	<li class="x_active"|cond="$act == 'dispProfilerAdminTriggerList'">
+		<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTriggerList')}">{$lang->cmd_profiler_arrange_triggers}</a>
+	</li>
+	<li class="x_active"|cond="$act == 'dispProfilerAdminModuleConfigList'">
+		<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfigList')}">{$lang->cmd_profiler_arrange_module_config}</a>
 	</li>
 </ul>
