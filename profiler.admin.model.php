@@ -273,7 +273,6 @@ class profilerAdminModel extends profiler
 		{
 			$addon_list[] = $list->addon;
 		}
-		
 
 		$output = executeQueryArray('profiler.getAddonConfigList');
 		$addon_config = $output->data;
