@@ -60,10 +60,10 @@ class profilerAdminController extends profiler
 
 		// 트리거 삭제
 		$oModuleController = getController('module');
-		foreach ($invalid_trigger_list as $trigger)
+		foreach($invalid_trigger_list as $trigger)
 		{
 			$output = $oModuleController->deleteTrigger($trigger->trigger_name, $trigger->module, $trigger->type, $trigger->called_method, $trigger->called_position);
-			if (!$output->toBool())
+			if(!$output->toBool())
 			{
 				return $output;
 			}
@@ -80,10 +80,10 @@ class profilerAdminController extends profiler
 		$invalid_module_config = $oProfilerAdminModel->getModuleConfigToBeDeleted();
 
 		// 모듈 설정 삭제
-		foreach ($invalid_module_config as $module_config)
+		foreach($invalid_module_config as $module_config)
 		{
 			$output = executeQuery('profiler.deleteModuleConfig', $module_config);
-			if (!$output->toBool())
+			if(!$output->toBool())
 			{
 				return $output;
 			}
@@ -119,7 +119,7 @@ class profilerAdminController extends profiler
 		$invalid_addon_config = $oProfilerAdminModel->getAddonConfigToBeDeleted();
 
 		// 애드온 설정 삭제
-		foreach ($invalid_addon_config as $addon_config)
+		foreach($invalid_addon_config as $addon_config)
 		{
 			$addon_name->addon = $addon_config->addon;
 			$output = executeQuery('profiler.deleteAddonConfig', $addon_name);

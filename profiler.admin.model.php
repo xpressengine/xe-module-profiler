@@ -106,7 +106,7 @@ class profilerAdminModel extends profiler
 		$oModuleModel = getModel('module');
 		$modules_info = $oModuleModel->getModuleList();
 
-		foreach ($modules_info as $module_info)
+		foreach($modules_info as $module_info)
  		{
 			// 모듈 이름만 배열에 추가
 			$module_list[] = $module_info->module;
@@ -176,15 +176,15 @@ class profilerAdminModel extends profiler
 
 		// 삭제해도 상관없는 트리거 목록
 		$invalid_trigger_list = array();
-		foreach ($trigger_list as $trigger)
+		foreach($trigger_list as $trigger)
 		{
-			if (in_array($trigger->module, $module_list))
+			if(in_array($trigger->module, $module_list))
 			{
 				// 고급 삭제 옵션
-				if ($advanced === TRUE)
+				if($advanced === TRUE)
 				{
 					$oModule = getModule($trigger->module, strtolower($trigger->type));
-					if (!@method_exists($oModule, $trigger->called_method))
+					if(!@method_exists($oModule, $trigger->called_method))
 					{
 						$invalid_trigger_list[] = $trigger;
 					}
@@ -214,9 +214,9 @@ class profilerAdminModel extends profiler
 
 		// 삭제해도 상관없는 모듈 설정 목록
 		$invalid_module_config = array();
-		foreach ($module_config as $config)
+		foreach($module_config as $config)
 		{
-			if (!in_array($config->module, $module_list))
+			if(!in_array($config->module, $module_list))
 			{
 				$invalid_module_config[] = $config;
 			}

@@ -24,10 +24,10 @@ class profilerController extends profiler
 		$config = $oProfilerModel->getConfig();
 
 		// 슬로우 로그를 쓰지 않을경우 리턴
-		if ($config->slowlog->enabled != 'Y') return new Object();
+		if($config->slowlog->enabled != 'Y') return new Object();
 
 		// 잘못된 인자 검사
-		if (!is_object($args))
+		if(!is_object($args))
 		{
 			$args = new stdClass();
 		}
@@ -50,7 +50,7 @@ class profilerController extends profiler
 		$output = executeQuery('profiler.getSlowlogType', $cond);
 
 		// type에 등록되어 있지 않으면 추가
-		if (!$output->data)
+		if(!$output->data)
 		{
 			$slowlog_type = new stdClass();
 			$slowlog_type->type = $args->_log_type;
@@ -59,7 +59,7 @@ class profilerController extends profiler
 			$slowlog_type->called = $args->called;
 			$slowlog_type->called_extension = $args->called_extension;
 			$output = executeQuery('profiler.insertSlowlogType', $slowlog_type);
-			if (!$output->toBool())
+			if(!$output->toBool())
 			{
 				return $output;
 			}
@@ -71,7 +71,7 @@ class profilerController extends profiler
 		$slowlog->elapsed_time = $args->_elapsed_time;
 		$slowlog->logged_timestamp = time();
 		$output = executeQuery('profiler.insertSlowlog', $slowlog);
-		if (!$output->toBool())
+		if(!$output->toBool())
 		{
 			return $output;
 		}
