@@ -22,9 +22,9 @@
 	<tbody>
 		<tr loop="$addon_config_list=>$addon_config">
 			<td>{$addon_config->site_srl}</td>
-			<td>{$aadon_config->Addon}</td>
-			<td>{$aadon_config->is_used}</td>
-			<td>{$aadon_config->is_used_m}</td>
+			<td>{$addon_config->addon}</td>
+			<td>{$addon_config->is_used}</td>
+			<td>{$addon_config->is_used_m}</td>
 			<td><pre style="margin-bottom:0">{$addon_config->extra_vars}</pre></td>
 		</tr>
 		<tr cond="!$addon_config_list">
@@ -48,9 +48,20 @@
 		<input type="hidden" name="module" value="profiler" />
 		<input type="hidden" name="act" value="procProfilerAdminDeleteAddonConfig" />
 		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/addonconfiglist/1" />
+		<label class="x_inline" for="advanced"><input type="checkbox" name="advanced" id="advanced" value="Y" checked="checked"|cond="$advanced == 'Y'" /> {$lang->cmd_profiler_advanced}</label>
 		<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_delete}</button>
 	</form>
 </div>
+
+<script>
+(function($)
+{
+	$("#advanced").change(function()
+	{
+		window.location.href = "{getNotEncodedUrl('advanced', $advanced == 'Y' ? NULL : 'Y')}";
+	});
+})(jQuery);
+</script>
 
 <!--// FOOTER -->
 <include target="./_footer.html" />

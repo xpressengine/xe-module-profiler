@@ -115,8 +115,11 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminDeleteAddonConfig()
 	{
+		// 고급 삭제 옵션
+		$advanced = Context::get('advanced') == 'Y' ? TRUE : FALSE;
+
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$invalid_addon_config = $oProfilerAdminModel->getAddonConfigToBeDeleted();
+		$invalid_addon_config = $oProfilerAdminModel->getAddonConfigToBeDeleted($advanced);
 
 		// 애드온 설정 삭제
 		foreach($invalid_addon_config as $addon_config)
@@ -127,6 +130,12 @@ class profilerAdminController extends profiler
 			{
 				return $output;
 			}
+		}
+
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$redirectUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminAddonConfigList', 'page', Context::get('page'), 'advanced', Context::get('advanced'));
+			$this->setRedirectUrl($redirectUrl);
 		}
 	}
 }

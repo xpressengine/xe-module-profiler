@@ -264,10 +264,11 @@ class profilerAdminModel extends profiler
 		return $invalid_table_list;
 	}
 
-	function getAddonConfigToBeDeleted()
+	function getAddonConfigToBeDeleted($advanced = FALSE)
 	{
 		$oAddonAdminModel = getAdminModel('addon');
 		$addon_foreach = $oAddonAdminModel->getAddonList();
+		$oModuleModel = getModel('module');
 
 		foreach($addon_foreach as $list)
 		{
@@ -277,6 +278,8 @@ class profilerAdminModel extends profiler
 		$output = executeQueryArray('profiler.getAddonConfigList');
 		$addon_config = $output->data;
 
+		$module_list = $this->getModuleList();
+
 		foreach($addon_config as $config)
 		{
 			$addons_j_list[] = $config->addon;
@@ -284,7 +287,17 @@ class profilerAdminModel extends profiler
 			{
 				$invalid_addon_config[] = $config;
 			}
-
+			else
+			{
+				if($advanced === TRUE && $config->site_srl)
+				{
+					$addon_site_srl = $oModuleModel->getSiteInfo($config->site_srl);
+					if(!in_array($addon_site_srl->module, $module_list))
+					{
+						$invalid_addon_config[] = $config;
+					}
+				}
+			}
 		}
 
 		return $invalid_addon_config;
