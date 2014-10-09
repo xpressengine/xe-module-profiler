@@ -332,6 +332,7 @@ class profilerAdminModel extends profiler
 	}
 
 	function deleteTemporaryDocuments($documentType, $args = NULL)
+	{
 			case 'temporary':
 				$output = executeQuery('profiler.deleteTemporaryDocuments', $obj);
 				break;
