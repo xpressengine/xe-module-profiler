@@ -138,6 +138,16 @@ class profilerAdminController extends profiler
 			$this->setRedirectUrl($redirectUrl);
 		}
 	}
+
+	function procProfilerAdminGetTemporaryDocumentCount()
+	{
+
+	}
+
+	function procProfilerAdminDeleteTemporaryDocument()
+	{
+		
+	}
 }
 
 /* End of file profiler.admin.controller.php */

@@ -302,6 +302,55 @@ class profilerAdminModel extends profiler
 
 		return $invalid_addon_config;
 	}
+
+	function getTemporaryDocumentCount($DocumentType, $args = NULL)
+	{
+		$obj = new StdClass();
+		$obj->start_time = $args->document_start_time;
+		$obj->end_time = $args->document_end_time;
+
+		switch($DocumentType)
+		{
+			case 'temporary':
+				$output = executeQuery('profiler.getTemporaryDocumentCounts', $obj);
+				break;
+
+			case 'autosave':
+				$output = executeQuery('profiler.getAutosaveDocumentCounts', $obj);
+				break;
+
+			default:
+				return false;
+				break;
+		}
+
+		if(!$output->data)
+		{
+			$output->bool = false;
+		}
+		return $output;
+	}
+
+	function deleteTemporaryDocuments($documentType, $args = NULL)
+			case 'temporary':
+				$output = executeQuery('profiler.deleteTemporaryDocuments', $obj);
+				break;
+
+			case 'autosave':
+				$output = executeQuery('profiler.deleteAutosaveDocuments', $obj);
+				break;
+
+			default:
+				return false;
+				break;
+		}
+
+		if(!$output->data)
+		{
+			$output->data = false;
+		}
+		return $output;
+	}
 }
 
 /* End of file profiler.admin.model.php */
