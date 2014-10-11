@@ -28,7 +28,6 @@ class profilerAdminController extends profiler
 		$config->slowlog->time_addon = ($vars->slowlog_time_addon > 0) ? $vars->slowlog_time_addon : null;
 
 		$oModuleController->updateModuleConfig('profiler', $config);
-		$this->setMessage('success_updated');
 
 		$oInstallController = getController('install');
 		if(!$oInstallController->makeConfigFile())
@@ -36,11 +35,8 @@ class profilerAdminController extends profiler
 			return new Object(-1, 'msg_invalid_request');
 		}
 
-		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
-		{
-			$redirectUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig');
-			$this->setRedirectUrl($redirectUrl);
-		}
+		$this->setMessage('success_updated');
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig'));
 	}
 
 	function procProfilerAdminDeleteTrigger()
@@ -64,7 +60,7 @@ class profilerAdminController extends profiler
 		}
 
 		$this->setMessage('success_deleted');
-		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTriggerList', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTrigger', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
 	}
 
 	function procProfilerAdminDeleteModuleConfig()
@@ -84,7 +80,7 @@ class profilerAdminController extends profiler
 		}
 
 		$this->setMessage('success_deleted');
-		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfigList', 'page', Context::get('page')));
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfig', 'page', Context::get('page')));
 	}
 
 	/**
@@ -126,11 +122,8 @@ class profilerAdminController extends profiler
 			}
 		}
 
-		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
-		{
-			$redirectUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminAddonConfigList', 'page', Context::get('page'), 'advanced', Context::get('advanced'));
-			$this->setRedirectUrl($redirectUrl);
-		}
+		$this->setMessage('success_deleted');
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminAddonConfig', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
 	}
 
 	function procProfilerAdminGetTemporaryDocumentCount()
@@ -140,7 +133,7 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminDeleteTemporaryDocument()
 	{
-		
+
 	}
 
 	function procProfilerAdminTruncateSlowlog()

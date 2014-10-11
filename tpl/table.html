@@ -32,7 +32,7 @@
 			<li class="x_disabled"|cond="$page == $page_navigation->last_page"><a href="{getUrl('page', $page_navigation->last_page)}">{$lang->last_page} &raquo;</a></li>
 		</ul>
 	</form>
-	<form class="x_pull-right" style="margin-top:0" action="{Context::getUrl('')}" method="post">
+	<form class="x_pull-right" style="margin-top:0" action="{Context::getUrl('')}" method="post" onsubmit="if(!confirm('{$lang->msg_profiler_delete_table}')) return false">
 		<input type="hidden" name="module" value="profiler" />
 		<input type="hidden" name="act" value="procProfilerAdminDeleteTable" />
 		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/table/1" />

@@ -32,11 +32,11 @@ class profilerAdminView extends profiler
 		$t_slowlog = $oProfilerAdminModel->getStaticsSlowlog('trigger');
 		Context::set('t_slowlog', $t_slowlog);
 
-        $a_slowlog = $oProfilerAdminModel->getStaticsSlowlog('addon');
-        Context::set('a_slowlog', $a_slowlog);
+		$a_slowlog = $oProfilerAdminModel->getStaticsSlowlog('addon');
+		Context::set('a_slowlog', $a_slowlog);
 	}
 
-	function dispProfilerAdminTriggerList()
+	function dispProfilerAdminTrigger()
 	{
 		// 고급 삭제 옵션
 		$advanced = Context::get('advanced') == 'Y' ? TRUE : FALSE;
@@ -54,7 +54,7 @@ class profilerAdminView extends profiler
 		Context::set('page_navigation', $paging->page_navigation);
 	}
 
-	function dispProfilerAdminModuleConfigList()
+	function dispProfilerAdminModuleConfig()
 	{
 		// 삭제할 수 있는 모듈 설정 목록
 		$oProfilerAdminModel = getAdminModel('profiler');
@@ -84,7 +84,7 @@ class profilerAdminView extends profiler
 		Context::set('page_navigation', $paging->page_navigation);
 	}
 
-	function dispProfilerAdminAddonConfigList()
+	function dispProfilerAdminAddonConfig()
 	{
 		// 고급 삭제 옵션
 		$advanced = Context::get('advanced') == 'Y' ? TRUE : FALSE;

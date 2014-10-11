@@ -6,9 +6,9 @@
 		<action name="dispProfilerAdminDashboard" type="view" menu_name="profiler" menu_index="true" admin_index="true" />
 		<action name="dispProfilerAdminConfig" type="view" menu_name="profiler" />
 		<action name="dispProfilerAdminSlowlog" type="view" menu_name="profiler" />
-		<action name="dispProfilerAdminTriggerList" type="view" menu_name="profiler" />
-		<action name="dispProfilerAdminModuleConfigList" type="view" menu_name="profiler" />
-		<action name="dispProfilerAdminAddonConfigList" type="view" menu_name="profiler" />
+		<action name="dispProfilerAdminTrigger" type="view" menu_name="profiler" />
+		<action name="dispProfilerAdminModuleConfig" type="view" menu_name="profiler" />
+		<action name="dispProfilerAdminAddonConfig" type="view" menu_name="profiler" />
 		<action name="dispProfilerAdminTable" type="view" menu_name="profiler" />
 		<action name="procProfilerAdminInsertConfig" type="controller" ruleset="insertConfig" />
 		<action name="procProfilerAdminDeleteTrigger" type="controller" ruleset="deleteTrigger" />
