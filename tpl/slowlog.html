@@ -1,8 +1,8 @@
 <!--// HEADER -->
 <include target="./_header.html" />
 
-<div class="btnArea">
-	<button id="action-profiler-truncate-slowlog" class="x_btn x_btn-primary">로그 비우기</button>
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/slowlog/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 
 <h2>{$lang->cmd_profiler_slowlog_trigger}</h2>
@@ -52,3 +52,10 @@
 		</tr>
 	</tbody>
 </table>
+
+<form class="x_pull-right" action="{Context::getUrl('')}" method="post">
+	<input type="hidden" name="module" value="profiler" />
+	<input type="hidden" name="act" value="procProfilerAdminTruncateSlowlog" />
+	<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/slowlog/1" />
+	<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_delete}</button>
+</form>
