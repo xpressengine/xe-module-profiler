@@ -126,8 +126,8 @@ class profilerAdminModel extends profiler
 			case 'mysql_innodb':
 			case 'mysqli':
 			case 'mysqli_innodb':
-				$query[] = "SELECT table_name AS 'table_name'";
-				$query[] = 'FROM information_schema.tables';
+				$query[] = "SELECT TABLE_NAME AS 'table_name'";
+				$query[] = 'FROM information_schema.TABLES';
 				$query[] = 'WHERE table_schema = DATABASE()';
 				$query[] = "AND table_name LIKE '" . $oDB->prefix . "%'";
 				$query = implode(' ', $query);
