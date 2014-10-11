@@ -174,6 +174,13 @@ class profilerAdminController extends profiler
 
 		return new Object(0, 'success_updated');
 	}
+
+	/**
+	 * @brief
+	 */
+	function deleteTemporaryDocuments($document_type, $args = NULL)
+	{
+	}
 }
 
 /* End of file profiler.admin.controller.php */

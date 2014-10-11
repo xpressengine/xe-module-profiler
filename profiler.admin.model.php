@@ -316,14 +316,11 @@ class profilerAdminModel extends profiler
 		return $arrange_table_list;
 	}
 
-	function getTemporaryDocumentCount($DocumentType, $args = NULL)
+	/**
+	 * @brief
+	 */
+	function getTemporaryDocumentCount($document_type, $args = NULL)
 	{
-
-	}
-
-	function deleteTemporaryDocuments($documentType, $args = NULL)
-	{
-
 	}
 }
 

@@ -21,9 +21,13 @@
 		</tr>
 	</thead>
 	<tbody>
+		{@$enable_delete = FALSE}
 		<tr loop="$table_list=>$key,$table_info">
 			<td>
-				<label cond="$table_info->to_be_deleted" class="x_label x_label-warning">{$lang->notuse}</label>
+				<label cond="$table_info->to_be_deleted" class="x_label x_label-warning">
+					{@$enable_delete = TRUE}
+					{$lang->notuse}
+				</label>
 				{$table_info->table_name}
 			</td>
 			<td>{number_format($table_info->table_rows)}</td>
@@ -84,7 +88,7 @@
 		<input type="hidden" name="module" value="profiler" />
 		<input type="hidden" name="act" value="procProfilerAdminDeleteTable" />
 		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/table/1" />
-		<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_delete}</button>
+		<button class="x_btn x_btn-primary" type="submit" disabled="disabled"|cond="!$enable_delete">{$lang->cmd_delete}</button>
 	</form>
 </div>
 
