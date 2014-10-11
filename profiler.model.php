@@ -21,9 +21,8 @@ class profilerModel extends profiler
 		{
 			$oModuleModel = getModel('module');
 			$config = $oModuleModel->getModuleConfig('profiler');
-			$db_config = Context::getDBInfo();
 
-			$config->slowlog = ($db_config->slowlog) ? (object)$db_config->slowlog : new stdClass();
+			$config->slowlog = ($config->slowlog) ? $config->slowlog : new stdClass();
 
 			if(!$config->slowlog->enabled)
 			{

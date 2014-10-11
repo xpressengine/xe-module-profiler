@@ -21,25 +21,19 @@ class profilerAdminController extends profiler
 		$vars = Context::getRequestVars();
 		$section = $vars->_config_section;
 
-		if($section == 'general')
-		{
-			// @TODO 모듈 설정에 저장
-			$config = $oProfilerModel->getConfig();
-			$oModuleController->updateModuleConfig('profiler', $config);
-			$this->setMessage('success_updated');
-		}
-		else if($section == 'slowlog')
-		{
-			$db_info = Context::getDbInfo();
-			$db_info->slowlog['enabled'] = ($vars->slowlog_enabled == 'Y') ? 'Y' : 'N';
-			$db_info->slowlog['time_trigger'] = ($vars->slowlog_time_trigger > 0) ? $vars->slowlog_time_trigger : null;
-			$db_info->slowlog['time_addon'] = ($vars->slowlog_time_addon > 0) ? $vars->slowlog_time_addon : null;
+		$config = $oProfilerModel->getConfig();
+		if(!$config->slowlog) $config->slowlog = new stdClass();
+		$config->slowlog->enabled = ($vars->slowlog_enabled == 'Y') ? 'Y' : 'N';
+		$config->slowlog->time_trigger = ($vars->slowlog_time_trigger > 0) ? $vars->slowlog_time_trigger : null;
+		$config->slowlog->time_addon = ($vars->slowlog_time_addon > 0) ? $vars->slowlog_time_addon : null;
 
-			$oInstallController = getController('install');
-			if(!$oInstallController->makeConfigFile())
-			{
-				return new Object(-1, 'msg_invalid_request');
-			}
+		$oModuleController->updateModuleConfig('profiler', $config);
+		$this->setMessage('success_updated');
+
+		$oInstallController = getController('install');
+		if(!$oInstallController->makeConfigFile())
+		{
+			return new Object(-1, 'msg_invalid_request');
 		}
 
 		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
