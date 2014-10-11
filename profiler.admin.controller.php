@@ -60,7 +60,7 @@ class profilerAdminController extends profiler
 		}
 
 		$this->setMessage('success_deleted');
-		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTriggerList', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTrigger', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
 	}
 
 	function procProfilerAdminDeleteModuleConfig()
@@ -80,7 +80,7 @@ class profilerAdminController extends profiler
 		}
 
 		$this->setMessage('success_deleted');
-		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfigList', 'page', Context::get('page')));
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfig', 'page', Context::get('page')));
 	}
 
 	/**
@@ -123,7 +123,7 @@ class profilerAdminController extends profiler
 		}
 
 		$this->setMessage('success_deleted');
-		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminAddonConfigList', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminAddonConfig', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
 	}
 
 	function procProfilerAdminGetTemporaryDocumentCount()
@@ -133,7 +133,7 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminDeleteTemporaryDocument()
 	{
-		
+
 	}
 }
 
