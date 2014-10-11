@@ -43,13 +43,13 @@
 	</thead>
 	<tbody>
 		<tr loop="$t_slowlog->data => $log">
-		<td>{$log->caller}</td>
-		<td>{$log->called}</td>
-		<td>{$log->count_called}</td>
-		<td>{number_format($log->total_time, 6)}</td>
-		<td>{number_format($log->max_time, 6)}</td>
-		<td>{number_format($log->min_time, 6)}</td>
-		<td>{number_format($log->avg_time, 6)}</td>
+			<td>{$log->caller}</td>
+			<td>{$log->called}</td>
+			<td>{$log->count_called}</td>
+			<td>{number_format($log->total_time, 6)}</td>
+			<td>{number_format($log->max_time, 6)}</td>
+			<td>{number_format($log->min_time, 6)}</td>
+			<td>{number_format($log->avg_time, 6)}</td>
 		</tr>
 	</tbody>
 </table>
