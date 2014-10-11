@@ -1,0 +1,49 @@
+<!--// HEADER -->
+<include target="./_header.html" />
+<h2>{$lang->about_slowlog_trigger}</h2>
+<table class="x_table x_table-striped x_table-hover">
+	<thead>
+		<th>Caller</th>
+		<th>Called</th>
+		<th>Hit</th>
+		<th>Total time</th>
+		<th>Max</th>
+		<th>Min</th>
+		<th>Avg</th>
+	</thead>
+	<tbody>
+		<tr loop="$t_slowlog->data => $log">
+		<td>{$log->caller}</td>
+		<td>{$log->called}</td>
+		<td>{$log->count_called}</td>
+		<td>{number_format($log->total_time, 6)}</td>
+		<td>{number_format($log->max_time, 6)}</td>
+		<td>{number_format($log->min_time, 6)}</td>
+		<td>{number_format($log->avg_time, 6)}</td>
+		</tr>
+	</tbody>
+</table>
+<h2>{$lang->about_slowlog_addon}</h2>
+<table class="x_table x_table-striped x_table-hover">
+    <thead>
+    <th>Caller</th>
+    <th>Called</th>
+    <th>Hit</th>
+    <th>Total time</th>
+    <th>Max</th>
+    <th>Min</th>
+    <th>Avg</th>
+    </thead>
+    <tbody>
+    <tr loop="$a_slowlog->data => $log">
+        <td>{$log->caller}</td>
+        <td>{$log->called}</td>
+        <td>{$log->count_called}</td>
+        <td>{number_format($log->total_time, 6)}</td>
+        <td>{number_format($log->max_time, 6)}</td>
+        <td>{number_format($log->min_time, 6)}</td>
+        <td>{number_format($log->avg_time, 6)}</td>
+    </tr>
+    </tbody>
+</table>
+
