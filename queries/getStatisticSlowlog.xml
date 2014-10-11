@@ -19,9 +19,11 @@
 		<condition operation="equal" column="slowlog.hahs_id" var="hash_id" pipe="and" />
 		<condition operation="more" column="slowlog.logged_timestamp" var="start" pipe="and" />
 		<condition operation="less" column="slowlog.logged_timestamp" var="end" pipe="and" />
-
 	</conditions>
 	<groups>
 		<group column="slowlog.type_hash_id" />
 	</groups>
+	<navigation>
+		<index var="sort_index" default="called" order="asc" />
+	</navigation>
 </query>
