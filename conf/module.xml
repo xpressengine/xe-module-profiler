@@ -15,6 +15,7 @@
 		<action name="procProfilerAdminDeleteModuleConfig" type="controller" />
 		<action name="procProfilerAdminDeleteTable" type="controller" />
 		<action name="procProfilerAdminDeleteAddonConfig" type="controller" />
+		<action name="procProfilerAdminTruncateSlowlog" type="controller" />
 	</actions>
 	<menus>
 		<menu name="profiler" type="all">

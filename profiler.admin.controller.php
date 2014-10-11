@@ -142,6 +142,16 @@ class profilerAdminController extends profiler
 	{
 		
 	}
+
+	function procProfilerAdminTruncateSlowlog()
+	{
+		$cond = new stdClass();
+		$output = executeQuery('profiler.truncateSlowlog', $cond);
+
+		$this->setMessage('success_deleted');
+		$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminSlowlog');
+		$this->setRedirectUrl($redirectUrl);
+	}
 }
 
 /* End of file profiler.admin.controller.php */
