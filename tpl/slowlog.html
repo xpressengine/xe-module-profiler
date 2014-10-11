@@ -1,6 +1,7 @@
 <!--// HEADER -->
 <include target="./_header.html" />
 
+<!--// BODY -->
 <div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/slowlog/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
@@ -59,3 +60,6 @@
 	<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/slowlog/1" />
 	<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_delete}</button>
 </form>
+
+<!--// FOOTER -->
+<include target="./_footer.html" />
