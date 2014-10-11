@@ -21,19 +21,18 @@ class profilerAdminView extends profiler
 	function dispProfilerAdminConfig()
 	{
 		$oProfilerModel = getModel('profiler');
-		$config = $oProfilerModel->getConfig();
-		Context::set('config', $config);
+		$module_config = $oProfilerModel->getConfig();
+		Context::set('module_config', $module_config);
 	}
 
 	function dispProfilerAdminSlowlog()
 	{
 		$oProfilerAdminModel = getAdminModel('profiler');
-
-		$t_slowlog = $oProfilerAdminModel->getStaticsSlowlog('trigger');
-		Context::set('t_slowlog', $t_slowlog);
-
 		$a_slowlog = $oProfilerAdminModel->getStaticsSlowlog('addon');
+		$t_slowlog = $oProfilerAdminModel->getStaticsSlowlog('trigger');
+
 		Context::set('a_slowlog', $a_slowlog);
+		Context::set('t_slowlog', $t_slowlog);
 	}
 
 	function dispProfilerAdminTrigger()
@@ -73,8 +72,8 @@ class profilerAdminView extends profiler
 	{
 		// 삭제할 수 있는 테이블 목록
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$invalid_table_list = $oProfilerAdminModel->getTableToBeDeleted();
-		$paging = $oProfilerAdminModel->getPageNavigation($invalid_table_list, Context::get('page'));
+		$arrange_table_list = $oProfilerAdminModel->getTableToBeArranged();
+		$paging = $oProfilerAdminModel->getPageNavigation($arrange_table_list, Context::get('page'));
 
 		// 템플릿 엔진으로 값 전달
 		Context::set('total_count', $paging->total_count);

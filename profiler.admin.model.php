@@ -115,6 +115,10 @@ class profilerAdminModel extends profiler
 		return $module_list;
 	}
 
+	/**
+	 * @brief DB 상의 테이블 목록 반환
+	 * @return array
+	 */
 	function getTableList()
 	{
 		$table_list = array();
@@ -126,31 +130,29 @@ class profilerAdminModel extends profiler
 			case 'mysql_innodb':
 			case 'mysqli':
 			case 'mysqli_innodb':
-				$query[] = "SELECT TABLE_NAME AS 'table_name'";
-				$query[] = 'FROM information_schema.TABLES';
-				$query[] = 'WHERE table_schema = DATABASE()';
-				$query[] = "AND table_name LIKE '" . $oDB->prefix . "%'";
-				$query = implode(' ', $query);
-
+				$query = '
+					select table_name, engine, table_rows, data_length, index_length, data_free, table_collation
+					from information_schema.tables
+					where table_schema = database()
+					and table_name like "' . $oDB->prefix . '%"
+					order by table_name asc
+				';
 				$result = $oDB->_query($query);
-				$temp = $oDB->_fetch($result);
-
-				foreach($temp as $val)
-				{
-					$table_list[] = substr($val->table_name, strlen($oDB->prefix));
-				}
+				$table_list = $oDB->_fetch($result);
 				break;
+
 			/*
-			// 아래 쿼리문은 테스트 환경이 없어서 작성하지 못 함
-			// 차후에 테스트 환경을 구축해서 쿼리문 작성 요망
+			// @TODO MSSQL, CUBRID 쿼리문 작성
 			case 'mssql':
 				break;
 
 			case 'cubrid':
-				$query[] = "SELECT class_name AS 'table_name'";
-				$query[] = 'FROM db_class';
-				$query[] = "WHERE class_name LIKE '" . $oDB->prefix . "%'";
-
+				$query = '
+					select *
+					from db_class
+					where class_name like "' . $oDB->prefix . '%"
+				';
+				$result = $oDB->_query($query);
 				break;
 			*/
 		}
@@ -225,44 +227,9 @@ class profilerAdminModel extends profiler
 	}
 
 	/**
-	 * @brief 삭제해도 상관없는 테이블 목록 반환
+	 * @brief 삭제해도 상관없는 애드온 설정 목록 반환
 	 * @return array
 	 */
-	function getTableToBeDeleted()
-	{
-		$oDB = DB::getInstance();
-
-		// 설치되어 있는 모듈 목록
-		$module_list = $this->getModuleList();
-
-		// DB 상의 테이블 목록
-		$table_list = $this->getTableList();
-
-		// 실제 사용하고 있는 테이블 목록
-		$valid_table_list = array();
-		foreach($module_list as $key => $module_name)
-		{
-			$module_path = ModuleHandler::getModulePath($module_name);
-			if(file_exists(FileHandler::getRealPath($module_path . 'schemas')))
-			{
-				$table_files = FileHandler::readDir($module_path . 'schemas', '/(\.xml)$/');
-				for($i = 0; $i < count($table_files); $i++)
-				{
-					list($table_name) = explode('.', $table_files[$i]);
-					if($oDB->isTableExists($table_name))
-					{
-						$valid_table_list[] = $table_name;
-					}
-				}
-			}
-		}
-
-		// 삭제해도 상관없는 테이블 목록
-		$invalid_table_list = array_diff($table_list, $valid_table_list);
-
-		return $invalid_table_list;
-	}
-
 	function getAddonConfigToBeDeleted($advanced = FALSE)
 	{
 		$oAddonAdminModel = getAdminModel('addon');
@@ -297,6 +264,56 @@ class profilerAdminModel extends profiler
 		}
 
 		return $invalid_addon_config;
+	}
+
+	/**
+	 * @brief 정리해야 할 테이블 목록 반환
+	 * @return array
+	 */
+	function getTableToBeArranged()
+	{
+		$oDB = DB::getInstance();
+
+		// DB 상의 테이블 목록
+		$table_list = $this->getTableList();
+
+		// 설치되어 있는 모듈 목록
+		$module_list = $this->getModuleList();
+
+		// 실제 사용하고 있는 테이블 목록
+		$valid_table_list = array();
+		foreach($module_list as $module_name)
+		{
+			$module_path = ModuleHandler::getModulePath($module_name);
+			$schemas_path = $module_path . 'schemas';
+			if(file_exists(FileHandler::getRealPath($schemas_path)))
+			{
+				$table_files = FileHandler::readDir($schemas_path, '/(\.xml)$/');
+				for($i = 0; $i < count($table_files); $i++)
+				{
+					list($table_name) = explode('.', $table_files[$i]);
+					if($oDB->isTableExists($table_name))
+					{
+						$valid_table_list[] = $oDB->prefix . $table_name;
+					}
+				}
+			}
+		}
+
+		// 정리해야 할 테이블 목록
+		$arrange_table_list = array();
+		foreach($table_list as $table_info)
+		{
+			$table_info->to_be_deleted = !in_array($table_info->table_name, $valid_table_list);
+			$table_info->to_be_repaired = !!$table_info->data_free;
+
+			if($table_info->to_be_deleted || $table_info->to_be_repaired)
+			{
+				$arrange_table_list[] = $table_info;
+			}
+		}
+
+		return $arrange_table_list;
 	}
 
 	function getTemporaryDocumentCount($DocumentType, $args = NULL)

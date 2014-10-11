@@ -5,6 +5,58 @@
 		<value xml:lang="ko"><![CDATA[XE Profiler]]></value>
 		<value xml:lang="jp"><![CDATA[XE Profiler]]></value>
 	</item>
+	<item name="profiler_unit">
+		<item name="addon">
+			<value xml:lang="en"><![CDATA[Addon]]></value>
+			<value xml:lang="ko"><![CDATA[애드온]]></value>
+			<value xml:lang="jp"><![CDATA[アドオン]]></value>
+		</item>
+		<item name="module">
+			<value xml:lang="en"><![CDATA[Module]]></value>
+			<value xml:lang="ko"><![CDATA[모듈]]></value>
+			<value xml:lang="jp"><![CDATA[モジュール]]></value>
+		</item>
+		<item name="trigger">
+			<value xml:lang="en"><![CDATA[Trigger]]></value>
+			<value xml:lang="ko"><![CDATA[트리거]]></value>
+			<value xml:lang="jp"><![CDATA[トリガー]]></value>
+		</item>
+		<item name="table">
+			<value xml:lang="en"><![CDATA[Table]]></value>
+			<value xml:lang="ko"><![CDATA[테이블]]></value>
+			<value xml:lang="jp"><![CDATA[テーブル]]></value>
+		</item>
+		<item name="rows">
+			<value xml:lang="en"><![CDATA[Rows]]></value>
+			<value xml:lang="ko"><![CDATA[행]]></value>
+			<value xml:lang="jp"><![CDATA[行]]></value>
+		</item>
+		<item name="type">
+			<value xml:lang="en"><![CDATA[Type]]></value>
+			<value xml:lang="ko"><![CDATA[종류]]></value>
+			<value xml:lang="jp"><![CDATA[タイプ]]></value>
+		</item>
+		<item name="collation">
+			<value xml:lang="en"><![CDATA[Data Collation]]></value>
+			<value xml:lang="ko"><![CDATA[데이터정렬방식]]></value>
+			<value xml:lang="jp"><![CDATA[データの並べ替え]]></value>
+		</item>
+		<item name="size">
+			<value xml:lang="en"><![CDATA[Size]]></value>
+			<value xml:lang="ko"><![CDATA[크기]]></value>
+			<value xml:lang="jp"><![CDATA[サイズ]]></value>
+		</item>
+		<item name="overhead">
+			<value xml:lang="en"><![CDATA[Overhead]]></value>
+			<value xml:lang="ko"><![CDATA[오버헤드]]></value>
+			<value xml:lang="jp"><![CDATA[オーバーヘッド]]></value>
+		</item>
+		<item name="repair">
+			<value xml:lang="en"><![CDATA[Repair]]></value>
+			<value xml:lang="ko"><![CDATA[복구]]></value>
+			<value xml:lang="jp"><![CDATA[回復]]></value>
+		</item>
+	</item>
 	<item name="cmd_profiler_dashboard">
 		<value xml:lang="en"><![CDATA[Dashboard]]></value>
 		<value xml:lang="ko"><![CDATA[대시보드]]></value>
@@ -16,49 +68,39 @@
 		<value xml:lang="jp"><![CDATA[モジュール設定]]></value>
 	</item>
 	<item name="cmd_profiler_slowlog">
-		<value xml:lang="en"><![CDATA[Slow Log]]></value>
+		<value xml:lang="en"><![CDATA[Slowlog]]></value>
 		<value xml:lang="ko"><![CDATA[슬로우로그]]></value>
 		<value xml:lang="jp"><![CDATA[スローログ]]></value>
+	</item>
+	<item name="cmd_profiler_enable_slowlog">
+		<value xml:lang="en"><![CDATA[Enable Slowlog]]></value>
+		<value xml:lang="ko"><![CDATA[슬로우로그 활성화]]></value>
+		<value xml:lang="jp"><![CDATA[スローログ有効化]]></value>
 	</item>
 	<item name="cmd_profiler_arrange_triggers">
 		<value xml:lang="en"><![CDATA[Arrange Triggers]]></value>
 		<value xml:lang="ko"><![CDATA[트리거 정리]]></value>
 		<value xml:lang="jp"><![CDATA[トリガー整理]]></value>
 	</item>
+	<item name="cmd_profiler_arrange_module_config">
+		<value xml:lang="en"><![CDATA[Arrange Module Settings]]></value>
+		<value xml:lang="ko"><![CDATA[모듈 설정 정리]]></value>
+		<value xml:lang="jp"><![CDATA[モジュール設定整理]]></value>
+	</item>
+	<item name="cmd_profiler_arrange_addon_config">
+		<value xml:lang="en"><![CDATA[Arrange Addon Settings]]></value>
+		<value xml:lang="ko"><![CDATA[애드온 설정 정리]]></value>
+		<value xml:lang="jp"><![CDATA[アドオン設定整理]]></value>
+	</item>
+	<item name="cmd_profiler_arrange_table">
+		<value xml:lang="en"><![CDATA[Arrange Tables]]></value>
+		<value xml:lang="ko"><![CDATA[테이블 정리]]></value>
+		<value xml:lang="jp"><![CDATA[テーブル整理]]></value>
+	</item>
 	<item name="cmd_profiler_advanced">
 		<value xml:lang="en"><![CDATA[Advanced Delete]]></value>
 		<value xml:lang="ko"><![CDATA[고급 삭제]]></value>
 		<value xml:lang="jp"><![CDATA[高級削除]]></value>
-	</item>
-	<item name="cmd_profiler_arrange_module_config">
-		<value xml:lang="en"><![CDATA[]]></value>
-		<value xml:lang="ko"><![CDATA[모듈 설정 정리]]></value>
-		<value xml:lang="jp"><![CDATA[]]></value>
-	</item>
-	<item name="cmd_profiler_trigger_slowlog">
-		<value xml:lang="en"><![CDATA[SlowLog setting]]></value>
-		<value xml:lang="ko"><![CDATA[슬로우로그 기록 설정]]></value>
-		<value xml:lang="jp"><![CDATA[]]></value>
-	</item>
-	<item name="cmd_profiler_arrange_table">
-		<value xml:lang="en"><![CDATA[]]></value>
-		<value xml:lang="ko"><![CDATA[테이블 정리]]></value>
-		<value xml:lang="jp"><![CDATA[]]></value>
-	</item>
-	<item name="cmd_profiler_arrange_addon_config">
-		<value xml:lang="en"><![CDATA[]]></value>
-		<value xml:lang="ko"><![CDATA[애드온 설정 정리]]></value>
-		<value xml:lang="jp"><![CDATA[]]></value>
-	</item>
-	<item name="cmd_profiler_slowlog_addon">
-		<value xml:lang="en"><![CDATA[]]></value>
-		<value xml:lang="ko"><![CDATA[애드온 슬로우로그]]></value>
-		<value xml:lang="jp"><![CDATA[]]></value>
-	</item>
-	<item name="cmd_profiler_slowlog_trigger">
-		<value xml:lang="en"><![CDATA[]]></value>
-		<value xml:lang="ko"><![CDATA[트리거 슬로우로그]]></value>
-		<value xml:lang="jp"><![CDATA[]]></value>
 	</item>
 	<item name="about_profiler">
 		<value xml:lang="en"><![CDATA[]]></value>
@@ -80,19 +122,19 @@
 		<value xml:lang="ko"><![CDATA[삭제할 수 있는 모듈 설정이 없습니다.]]></value>
 		<value xml:lang="jp"><![CDATA[]]></value>
 	</item>
-	<item name="about_profiler_no_table">
-		<value xml:lang="en"><![CDATA[]]></value>
-		<value xml:lang="ko"><![CDATA[삭제할 수 있는 테이블이 없습니다.]]></value>
-		<value xml:lang="jp"><![CDATA[]]></value>
-	</item>
 	<item name="about_profiler_no_addon_config">
 		<value xml:lang="en"><![CDATA[]]></value>
 		<value xml:lang="ko"><![CDATA[삭제할 수 있는 애드온 설정이 없습니다.]]></value>
 		<value xml:lang="jp"><![CDATA[]]></value>
 	</item>
+	<item name="about_profiler_no_table">
+		<value xml:lang="en"><![CDATA[]]></value>
+		<value xml:lang="ko"><![CDATA[삭제할 수 있는 테이블이 없습니다.]]></value>
+		<value xml:lang="jp"><![CDATA[]]></value>
+	</item>
 	<item name="msg_profiler_delete_table">
 		<value xml:lang="en"><![CDATA[]]></value>
-		<value xml:lang="ko"><![CDATA[테이블을 삭제하면 복구할 수 없습니다. 정말로 정리하시겠습니까?]]></value>
+		<value xml:lang="ko"><![CDATA[사용하지 않는 테이블을 삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?]]></value>
 		<value xml:lang="jp"><![CDATA[]]></value>
 	</item>
 </lang>

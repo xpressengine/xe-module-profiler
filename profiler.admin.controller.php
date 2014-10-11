@@ -39,6 +39,14 @@ class profilerAdminController extends profiler
 		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig'));
 	}
 
+	function procProfilerAdminTruncateSlowlog()
+	{
+		$output = executeQuery('profiler.truncateSlowlog');
+
+		$this->setMessage('success_deleted');
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminSlowlog'));
+	}
+
 	function procProfilerAdminDeleteTrigger()
 	{
 		// 고급 삭제 옵션
@@ -83,24 +91,37 @@ class profilerAdminController extends profiler
 		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfig', 'page', Context::get('page')));
 	}
 
-	/**
-	 * @comment 테이블을 삭제하기 전에 강력한 경고문을 보여줄 것. 현재 구현되어 있지 않음
-	 */
 	function procProfilerAdminDeleteTable()
 	{
 		// 삭제할 테이블 목록 불러오기
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$invalid_table_list = $oProfilerAdminModel->getTableToBeDeleted();
+		$table_list = $oProfilerAdminModel->getTableToBeArranged();
 
 		// DB 테이블 삭제
 		$oDB = DB::getInstance();
-		foreach($invalid_table_list as $table_name)
+		foreach($table_list as $table_info)
 		{
-			$oDB->dropTable($table_name);
+			if($table_info->to_be_deleted === TRUE)
+			{
+				$oDB->dropTable(substr($table_info->table_name, strlen($oDB->prefix)));
+			}
 		}
 
 		$this->setMessage('success_deleted');
-		$this->setRedirectUrl(getNotEncodedUrl('module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
+	}
+
+	function procProfilerAdminRepairTable()
+	{
+		$table_name = Context::get('table_name');
+		$output = $this->repairTable($table_name);
+		if(!$output->toBool())
+		{
+			return $output;
+		}
+
+		$this->setMessage('success_updated');
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
 	}
 
 	function procProfilerAdminDeleteAddonConfig()
@@ -128,22 +149,30 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminGetTemporaryDocumentCount()
 	{
-
 	}
 
 	function procProfilerAdminDeleteTemporaryDocument()
 	{
-
 	}
 
-	function procProfilerAdminTruncateSlowlog()
+	/**
+	 * @brief 테이블 복구
+	 * @param string $table_name
+	 * @return object
+	 */
+	function repairTable($table_name)
 	{
-		$cond = new stdClass();
-		$output = executeQuery('profiler.truncateSlowlog', $cond);
+		// 테이블 이름은 string 형태만 허용
+		if(!is_string($table_name))
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
 
-		$this->setMessage('success_deleted');
-		$redirectUrl = getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminSlowlog');
-		$this->setRedirectUrl($redirectUrl);
+		$oDB = DB::getInstance();
+		$query = 'repair table ' . $table_name;
+		$result = $oDB->_query($query);
+
+		return new Object(0, 'success_updated');
 	}
 }
 

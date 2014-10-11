@@ -12,8 +12,8 @@
 	</caption>
 	<thead>
 		<tr>
-			<th scope="col" style="white-space:nowrap">Site srl</th>
-			<th scope="col" style="white-space:nowrap">Addon</th>
+			<th scope="col" style="white-space:nowrap">addon</th>
+			<th scope="col" style="white-space:nowrap">site_srl</th>
 			<th scope="col" style="white-space:nowrap">is_used</th>
 			<th scope="col" style="white-space:nowrap">is_used_m</th>
 			<th scope="col" style="white-space:nowrap">extra_vars</th>
@@ -21,8 +21,8 @@
 	</thead>
 	<tbody>
 		<tr loop="$addon_config_list=>$addon_config">
-			<td>{$addon_config->site_srl}</td>
 			<td>{$addon_config->addon}</td>
+			<td>{$addon_config->site_srl}</td>
 			<td>{$addon_config->is_used}</td>
 			<td>{$addon_config->is_used_m}</td>
 			<td><pre style="margin-bottom:0">{$addon_config->extra_vars}</pre></td>
