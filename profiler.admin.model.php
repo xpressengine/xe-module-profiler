@@ -286,15 +286,12 @@ class profilerAdminModel extends profiler
 			{
 				$invalid_addon_config[] = $config;
 			}
-			else
+			else if($advanced === TRUE && $config->site_srl)
 			{
-				if($advanced === TRUE && $config->site_srl)
+				$addon_site_srl = $oModuleModel->getSiteInfo($config->site_srl);
+				if(!in_array($addon_site_srl->module, $module_list))
 				{
-					$addon_site_srl = $oModuleModel->getSiteInfo($config->site_srl);
-					if(!in_array($addon_site_srl->module, $module_list))
-					{
-						$invalid_addon_config[] = $config;
-					}
+					$invalid_addon_config[] = $config;
 				}
 			}
 		}
