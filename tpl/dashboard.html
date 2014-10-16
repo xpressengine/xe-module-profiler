@@ -1,10 +1,85 @@
 <!--// HEADER -->
 <include target="./_header.html" />
-
+<load target="./js/highcharts/highcharts.js" />
+<script>
+	jQuery(function($) {
+		$('#slowlog-trigger-graph').highcharts({
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,//null,
+				plotShadow: false
+			},
+			title: {
+				text: '트리거'
+			},
+			tooltip: {
+				pointFormat: '{series.name}: <b>{point.y:.2f}초</b>'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: false,
+						format: '<b>{point.name}</b>: {point.y:.2f} 초',
+						style: {
+							color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+						}
+					},
+					showInLegend: false
+				}
+			},
+			series: [{
+				type: 'pie',
+				name: '실행 시간',
+				data: [
+					<block loop="$t_slowlog->data => $log">
+					['{$log->called}',   {$log->avg_time}],
+					</block>
+				]
+			}]
+		});
+		$('#slowlog-addon-graph').highcharts({
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,//null,
+				plotShadow: false
+			},
+			title: {
+				text: '애드온'
+			},
+			tooltip: {
+				pointFormat: '{series.name}: <b>{point.y:.2f}초</b>'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: false,
+					},
+					showInLegend: false
+				}
+			},
+			series: [{
+				type: 'pie',
+				name: '실행 시간',
+				data: [
+					<block loop="$a_slowlog->data => $log">
+					['{$log->called}',   {$log->avg_time}],
+					</block>
+				]
+			}]
+		});
+	});
+</script>
 <!--// BODY -->
 <div class="x_clearfix">
-<div class="x_span8">
-	<div id="slowlog-graph" style="height:300px">슬로우로그 그래프</div>
+<div class="x_span4">
+	<div id="slowlog-trigger-graph" style="height:300px">트리거 그래프</div>
+</div>
+<div class="x_span4">
+	<div id="slowlog-addon-graph" style="height:300px">애드온 그래프</div>
 </div>
 <div class="x_span4">
 	안내문...

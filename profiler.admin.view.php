@@ -16,6 +16,12 @@ class profilerAdminView extends profiler
 
 	function dispProfilerAdminDashboard()
 	{
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$a_slowlog = $oProfilerAdminModel->getStaticsSlowlog('addon');
+		$t_slowlog = $oProfilerAdminModel->getStaticsSlowlog('trigger');
+
+		Context::set('a_slowlog', $a_slowlog);
+		Context::set('t_slowlog', $t_slowlog);
 	}
 
 	function dispProfilerAdminConfig()
