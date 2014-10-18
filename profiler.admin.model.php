@@ -228,6 +228,7 @@ class profilerAdminModel extends profiler
 
 	/**
 	 * @brief 삭제해도 상관없는 애드온 설정 목록 반환
+	 * @param boolean $advanced
 	 * @return array
 	 */
 	function getAddonConfigToBeDeleted($advanced = FALSE)
