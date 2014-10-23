@@ -73,9 +73,12 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminDeleteModuleConfig()
 	{
+		// 고급 삭제 옵션
+		$advanced = Context::get('advanced') == 'Y' ? TRUE : FALSE;
+
 		// 삭제할 모듈 설정 목록 불러오기
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$invalid_module_config = $oProfilerAdminModel->getModuleConfigToBeDeleted();
+		$invalid_module_config = $oProfilerAdminModel->getModuleConfigToBeDeleted($advanced);
 
 		// 모듈 설정 삭제
 		foreach($invalid_module_config as $module_config)

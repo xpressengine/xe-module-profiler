@@ -204,7 +204,7 @@ class profilerAdminModel extends profiler
 	 * @brief 삭제해도 상관없는 모듈 설정 목록 반환
 	 * @return array
 	 */
-	function getModuleConfigToBeDeleted()
+	function getModuleConfigToBeDeleted($advanced = FALSE)
 	{
 		// DB 상의 모듈 설정 목록
 		$output = executeQueryArray('profiler.getModuleConfig');
@@ -220,6 +220,14 @@ class profilerAdminModel extends profiler
 			if(!in_array($config->module, $module_list))
 			{
 				$invalid_module_config[] = $config;
+			}
+			else if($advanced === TRUE && $config->site_srl)
+			{
+				$module_site_srl = $oModuleModel->getSiteInfo($config->site_srl);
+				if(!in_array($module_site_srl->module, $module_list))
+				{
+					$invalid_addon_config[] = $config;
+				}
 			}
 		}
 
