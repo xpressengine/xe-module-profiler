@@ -106,7 +106,7 @@ class profilerAdminController extends profiler
 		{
 			if($table_info->to_be_deleted === TRUE)
 			{
-				$oDB->dropTable(substr($table_info->table_name, strlen($oDB->prefix)));
+				$oDB->dropTable(substr($table_info->name, strlen($oDB->prefix)));
 			}
 		}
 
@@ -116,8 +116,9 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminRepairTable()
 	{
+		$oDB = DB::getInstance();
 		$table_name = Context::get('table_name');
-		$output = $this->repairTable($table_name);
+		$output = $this->repairTable(substr($table_name, strlen($oDB->prefix)));
 		if(!$output->toBool())
 		{
 			return $output;
@@ -165,17 +166,37 @@ class profilerAdminController extends profiler
 	 */
 	function repairTable($table_name)
 	{
-		// 테이블 이름은 string 형태만 허용
 		if(!is_string($table_name))
 		{
 			return new Object(-1, 'msg_invalid_request');
 		}
 
 		$oDB = DB::getInstance();
-		$query = 'repair table ' . $table_name;
-		$result = $oDB->_query($query);
+		switch($oDB->db_type)
+		{
+			case 'mysql':
+			case 'mysql_innodb':
+			case 'mysqli':
+			case 'mysqli_innodb':
+				// @TODO repair, analyze, optimize 상관관계 이해하기
+				$query = 'repair table ' . $oDB->prefix . $table_name;
+				$result = $oDB->_query($query);
+				break;
 
-		return new Object(0, 'success_updated');
+			// MSSQL 작성 포기
+			/*
+			case 'mssql':
+				break;
+			*/
+
+			// @TODO 쿼리문 작성
+			/*
+			case 'cubrid':
+				break;
+			*/
+		}
+
+		return new Object();
 	}
 
 	/**

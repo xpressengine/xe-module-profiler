@@ -81,11 +81,31 @@ class profilerAdminView extends profiler
 		$arrange_table_list = $oProfilerAdminModel->getTableToBeArranged();
 		$paging = $oProfilerAdminModel->getPageNavigation($arrange_table_list, Context::get('page'));
 
+		$oDB = DB::getInstance();
+		$column_list = array();
+		switch($oDB->db_type)
+		{
+			case 'mysql':
+			case 'mysql_innodb':
+			case 'mysqli':
+			case 'mysqli_innodb':
+				$column_list = array('name', 'type', 'collation', 'rows', 'size', 'overhead', 'repair');
+				break;
+
+			case 'mssql':
+				$column_list = array('name', 'rows', 'size', 'overhead');
+				break;
+
+			case 'cubrid':
+				break;
+		}
+
 		// 템플릿 엔진으로 값 전달
 		Context::set('total_count', $paging->total_count);
 		Context::set('total_page', $paging->total_page);
 		Context::set('page', $paging->page);
 		Context::set('table_list', $paging->data);
+		Context::set('column_list', $column_list);
 		Context::set('page_navigation', $paging->page_navigation);
 	}
 

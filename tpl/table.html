@@ -12,28 +12,28 @@
 	</caption>
 	<thead>
 		<tr>
-			<th scope="col">{$lang->profiler_unit->table}</th>
-			<th scope="col">{$lang->profiler_unit->rows}</th>
-			<th scope="col">{$lang->profiler_unit->type}</th>
-			<th scope="col">{$lang->profiler_unit->collation}</th>
-			<th scope="col">{$lang->profiler_unit->size}</th>
-			<th scope="col">{$lang->profiler_unit->overhead}</th>
+			<th cond="in_array('name', $column_list)" scope="col">{$lang->profiler_unit->table}</th>
+			<th cond="in_array('type', $column_list)" scope="col">{$lang->profiler_unit->type}</th>
+			<th cond="in_array('collation', $column_list)" scope="col">{$lang->profiler_unit->collation}</th>
+			<th cond="in_array('rows', $column_list)" scope="col">{$lang->profiler_unit->rows}</th>
+			<th cond="in_array('size', $column_list)" scope="col">{$lang->profiler_unit->size}</th>
+			<th cond="in_array('overhead', $column_list)" scope="col">{$lang->profiler_unit->overhead}</th>
 		</tr>
 	</thead>
 	<tbody>
 		{@$enable_delete = FALSE}
 		<tr loop="$table_list=>$key,$table_info">
-			<td>
+			<td cond="in_array('name', $column_list)">
 				<label cond="$table_info->to_be_deleted" class="x_label x_label-warning">
 					{@$enable_delete = TRUE}
 					{$lang->notuse}
 				</label>
-				{$table_info->table_name}
+				{$table_info->name}
 			</td>
-			<td>{number_format($table_info->table_rows)}</td>
-			<td>{$table_info->engine}</td>
-			<td>{$table_info->table_collation}</td>
-			<td>
+			<td cond="in_array('type', $column_list)">{$table_info->type}</td>
+			<td cond="in_array('collation', $column_list)">{$table_info->collation}</td>
+			<td cond="in_array('rows', $column_list)">{number_format($table_info->rows)}</td>
+			<td cond="in_array('size', $column_list)">
 				{@$size = $table_info->data_length + $table_info->index_length}
 				<!--@if($size < 1024)-->
 					{number_format($size)}B
@@ -45,8 +45,8 @@
 					{number_format($size / (1024 * 1024 * 1024))}GB
 				<!--@end-->
 			</td>
-			<td>
-				{@$size = $table_info->data_free}
+			<td cond="in_array('overhead', $column_list)">
+				{@$size = $table_info->overhead}
 				<block cond="$size">
 					<!--@if($size < 1024)-->
 						{number_format($size)}B
@@ -57,10 +57,10 @@
 					<!--@else-->
 						{number_format($size / (1024 * 1024 * 1024))}GB
 					<!--@end-->
-					<form class="x_inline" action="{Context::getUrl('')}" method="post">
+					<form cond="in_array('repair', $column_list)" class="x_inline" action="{Context::getUrl('')}" method="post">
 						<input type="hidden" name="module" value="profiler" />
 						<input type="hidden" name="act" value="procProfilerAdminRepairTable" />
-						<input type="hidden" name="table_name" value="{$table_info->table_name}" />
+						<input type="hidden" name="table_name" value="{$table_info->name}" />
 						<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/table/1" />
 						<button class="x_btn x_btn-mini" type="submit">{$lang->profiler_unit->repair}</button>
 					</form>

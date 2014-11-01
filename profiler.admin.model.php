@@ -130,29 +130,21 @@ class profilerAdminModel extends profiler
 			case 'mysql_innodb':
 			case 'mysqli':
 			case 'mysqli_innodb':
-				$query = '
-					select table_name, engine, table_rows, data_length, index_length, data_free, table_collation
-					from information_schema.tables
-					where table_schema = database()
-					and table_name like "' . $oDB->prefix . '%"
-					order by table_name asc
-				';
+				$query = "select table_name as name, engine as type, table_collation as collation, table_rows as rows, data_length, index_length, data_free as overhead from information_schema.tables where table_schema = database() and table_name like '" . $oDB->prefix . "%' order by table_name asc";
+				$result = $oDB->_query($query);
+				$table_list = $oDB->_fetch($result);
+				break;
+
+			// @TODO type, collation 값 출력 연구
+			case 'mssql':
+				$query = "select o.name as name, i.rows as rows, i.dpages * 8192 as data_length, (i.used - i.dpages) * 8192 as index_length, (i.reserved - i.used) * 8192 as overhead from sysindexes i, sysobjects o where i.indid in (0, 1, 255) and o.id = i.id and o.name like '" . $oDB->prefix . "%' and o.xtype = 'U' order by o.name asc";
 				$result = $oDB->_query($query);
 				$table_list = $oDB->_fetch($result);
 				break;
 
 			/*
-			// @TODO MSSQL, CUBRID 쿼리문 작성
-			case 'mssql':
-				break;
-
+			// @TODO 쿼리문 작성
 			case 'cubrid':
-				$query = '
-					select *
-					from db_class
-					where class_name like "' . $oDB->prefix . '%"
-				';
-				$result = $oDB->_query($query);
 				break;
 			*/
 		}
@@ -283,11 +275,11 @@ class profilerAdminModel extends profiler
 	{
 		$oDB = DB::getInstance();
 
-		// DB 상의 테이블 목록
-		$table_list = $this->getTableList();
-
 		// 설치되어 있는 모듈 목록
 		$module_list = $this->getModuleList();
+
+		// DB 상의 테이블 목록
+		$table_list = $this->getTableList();
 
 		// 실제 사용하고 있는 테이블 목록
 		$valid_table_list = array();
@@ -303,7 +295,7 @@ class profilerAdminModel extends profiler
 					list($table_name) = explode('.', $table_files[$i]);
 					if($oDB->isTableExists($table_name))
 					{
-						$valid_table_list[] = $oDB->prefix . $table_name;
+						$valid_table_list[] = $table_name;
 					}
 				}
 			}
@@ -313,8 +305,8 @@ class profilerAdminModel extends profiler
 		$arrange_table_list = array();
 		foreach($table_list as $table_info)
 		{
-			$table_info->to_be_deleted = !in_array($table_info->table_name, $valid_table_list);
-			$table_info->to_be_repaired = !!$table_info->data_free;
+			$table_info->to_be_deleted = !in_array(substr($table_info->name, strlen($oDB->prefix)), $valid_table_list);
+			$table_info->to_be_repaired = !!$table_info->overhead;
 
 			if($table_info->to_be_deleted || $table_info->to_be_repaired)
 			{
