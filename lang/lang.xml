@@ -56,6 +56,21 @@
 			<value xml:lang="ko"><![CDATA[복구]]></value>
 			<value xml:lang="jp"><![CDATA[回復]]></value>
 		</item>
+		<item name="called_position">
+			<value xml:lang="en"><![CDATA[Called Position]]></value>
+			<value xml:lang="ko"><![CDATA[호출된 위치]]></value>
+			<value xml:lang="jp"><![CDATA[呼び出し場所]]></value>
+		</item>
+		<item name="trigger_name">
+			<value xml:lang="en"><![CDATA[Trigger name]]></value>
+			<value xml:lang="ko"><![CDATA[트리거 이름]]></value>
+			<value xml:lang="jp"><![CDATA[トリガーの名前]]></value>
+		</item>
+		<item name="called_method">
+			<value xml:lang="en"><![CDATA[Called method]]></value>
+			<value xml:lang="ko"><![CDATA[호출 방법]]></value>
+			<value xml:lang="jp"><![CDATA[呼び出されたメソッド]]></value>
+		</item>
 	</item>
 	<item name="cmd_profiler_dashboard">
 		<value xml:lang="en"><![CDATA[Dashboard]]></value>

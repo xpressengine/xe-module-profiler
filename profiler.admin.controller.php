@@ -151,14 +151,6 @@ class profilerAdminController extends profiler
 		$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminAddonConfig', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
 	}
 
-	function procProfilerAdminGetTemporaryDocumentCount()
-	{
-	}
-
-	function procProfilerAdminDeleteTemporaryDocument()
-	{
-	}
-
 	/**
 	 * @brief 테이블 복구
 	 * @param string $table_name
@@ -197,6 +189,14 @@ class profilerAdminController extends profiler
 		}
 
 		return new Object();
+	}
+
+	function procProfilerAdminGetTemporaryDocumentCount()
+	{
+	}
+
+	function procProfilerAdminDeleteTemporaryDocument()
+	{
 	}
 
 	/**

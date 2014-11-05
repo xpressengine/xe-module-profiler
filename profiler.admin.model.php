@@ -23,7 +23,7 @@ class profilerAdminModel extends profiler
 	 */
 	function getPageNavigation($args = array(), $page = 1, $page_count = 10, $list_count = 20)
 	{
-		if ((int)$page)
+		if((int)$page)
 		{
 			$page = (int)$page;
 		}
@@ -31,7 +31,7 @@ class profilerAdminModel extends profiler
 		{
 			$page = 1;
 		}
-		if ((int)$page_count)
+		if((int)$page_count)
 		{
 			$page_count = (int)$page_count;
 		}
@@ -39,7 +39,7 @@ class profilerAdminModel extends profiler
 		{
 			$page_count = 10;
 		}
-		if ((int)$list_count)
+		if((int)$list_count)
 		{
 			$list_count = (int)$list_count;
 		}
@@ -49,7 +49,7 @@ class profilerAdminModel extends profiler
 		}
 
 		$total_count = count($args);
-		if ($total_count)
+		if($total_count)
 		{
 			$total_page = (int)(($total_count - 1) / $list_count) + 1;
 		}
@@ -64,7 +64,7 @@ class profilerAdminModel extends profiler
 		$output->page = $page;
 		$output->page_navigation = new PageHandler($total_count, $total_page, $page, $page_count);
 
-		if ($page > $total_page)
+		if($page > $total_page)
 		{
 			$output->data = array();
 		}
