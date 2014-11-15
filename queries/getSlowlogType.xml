@@ -1,0 +1,14 @@
+<query id="getSlowlogType" action="select">
+	<tables>
+		<table name="profiler_slowlog_type" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="hash_id" var="hash_id" notnull="notnull" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="called" order="asc" />
+	</navigation>
+</query>

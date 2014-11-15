@@ -1,0 +1,96 @@
+<!--// HEADER -->
+<include target="./_header.html" />
+
+<!--// BODY -->
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/table/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<table id="tableList" class="x_table">
+	<caption>
+		<strong>Total: {number_format($total_count)}, Page: {number_format($page)}/{number_format($total_page)}</strong>
+	</caption>
+	<thead>
+		<tr>
+			<th scope="col">{$lang->profiler_unit->table}</th>
+			<th scope="col">{$lang->profiler_unit->rows}</th>
+			<th scope="col">{$lang->profiler_unit->type}</th>
+			<th scope="col">{$lang->profiler_unit->collation}</th>
+			<th scope="col">{$lang->profiler_unit->size}</th>
+			<th scope="col">{$lang->profiler_unit->overhead}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{@$enable_delete = FALSE}
+		<tr loop="$table_list=>$key,$table_info">
+			<td>
+				<label cond="$table_info->to_be_deleted" class="x_label x_label-warning">
+					{@$enable_delete = TRUE}
+					{$lang->notuse}
+				</label>
+				{$table_info->table_name}
+			</td>
+			<td>{number_format($table_info->table_rows)}</td>
+			<td>{$table_info->engine}</td>
+			<td>{$table_info->table_collation}</td>
+			<td>
+				{@$size = $table_info->data_length + $table_info->index_length}
+				<!--@if($size < 1024)-->
+					{number_format($size)}B
+				<!--@elseif($size < 1024 * 1024)-->
+					{number_format($size / 1024, 1)}KB
+				<!--@elseif($size < 1024 * 1024 * 1024)-->
+					{number_format($size / (1024 * 1024), 1)}MB
+				<!--@else-->
+					{number_format($size / (1024 * 1024 * 1024))}GB
+				<!--@end-->
+			</td>
+			<td>
+				{@$size = $table_info->data_free}
+				<block cond="$size">
+					<!--@if($size < 1024)-->
+						{number_format($size)}B
+					<!--@elseif($size < 1024 * 1024)-->
+						{number_format($size / 1024, 1)}KB
+					<!--@elseif($size < 1024 * 1024 * 1024)-->
+						{number_format($size / (1024 * 1024), 1)}MB
+					<!--@else-->
+						{number_format($size / (1024 * 1024 * 1024))}GB
+					<!--@end-->
+					<form class="x_inline" action="{Context::getUrl('')}" method="post">
+						<input type="hidden" name="module" value="profiler" />
+						<input type="hidden" name="act" value="procProfilerAdminRepairTable" />
+						<input type="hidden" name="table_name" value="{$table_info->table_name}" />
+						<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/table/1" />
+						<button class="x_btn x_btn-mini" type="submit">{$lang->profiler_unit->repair}</button>
+					</form>
+				</block>
+			</td>
+		</tr>
+		<tr cond="!$table_list">
+			<td>{$lang->about_profiler_no_table}</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="x_clearfix">
+	<form class="x_pagination x_pull-left" style="margin-top:0" action="{Context::getUrl('')}" method="post" no-error-return-url="true">
+		<input loop="$param=>$key,$val" cond="!in_array($key, array('mid', 'vid', 'act'))" type="hidden" name="{$key}" value="{$val}" />
+		<ul>
+			<li class="x_disabled"|cond="$page == 1"><a href="{getUrl('page', '')}">&laquo; {$lang->first_page}</a></li>
+			<!--@while($page_no = $page_navigation->getNextPage())-->
+				<li class="x_active"|cond="$page_no == $page"><a href="{getUrl('page', $page_no)}">{$page_no}</a></li>
+			<!--@end-->
+			<li class="x_disabled"|cond="$page == $page_navigation->last_page"><a href="{getUrl('page', $page_navigation->last_page)}">{$lang->last_page} &raquo;</a></li>
+		</ul>
+	</form>
+	<form class="x_pull-right" style="margin-top:0" action="{Context::getUrl('')}" method="post" onsubmit="if(!confirm('{$lang->msg_profiler_delete_table}')) return false">
+		<input type="hidden" name="module" value="profiler" />
+		<input type="hidden" name="act" value="procProfilerAdminDeleteTable" />
+		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/table/1" />
+		<button class="x_btn x_btn-primary" type="submit" disabled="disabled"|cond="!$enable_delete">{$lang->cmd_delete}</button>
+	</form>
+</div>
+
+<!--// FOOTER -->
+<include target="./_footer.html" />

@@ -1,0 +1,11 @@
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
+@charset "UTF-8";
+
+.x .x_input-append .x_add-on, .x .x_input-prepend .x_add-on {
+	height:16px !important;
+	line-height:16px !important;
+}
+
+/* End of file profiler.admin.css */
+/* Location: ./modules/profiler/tpl/css/profiler.admin.css */

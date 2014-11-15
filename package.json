@@ -1,0 +1,22 @@
+{
+  "name": "XE-Profiler",
+  "version": "0.1.0",
+  "author": "NAVER",
+  "keywords": ["XpressEngine", "XE", "Profiler"],
+  "license": "GNU LGPL",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/xpressengine/xe-module-profiler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xpressengine/xe-module-profiler/issues"
+  },
+  "devDependencies": {
+    "grunt": ">0.4.0",
+    "grunt-phplint": "0.0.5"
+  },
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "grunt"
+  }
+}

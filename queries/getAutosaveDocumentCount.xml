@@ -1,0 +1,12 @@
+<query id="getAutosaveDocumentCount" action="select">
+	<tables>
+		<table name="editor_autosave" />
+	</tables>
+	<columns>
+		<column name="COUNT(*)" />
+	</columns>
+	<conditions>
+		<condition operation="more" column="regdate" var="" />
+		<condition operation="less" column="regdate" var="" />
+	</conditions>
+</query>

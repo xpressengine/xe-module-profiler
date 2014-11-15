@@ -1,0 +1,10 @@
+<query id="insertSlowlog" action="insert">
+	<tables>
+		<table name="profiler_slowlog" />
+	</tables>
+	<columns>
+		<column name="type_hash_id" var="type_hash_id" notnull="notnull" />
+		<column name="elapsed_time" var="elapsed_time" notnull="notnull" />
+		<column name="logged_timestamp" var="logged_timestamp" notnull="notnull" />
+	</columns>
+</query>

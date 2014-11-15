@@ -1,0 +1,6 @@
+<query id="truncateSlowlog" action="delete">
+	<tables>
+		<table name="profiler_slowlog" />
+	</tables>
+	<conditions />
+</query>

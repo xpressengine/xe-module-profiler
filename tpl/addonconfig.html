@@ -1,0 +1,67 @@
+<!--// HEADER -->
+<include target="./_header.html" />
+
+<!--// BODY -->
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/addonconfiglist/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<table id="addonConfigList" class="x_table x_table-striped x_table-hover">
+	<caption>
+		<strong>Total: {number_format($total_count)}, Page: {number_format($page)}/{number_format($total_page)}</strong>
+	</caption>
+	<thead>
+		<tr>
+			<th scope="col" style="white-space:nowrap">addon</th>
+			<th scope="col" style="white-space:nowrap">site_srl</th>
+			<th scope="col" style="white-space:nowrap">is_used</th>
+			<th scope="col" style="white-space:nowrap">is_used_m</th>
+			<th scope="col" style="white-space:nowrap">extra_vars</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr loop="$addon_config_list=>$addon_config">
+			<td>{$addon_config->addon}</td>
+			<td>{$addon_config->site_srl}</td>
+			<td>{$addon_config->is_used}</td>
+			<td>{$addon_config->is_used_m}</td>
+			<td><pre style="margin-bottom:0">{$addon_config->extra_vars}</pre></td>
+		</tr>
+		<tr cond="!$addon_config_list">
+			<td>{$lang->about_profiler_no_addon_config}</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="x_clearfix">
+	<form class="x_pagination x_pull-left" style="margin-top:0" action="{Context::getUrl('')}" method="post" no-error-return-url="true">
+		<input loop="$param=>$key,$val" cond="!in_array($key, array('mid', 'vid', 'act'))" type="hidden" name="{$key}" value="{$val}" />
+		<ul>
+			<li class="x_disabled"|cond="$page == 1"><a href="{getUrl('page', '')}">&laquo; {$lang->first_page}</a></li>
+			<!--@while($page_no = $page_navigation->getNextPage())-->
+				<li class="x_active"|cond="$page_no == $page"><a href="{getUrl('page', $page_no)}">{$page_no}</a></li>
+			<!--@end-->
+			<li class="x_disabled"|cond="$page == $page_navigation->last_page"><a href="{getUrl('page', $page_navigation->last_page)}">{$lang->last_page} &raquo;</a></li>
+		</ul>
+	</form>
+	<form class="x_pull-right" style="margin-top:0" action="{Context::getUrl('')}" method="post">
+		<input type="hidden" name="module" value="profiler" />
+		<input type="hidden" name="act" value="procProfilerAdminDeleteAddonConfig" />
+		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/addonconfiglist/1" />
+		<label class="x_inline" for="advanced"><input type="checkbox" name="advanced" id="advanced" value="Y" checked="checked"|cond="$advanced == 'Y'" /> {$lang->cmd_profiler_advanced}</label>
+		<button class="x_btn x_btn-primary" type="submit" disabled="disabled"|cond="!$addon_config_list">{$lang->cmd_delete}</button>
+	</form>
+</div>
+
+<script>
+(function($)
+{
+	$("#advanced").change(function()
+	{
+		window.location.href = "{getNotEncodedUrl('advanced', $advanced == 'Y' ? NULL : 'Y')}";
+	});
+})(jQuery);
+</script>
+
+<!--// FOOTER -->
+<include target="./_footer.html" />

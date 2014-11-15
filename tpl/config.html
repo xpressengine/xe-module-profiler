@@ -1,0 +1,56 @@
+<!--// HEADER -->
+<include target="./_header.html" />
+
+<!--// BODY -->
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/config/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<section class="section">
+	<h1>{$lang->cmd_profiler_slowlog}</h1>
+	<form method="post" class="x_form-horizontal" action="./">
+		<input type="hidden" name="module" value="profiler">
+		<input type="hidden" name="act" value="procProfilerAdminInsertConfig">
+		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/config/1" />
+		<input type="hidden" name="_config_section" value="slowlog">
+
+		<div class="x_control-group">
+			<div class="x_control-label">{$lang->cmd_profiler_enable_slowlog}</div>
+			<div class="x_controls">
+				<label for="slowlog_enabled_y" class="x_inline checked">
+					<input type="radio" checked="checked"|cond="$module_config->slowlog->enabled == 'Y'" value="Y" id="slowlog_enabled_y" name="slowlog_enabled"> {$lang->use}
+				</label>
+				<label for="slowlog_enabled_n" class="x_inline">
+					<input type="radio" value="N" checked="checked"|cond="$module_config->slowlog->enabled == 'N'" id="slowlog_enabled_n" name="slowlog_enabled"> {$lang->notuse}
+				</label>
+				<p class="x_help-block">{$lang->about_profiler_slowlog_setting}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<div class="x_control-label">{$lang->profiler_unit->addon}</div>
+			<div class="x_controls">
+				<div class="x_input-append">
+					<input type="number" step="any" value="{$module_config->slowlog->time_addon}" name="slowlog_time_addon" size="7">
+					<span class="x_add-on">{$lang->unit_sec}</span>
+				</div>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<div class="x_control-label">{$lang->profiler_unit->trigger}</div>
+			<div class="x_controls">
+				<div class="x_input-append">
+					<input type="number" step="any" value="{$module_config->slowlog->time_trigger}" name="slowlog_time_trigger" size="7">
+					<span class="x_add-on">{$lang->unit_sec}</span>
+				</div>
+			</div>
+		</div>
+		<div class="x_clearfix btnArea">
+			<div class="x_pull-right">
+				<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_registration}</button>
+			</div>
+		</div>
+	</form>
+</section>
+
+<!--// FOOTER -->
+<include target="./_footer.html" />

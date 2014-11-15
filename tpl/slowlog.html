@@ -1,0 +1,65 @@
+<!--// HEADER -->
+<include target="./_header.html" />
+
+<!--// BODY -->
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/slowlog/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<h2>{$lang->profiler_unit->addon}</h2>
+<table class="x_table x_table-striped x_table-hover">
+	<thead>
+		<th>Caller</th>
+		<th>Called</th>
+		<th>Hit</th>
+		<th>Total time</th>
+		<th>Max</th>
+		<th>Min</th>
+		<th>Avg</th>
+	</thead>
+	<tbody>
+		<tr loop="$a_slowlog->data => $log">
+			<td>{$log->caller}</td>
+			<td>{$log->called}</td>
+			<td>{$log->count_called}</td>
+			<td>{number_format($log->total_time, 6)}</td>
+			<td>{number_format($log->max_time, 6)}</td>
+			<td>{number_format($log->min_time, 6)}</td>
+			<td>{number_format($log->avg_time, 6)}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h2>{$lang->profiler_unit->trigger}</h2>
+<table class="x_table x_table-striped x_table-hover">
+	<thead>
+		<th>Caller</th>
+		<th>Called</th>
+		<th>Hit</th>
+		<th>Total time</th>
+		<th>Max</th>
+		<th>Min</th>
+		<th>Avg</th>
+	</thead>
+	<tbody>
+		<tr loop="$t_slowlog->data => $log">
+			<td>{$log->caller}</td>
+			<td>{$log->called}</td>
+			<td>{$log->count_called}</td>
+			<td>{number_format($log->total_time, 6)}</td>
+			<td>{number_format($log->max_time, 6)}</td>
+			<td>{number_format($log->min_time, 6)}</td>
+			<td>{number_format($log->avg_time, 6)}</td>
+		</tr>
+	</tbody>
+</table>
+
+<form class="x_pull-right" action="{Context::getUrl('')}" method="post">
+	<input type="hidden" name="module" value="profiler" />
+	<input type="hidden" name="act" value="procProfilerAdminTruncateSlowlog" />
+	<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/slowlog/1" />
+	<button class="x_btn x_btn-primary" type="submit" disabled="disabled"|cond="!$a_slowlog->data && !$t_slowlog->data">{$lang->cmd_delete}</button>
+</form>
+
+<!--// FOOTER -->
+<include target="./_footer.html" />
