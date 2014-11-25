@@ -23,32 +23,23 @@ class profilerAdminModel extends profiler
 	 */
 	function getPageNavigation($args = array(), $page = 1, $page_count = 10, $list_count = 20)
 	{
-		if((int)$page)
-		{
-			$page = (int)$page;
-		}
-		else
+		$page = (int)$page;
+		$page_count = (int)$page_count;
+		$list_count = (int)$list_count;
+		$total_count = count($args);
+
+		if(!$page)
 		{
 			$page = 1;
 		}
-		if((int)$page_count)
-		{
-			$page_count = (int)$page_count;
-		}
-		else
+		if(!$page_count)
 		{
 			$page_count = 10;
 		}
-		if((int)$list_count)
-		{
-			$list_count = (int)$list_count;
-		}
-		else
+		if(!$list_count)
 		{
 			$list_count = 20;
 		}
-
-		$total_count = count($args);
 		if($total_count)
 		{
 			$total_page = (int)(($total_count - 1) / $list_count) + 1;

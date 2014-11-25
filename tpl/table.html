@@ -57,7 +57,7 @@
 					<!--@else-->
 						{number_format($size / (1024 * 1024 * 1024))}GB
 					<!--@end-->
-					<form cond="in_array('repair', $column_list)" class="x_inline" action="{Context::getUrl('')}" method="post">
+					<form cond="in_array('repair', $column_list)" class="x_inline" action="{getUrl('')}" method="post">
 						<input type="hidden" name="module" value="profiler" />
 						<input type="hidden" name="act" value="procProfilerAdminRepairTable" />
 						<input type="hidden" name="table_name" value="{$table_info->name}" />
@@ -68,7 +68,7 @@
 			</td>
 		</tr>
 		<tr cond="!$table_list">
-			<td>{$lang->about_profiler_no_table}</td>
+			<td>{$lang->msg_profiler_no_table}</td>
 		</tr>
 	</tbody>
 </table>

@@ -1,106 +1,104 @@
 <!--// HEADER -->
 <include target="./_header.html" />
+<load target="./css/dashboard.admin.css" />
 <load target="./js/highcharts/highcharts.js" />
+<load target="./js/highcharts/modules/exporting.js" />
+<load target="./js/highcharts/themes/grid-light.js" />
+<load target="./js/dashboard.admin.js" />
 <script>
-	jQuery(function($) {
-		$('#slowlog-trigger-graph').highcharts({
-			chart: {
-				plotBackgroundColor: null,
-				plotBorderWidth: null,//null,
-				plotShadow: false
+(function(global, $) {
+	var profiler = global.profiler = {},
+		tgd = profiler.tgd = [],
+		agd = profiler.agd = [],
+		lang = {
+			unit_sec: "{$lang->unit_sec}",
+			profiler_unit: {
+				trigger: "{$lang->profiler_unit->trigger}",
+				addon: "{$lang->profiler_unit->addon}"
 			},
-			title: {
-				text: '트리거'
-			},
-			tooltip: {
-				pointFormat: '{series.name}: <b>{point.y:.2f}초</b>'
-			},
-			plotOptions: {
-				pie: {
-					allowPointSelect: true,
-					cursor: 'pointer',
-					dataLabels: {
-						enabled: false,
-						format: '<b>{point.name}</b>: {point.y:.2f} 초',
-						style: {
-							color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-						}
-					},
-					showInLegend: false
-				}
-			},
-			series: [{
-				type: 'pie',
-				name: '실행 시간',
-				data: [
-					<block loop="$t_slowlog->data => $log">
-					['{$log->called}',   {$log->avg_time}],
-					</block>
-				]
-			}]
-		});
-		$('#slowlog-addon-graph').highcharts({
-			chart: {
-				plotBackgroundColor: null,
-				plotBorderWidth: null,//null,
-				plotShadow: false
-			},
-			title: {
-				text: '애드온'
-			},
-			tooltip: {
-				pointFormat: '{series.name}: <b>{point.y:.2f}초</b>'
-			},
-			plotOptions: {
-				pie: {
-					allowPointSelect: true,
-					cursor: 'pointer',
-					dataLabels: {
-						enabled: false,
-					},
-					showInLegend: false
-				}
-			},
-			series: [{
-				type: 'pie',
-				name: '실행 시간',
-				data: [
-					<block loop="$a_slowlog->data => $log">
-					['{$log->called}',   {$log->avg_time}],
-					</block>
-				]
-			}]
-		});
-	});
+			cmd_profiler_runtime: "{$lang->cmd_profiler_runtime}"
+		}
+	<!--@foreach($t_slowlog->data as $log)-->
+		tgd.push(["{$log->called}", {$log->avg_time}]);
+	<!--@end-->
+	<!--@foreach($a_slowlog->data as $log)-->
+		agd.push(["{$log->called}", {$log->avg_time}]);
+	<!--@end-->
+	$.extend(global.xe.lang, lang);
+})(this, jQuery);
 </script>
+
 <!--// BODY -->
 <div class="x_clearfix">
 	<div class="x_span4">
-		<div id="slowlog-trigger-graph" style="height:300px">트리거 그래프</div>
+		<div id="slowlog-trigger-graph">
+		</div>
 	</div>
 	<div class="x_span4">
-		<div id="slowlog-addon-graph" style="height:300px">애드온 그래프</div>
+		<div id="slowlog-addon-graph">
+		</div>
 	</div>
 	<div class="x_span4">
-		<h2 style="border-bottom:1px solid #999;">안내문...</h2>
-		<p>1. 프로파일러 모듈은 현제 베타 버전입니다.</br></p>
-		<p>2. 지운 모듈의 설정 및 테이블을 정리 할 수 있습니다.</br></p>
-		<p>3. 애드온과 트리거와 같은 사이트 속도에 영향을 주고 있는 모듈 및 애드온을 찾아낼 수 있습니다.</br></p>
-		<p>4. 테이블 정리 및 설정 정리 옵션을 이용하시기 전에, 다시한번 확인하시고 이용 바랍니다.</br></p>
+		<p class="transition colorset-1">XE 프로파일러 모듈은 베타 버전입니다.</p>
+		<p class="transition colorset-2">사용하지 않는 모듈 또는 애드온 설정, 테이블을 정리할 수 있습니다.</p>
+		<p class="transition colorset-3">슬로우로그 분석을 통해 사이트 속도에 영향을 주고 있는 모듈 또는 애드온을 찾아낼 수 있습니다.</p>
+		<p class="transition colorset-4">XE 프로파일러 모듈의 기능을 이용하기 전에 유의사항을 다시 한 번 확인해주세요.</p>
 	</div>
 </div>
-<div class="x_span3" style="background:#F0F0F0">
-	슬로우로그 정리
-</div>
-<div class="x_span3" style="background:#F0F0F0">
-	트리거 정리
-</div>
-<div class="x_span3" style="background:#F0F0F0">
-	모듈 설정 정리<br />
-	애드온 설정 정리
-</div>
-<div class="x_span3" style="background:#F0F0F0">
-	테이블 정리
+<div class="x_clearfix dashboard-wrapper">
+	<div class="x_span3">
+		<form class="transition colorset-1" action="{Context::getUrl('')}" method="post">
+			<input type="hidden" name="module" value="profiler" />
+			<input type="hidden" name="act" value="procProfilerAdminTruncateSlowlog" />
+			<input type="hidden" name="success_return_url" value="{getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminDashboard')}" />
+			<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/dashboard/1" />
+			<p cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/dashboard/1'" class="dashboard-message">{$XE_VALIDATOR_MESSAGE}</p>
+			<p>{$lang->about_profiler_arrange_slowlog}</p>
+			<button type="submit" class="transition dashboard-trigger">{$lang->cmd_profiler_arrange_slowlog}</button>
+		</form>
+	</div>
+	<div class="x_span3">
+		<form class="transition colorset-2" action="{Context::getUrl('')}" method="post">
+			<input type="hidden" name="module" value="profiler" />
+			<input type="hidden" name="act" value="procProfilerAdminDeleteTrigger" />
+			<input type="hidden" name="success_return_url" value="{getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminDashboard')}" />
+			<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/dashboard/2" />
+			<p cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/dashboard/2'" class="dashboard-message">{$XE_VALIDATOR_MESSAGE}</p>
+			<p>{$lang->about_profiler_arrange_triggers}</p>
+			<button type="submit" class="transition dashboard-trigger">{$lang->cmd_profiler_arrange_triggers}</button>
+		</form>
+	</div>
+	<div class="x_span3">
+		<form class="transition colorset-3" action="{Context::getUrl('')}" method="post">
+			<input type="hidden" name="module" value="profiler" />
+			<input type="hidden" name="act" value="procProfilerAdminDeleteModuleConfig" />
+			<input type="hidden" name="success_return_url" value="{getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminDashboard')}" />
+			<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/dashboard/3" />
+			<p cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/dashboard/3'" class="dashboard-message">{$XE_VALIDATOR_MESSAGE}</p>
+			<p>{$lang->about_profiler_arrange_module_config}</p>
+			<button type="submit" class="transition dashboard-trigger">{$lang->cmd_profiler_arrange_module_config}</button>
+		</form>
+		<form class="transition colorset-3" action="{Context::getUrl('')}" method="post">
+			<input type="hidden" name="module" value="profiler" />
+			<input type="hidden" name="act" value="procProfilerAdminDeleteAddonConfig" />
+			<input type="hidden" name="success_return_url" value="{getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminDashboard')}" />
+			<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/dashboard/4" />
+			<p cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/dashboard/4'" class="dashboard-message">{$XE_VALIDATOR_MESSAGE}</p>
+			<p>{$lang->about_profiler_arrange_addon_config}</p>
+			<button type="submit" class="transition dashboard-trigger">{$lang->cmd_profiler_arrange_addon_config}</button>
+		</form>
+	</div>
+	<div class="x_span3">
+		<form class="transition colorset-4" action="{Context::getUrl('')}" method="post" onsubmit="if(!confirm('{$lang->msg_profiler_delete_table}')) return false">
+			<input type="hidden" name="module" value="profiler" />
+			<input type="hidden" name="act" value="procProfilerAdminDeleteTable" />
+			<input type="hidden" name="success_return_url" value="{getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminDashboard')}" />
+			<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/dashboard/5" />
+			<p cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/dashboard/5'" class="dashboard-message">{$XE_VALIDATOR_MESSAGE}</p>
+			<p>{$lang->about_profiler_arrange_table}</p>
+			<button type="submit" class="transition dashboard-trigger">{$lang->cmd_profiler_arrange_table}</button>
+		</form>
+	</div>
 </div>
 
 <!--// FOOTER -->

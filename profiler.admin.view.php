@@ -66,7 +66,7 @@ class profilerAdminView extends profiler
 
 		// 삭제할 수 있는 모듈 설정 목록
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$invalid_module_config = $oProfilerAdminModel->getModuleConfigToBeDeleted();
+		$invalid_module_config = $oProfilerAdminModel->getModuleConfigToBeDeleted($advanced);
 		$paging = $oProfilerAdminModel->getPageNavigation($invalid_module_config, Context::get('page'));
 
 		// 템플릿 엔진으로 값 전달
