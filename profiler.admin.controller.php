@@ -22,7 +22,10 @@ class profilerAdminController extends profiler
 		$section = $vars->_config_section;
 
 		$config = $oProfilerModel->getConfig();
-		if(!$config->slowlog) $config->slowlog = new stdClass();
+		if(!$config->slowlog)
+		{
+			$config->slowlog = new stdClass();
+		}
 		$config->slowlog->enabled = ($vars->slowlog_enabled == 'Y') ? 'Y' : 'N';
 		$config->slowlog->time_trigger = ($vars->slowlog_time_trigger > 0) ? $vars->slowlog_time_trigger : null;
 		$config->slowlog->time_addon = ($vars->slowlog_time_addon > 0) ? $vars->slowlog_time_addon : null;
@@ -107,7 +110,7 @@ class profilerAdminController extends profiler
 		{
 			$addon_name->addon = $addon_config->addon;
 			$output = executeQuery('profiler.deleteAddonConfig', $addon_name);
-			if (!$output->toBool())
+			if(!$output->toBool())
 			{
 				return $output;
 			}

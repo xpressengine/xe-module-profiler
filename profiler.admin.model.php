@@ -32,14 +32,17 @@ class profilerAdminModel extends profiler
 		{
 			$page = 1;
 		}
+
 		if(!$page_count)
 		{
 			$page_count = 10;
 		}
+
 		if(!$list_count)
 		{
 			$list_count = 20;
 		}
+
 		if($total_count)
 		{
 			$total_page = (int)(($total_count - 1) / $list_count) + 1;
