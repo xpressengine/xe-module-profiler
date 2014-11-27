@@ -1,6 +1,11 @@
 /* Copyright (C) NAVER <http://www.navercorp.com> */
 
 jQuery(function($) {
+	Highcharts.setOptions({
+		credits: {
+			enabled: false
+		}
+	});
 	Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
 		return {
 			radialGradient: {
@@ -89,7 +94,7 @@ jQuery(function($) {
 		}
 	});
 
-	setTimeout(function() {$(".dashboard-message").fadeOut(1000)}, 2500);
+	setTimeout(function() {$(".dashboard-message").fadeOut(1000);}, 2500);
 });
 
 /* End of file */
