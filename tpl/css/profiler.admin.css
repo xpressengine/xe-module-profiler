@@ -1,11 +1,10 @@
-/* Copyright (C) NAVER <http://www.navercorp.com> */
-
 @charset "UTF-8";
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 .x .x_input-append .x_add-on,
 .x .x_input-prepend .x_add-on {
-	height:16px !important;
-	line-height:16px !important;
+	height: 16px !important;
+	line-height: 16px !important;
 }
 
 /* End of file */
