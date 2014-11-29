@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/* Copyright (C) NAVER <http: //www.navercorp.com> */
+
+#xe-debugbar {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 100%;
+}
+
+#xe-debugbar .handle {
+	float: right;
+	width: 30px;
+	z-index: 91000;
+}
+
+#xe-debugbar .side-panel {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin-right: 30px;
+	width: 250px;
+	background: green;
+}
+#xe-debugbar .main-panel {
+	display: none;
+	margin-right: 280px;
+	width: auto;
+	background: red;
+}

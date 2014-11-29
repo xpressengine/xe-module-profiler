@@ -10,7 +10,8 @@
 class profiler extends ModuleObject
 {
 	private $triggers = array(
-		array('XE.writeSlowlog', 'profiler', 'controller', 'triggerWriteSlowlog', 'after')
+		array('XE.writeSlowlog', 'profiler', 'controller', 'triggerWriteSlowlog', 'after'),
+		array('display', 'profiler', 'controller', 'triggerBeforeDisplay', 'before')
 	);
 
 	function moduleInstall()

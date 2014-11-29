@@ -76,6 +76,18 @@ class profilerController extends profiler
 			return $output;
 		}
 	}
+
+	function triggerBeforeDisplay(&$output_html) {
+		if(Context::getResponseMethod() != 'HTML' || strpos(Context::get('act'), 'Admin') !== false)
+		{
+			return;
+		}
+
+		$oTemplateHandler = TemplateHandler::getInstance();
+
+		$debugbar = $oTemplateHandler->compile($this->module_path . 'tpl/', 'debugbar.html');
+		$output_html .= $debugbar;
+	}
 }
 
 /* End of file profiler.controller.php */
