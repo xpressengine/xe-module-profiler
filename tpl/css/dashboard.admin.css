@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* Copyright (C) NAVER <http: //www.navercorp.com> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 #slowlog-trigger-graph,
 #slowlog-addon-graph {
@@ -30,6 +30,7 @@
 	margin: 0;
 	padding: 8px 16px;
 }
+
 .colorset-1 {
 	color: #292961;
 	background-color: #6969A1;
@@ -117,4 +118,5 @@
 	color: #FFB6D0;
 	background-color: #BB6680;
 }
+
 /* End of file */
