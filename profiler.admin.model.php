@@ -28,7 +28,7 @@ class profilerAdminModel extends profiler
 		$list_count = (int)$list_count;
 		$total_count = count($args);
 
-		if(!$page)
+		if($page < 1)
 		{
 			$page = 1;
 		}
@@ -79,15 +79,19 @@ class profilerAdminModel extends profiler
 	{
 		$cond = new stdClass();
 		$cond->type = $type;
-		$cond->hash_id = $args->hash_id;
+
+		if(isset($args->hash_id, $args->start, $args->end))
+		{
+			$cond->hash_id = $args->hash_id;
+			$cond->start = $args->start;
+			$cond->end = $args->end;
+		}
 
 		// $cond->like_caller = $args->like_caller;
 		// $cond->like_called = $args->like_called;
 
-		$cond->start = $args->start;
-		$cond->end = $args->end;
-
 		$output = executeQueryArray('profiler.getStatisticSlowlog', $cond);
+
 		return $output;
 	}
 
@@ -99,6 +103,7 @@ class profilerAdminModel extends profiler
 	{
 		$oModuleModel = getModel('module');
 		$modules_info = $oModuleModel->getModuleList();
+		$module_list = array();
 
 		foreach($modules_info as $module_info)
  		{
@@ -116,7 +121,7 @@ class profilerAdminModel extends profiler
 	function getTableList()
 	{
 		$table_list = array();
-
+		$query = "";
 		$oDB = DB::getInstance();
 		switch($oDB->db_type)
 		{
@@ -125,15 +130,11 @@ class profilerAdminModel extends profiler
 			case 'mysqli':
 			case 'mysqli_innodb':
 				$query = "select table_name as name, engine as type, table_collation as collation, table_rows as rows, data_length, index_length, data_free as overhead from information_schema.tables where table_schema = database() and table_name like '" . $oDB->prefix . "%' order by table_name asc";
-				$result = $oDB->_query($query);
-				$table_list = $oDB->_fetch($result);
 				break;
 
 			// @TODO type, collation 값 출력 연구
 			case 'mssql':
 				$query = "select o.name as name, i.rows as rows, i.dpages * 8192 as data_length, (i.used - i.dpages) * 8192 as index_length, (i.reserved - i.used) * 8192 as overhead from sysindexes i, sysobjects o where i.indid in (0, 1, 255) and o.id = i.id and o.name like '" . $oDB->prefix . "%' and o.xtype = 'U' order by o.name asc";
-				$result = $oDB->_query($query);
-				$table_list = $oDB->_fetch($result);
 				break;
 
 			/*
@@ -142,6 +143,9 @@ class profilerAdminModel extends profiler
 				break;
 			*/
 		}
+
+		$result = $oDB->_query($query);
+		$table_list = $oDB->_fetch($result);
 
 		return $table_list;
 	}
@@ -212,7 +216,7 @@ class profilerAdminModel extends profiler
 				$module_site_srl = $oModuleModel->getSiteInfo($config->site_srl);
 				if(!in_array($module_site_srl->module, $module_list))
 				{
-					$invalid_addon_config[] = $config;
+					$invalid_module_config[] = $config;
 				}
 			}
 		}
@@ -284,9 +288,10 @@ class profilerAdminModel extends profiler
 			if(file_exists(FileHandler::getRealPath($schemas_path)))
 			{
 				$table_files = FileHandler::readDir($schemas_path, '/(\.xml)$/');
-				for($i = 0; $i < count($table_files); $i++)
+
+				foreach($table_files as $table_file)
 				{
-					list($table_name) = explode('.', $table_files[$i]);
+					list($table_name) = explode('.', $table_file);
 					if($oDB->isTableExists($table_name))
 					{
 						$valid_table_list[] = $table_name;

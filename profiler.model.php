@@ -6,7 +6,7 @@
  */
 class profilerModel extends profiler
 {
-	private $config;
+	private static $config = NULL;
 
 	function init()
 	{
@@ -17,14 +17,14 @@ class profilerModel extends profiler
 	 */
 	function getConfig()
 	{
-		if(!$this->config)
+		if(self::$config === NULL)
 		{
 			$oModuleModel = getModel('module');
 			$config = $oModuleModel->getModuleConfig('profiler');
 
 			$config->slowlog = ($config->slowlog) ? $config->slowlog : new stdClass();
 
-			if(!$config->slowlog->enabled)
+			if(!isset($config->slowlog->enabled))
 			{
 				$config->slowlog->enabled = 'N';
 			}

@@ -115,7 +115,7 @@ class profilerAdminView extends profiler
 	function dispProfilerAdminAddonConfig()
 	{
 		// 고급 삭제 옵션
-		$advanced = Context::get('advanced') == 'Y' ? TRUE : FALSE;
+		$advanced = Context::get('advanced') === 'Y';
 
 		// 삭제할 수 있는 모듈 설정 목록
 		$oProfilerAdminModel = getAdminModel('profiler');

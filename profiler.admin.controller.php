@@ -26,9 +26,9 @@ class profilerAdminController extends profiler
 		{
 			$config->slowlog = new stdClass();
 		}
-		$config->slowlog->enabled = ($vars->slowlog_enabled == 'Y') ? 'Y' : 'N';
-		$config->slowlog->time_trigger = ($vars->slowlog_time_trigger > 0) ? $vars->slowlog_time_trigger : null;
-		$config->slowlog->time_addon = ($vars->slowlog_time_addon > 0) ? $vars->slowlog_time_addon : null;
+		$config->slowlog->enabled = ($vars->slowlog_enabled === 'Y') ? 'Y' : 'N';
+		$config->slowlog->time_trigger = ($vars->slowlog_time_trigger > 0) ? $vars->slowlog_time_trigger : NULL;
+		$config->slowlog->time_addon = ($vars->slowlog_time_addon > 0) ? $vars->slowlog_time_addon : NULL;
 
 		$oModuleController->updateModuleConfig('profiler', $config);
 
@@ -53,7 +53,7 @@ class profilerAdminController extends profiler
 	function procProfilerAdminDeleteTrigger()
 	{
 		// 고급 삭제 옵션
-		$advanced = Context::get('advanced') == 'Y' ? TRUE : FALSE;
+		$advanced = Context::get('advanced') === 'Y';
 
 		// 삭제할 트리거 목록 불러오기
 		$oProfilerAdminModel = getAdminModel('profiler');
@@ -77,7 +77,7 @@ class profilerAdminController extends profiler
 	function procProfilerAdminDeleteModuleConfig()
 	{
 		// 고급 삭제 옵션
-		$advanced = Context::get('advanced') == 'Y' ? TRUE : FALSE;
+		$advanced = Context::get('advanced') === 'Y';
 
 		// 삭제할 모듈 설정 목록 불러오기
 		$oProfilerAdminModel = getAdminModel('profiler');
@@ -94,13 +94,14 @@ class profilerAdminController extends profiler
 		}
 
 		$this->setMessage('msg_profiler_arranged');
-		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfig', 'page', Context::get('page')));
+		$success_return_url = Context::get('success_return_url');
+		$this->setRedirectUrl( $success_return_url ? $success_return_url : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminModuleConfig', 'page', Context::get('page')));
 	}
 
 	function procProfilerAdminDeleteAddonConfig()
 	{
 		// 고급 삭제 옵션
-		$advanced = Context::get('advanced') == 'Y' ? TRUE : FALSE;
+		$advanced = Context::get('advanced') === 'Y';
 
 		$oProfilerAdminModel = getAdminModel('profiler');
 		$invalid_addon_config = $oProfilerAdminModel->getAddonConfigToBeDeleted($advanced);
@@ -117,7 +118,8 @@ class profilerAdminController extends profiler
 		}
 
 		$this->setMessage('msg_profiler_arranged');
-		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminAddonConfig', 'page', Context::get('page'), 'advanced', Context::get('advanced')));
+		$success_return_url = Context::get('success_return_url');
+		$this->setRedirectUrl($success_return_url ? $success_return_url : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminAddonConfig', 'page', Context::get('page'), 'advanced', ($advanced ? 'Y' : 'N')));
 	}
 
 	function procProfilerAdminDeleteTable()
@@ -137,7 +139,8 @@ class profilerAdminController extends profiler
 		}
 
 		$this->setMessage('msg_profiler_arranged');
-		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
+		$success_return_url = Context::get('success_return_url');
+		$this->setRedirectUrl($success_return_url ? $success_return_url : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
 	}
 
 	function procProfilerAdminRepairTable()
@@ -151,7 +154,8 @@ class profilerAdminController extends profiler
 		}
 
 		$this->setMessage('success_updated');
-		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
+		$success_return_url = Context::get('success_return_url');
+		$this->setRedirectUrl($success_return_url ? $success_return_url : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
 	}
 
 	/**
