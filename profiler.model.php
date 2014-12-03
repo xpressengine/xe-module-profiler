@@ -29,10 +29,10 @@ class profilerModel extends profiler
 				$config->slowlog->enabled = 'N';
 			}
 
-			$this->config = $config;
+			self::$config = $config;
 		}
 
-		return $this->config;
+		return self::$config;
 	}
 }
 
