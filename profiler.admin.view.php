@@ -36,9 +36,11 @@ class profilerAdminView extends profiler
 		$oProfilerAdminModel = getAdminModel('profiler');
 		$a_slowlog = $oProfilerAdminModel->getStaticsSlowlog('addon');
 		$t_slowlog = $oProfilerAdminModel->getStaticsSlowlog('trigger');
+		$w_slowlog = $oProfilerAdminModel->getStaticsSlowlog('widget');
 
 		Context::set('a_slowlog', $a_slowlog);
 		Context::set('t_slowlog', $t_slowlog);
+		Context::set('w_slowlog', $w_slowlog);
 	}
 
 	function dispProfilerAdminTrigger()

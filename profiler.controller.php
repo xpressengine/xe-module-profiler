@@ -35,8 +35,8 @@ class profilerController extends profiler
 			$args = new stdClass();
 		}
 
-		if(($args->_log_type == 'trigger' || $args->_log_type == 'addon')
-			&& ($args->_elapsed_time < $config->slowlog->{'time_' . $config->_log_type}))
+		if(($args->_log_type == 'trigger' || $args->_log_type == 'addon' || $args->_log_type == 'widget')
+			&& ($args->_elapsed_time < $config->slowlog->{'time_' . $args->_log_type}))
 		{
 			return new Object();
 		}

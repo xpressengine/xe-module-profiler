@@ -29,6 +29,7 @@ class profilerAdminController extends profiler
 		$config->slowlog->enabled = ($vars->slowlog_enabled === 'Y') ? 'Y' : 'N';
 		$config->slowlog->time_trigger = ($vars->slowlog_time_trigger > 0) ? $vars->slowlog_time_trigger : NULL;
 		$config->slowlog->time_addon = ($vars->slowlog_time_addon > 0) ? $vars->slowlog_time_addon : NULL;
+		$config->slowlog->time_widget = ($vars->slowlog_time_widget > 0) ? $vars->slowlog_time_widget : NULL;
 
 		$oModuleController->updateModuleConfig('profiler', $config);
 

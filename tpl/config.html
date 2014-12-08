@@ -44,6 +44,15 @@
 				</div>
 			</div>
 		</div>
+		<div class="x_control-group">
+			<div class="x_control-label">{$lang->widget}</div>
+			<div class="x_controls">
+				<div class="x_input-append">
+					<input type="number" step="any" value="{$module_config->slowlog->time_widget}" name="slowlog_time_widget" size="7">
+					<span class="x_add-on">{$lang->unit_sec}</span>
+				</div>
+			</div>
+		</div>
 		<div class="x_clearfix btnArea">
 			<div class="x_pull-right">
 				<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_registration}</button>
