@@ -11,15 +11,15 @@ module.exports = function(grunt) {
 				},
 
 				src: [
-					"**/*.php",
-					"!node_modules/**"
+				"**/*.php",
+				"!node_modules/**"
 				],
 			},
 		},
 		jshint: {
 			files: [
-				'Gruntfile.js',
-				'tpl/js/*.js',
+			'Gruntfile.js',
+			'tpl/js/*.js',
 			],
 			options : {
 				globalstrict: false,
@@ -32,10 +32,10 @@ module.exports = function(grunt) {
 					"window" : true
 				},
 				ignores : [
-					'**/jquery*.js',
-					'**/*.min.js',
-					'**/*-packed.js',
-					'**/*.compressed.js'
+				'**/jquery*.js',
+				'**/*.min.js',
+				'**/*-packed.js',
+				'**/*.compressed.js'
 				]
 			}
 		},
@@ -54,8 +54,8 @@ module.exports = function(grunt) {
 					'underscore-property-hack' : false,
 				},
 				src: [
-					'tpl/css/*.css',
-					'!**/*.min.css',
+				'tpl/css/*.css',
+				'!**/*.min.css',
 				]
 			}
 		},
@@ -78,6 +78,35 @@ module.exports = function(grunt) {
 			}
 		},
 	});
+
+	grunt.registerTask('build', '', function(branch) {
+		if(!branch) grunt.fail.warn('Undefined build target.');
+
+		var done = this.async();
+		var build_dir = 'build';
+
+		if(grunt.file.isDir(build_dir)) {
+			grunt.file.delete(build_dir);
+		}
+		grunt.file.mkdir(build_dir);
+
+		grunt.util.spawn({
+			cmd: "git",
+			args: ['archive', '--output=build/archived.full.tar.gz', branch, '.']
+		}, function (error, result, code) {
+			grunt.log.ok('Archived (full) : build/archived.full.tar.gz');
+
+			grunt.util.spawn({
+				cmd: "git",
+				args: ['archive', '--output=build/archived.full.zip', branch, '.']
+			}, function (error, result, code) {
+				grunt.log.ok('Archived (full) : build/archived.full.zip');
+				grunt.log.ok('Done!');
+				done();
+			});
+		});
+	});
+
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-csslint');
