@@ -24,12 +24,9 @@ class profilerController extends profiler
 		$config = $oProfilerModel->getConfig();
 
 		// 슬로우 로그를 쓰지 않을경우 리턴
-		if($config->slowlog->enabled != 'Y') return new Object();
-
-		// 잘못된 인자 검사
-		if(!is_object($args))
+		if($config->slowlog->enabled !== 'Y')
 		{
-			$args = new stdClass();
+			return new Object();
 		}
 
 		if($args->_log_type == 'flush')
@@ -44,6 +41,13 @@ class profilerController extends profiler
 				if(!is_object($args))
 				{
 					$args = new stdClass();
+				}
+
+				if(($args->_log_type == 'trigger' || $args->_log_type == 'addon' || $args->_log_type == 'widget')
+					&& ($args->_elapsed_time < $config->slowlog->{'time_' . $args->_log_type})
+				)
+				{
+					continue;
 				}
 
 				// hash id 생성
@@ -66,8 +70,7 @@ class profilerController extends profiler
 					$output = executeQuery('profiler.insertSlowlogType', $slowlog_type);
 					if(!$output->toBool())
 					{
-						unset($GLOBALS['profiler_Slowlog']);
-						return $output;
+						continue;
 					}
 				}
 
@@ -79,27 +82,15 @@ class profilerController extends profiler
 				$output = executeQuery('profiler.insertSlowlog', $slowlog);
 				if(!$output->toBool())
 				{
-					unset($GLOBALS['profiler_Slowlog']);
-					return $output;
+					continue;
 				}
 			}
-
-			unset($GLOBALS['profiler_Slowlog']);
 		}
 		else
 		{
 			if(!isset($GLOBALS['profiler_Slowlog']))
 			{
 				$GLOBALS['profiler_Slowlog'] = array();
-			}
-
-			if($args->_log_type == 'trigger')
-			{
-				if($args->_elapsed_time < $config->slowlog->time_trigger) return new Object();
-			}
-			else if($args->_log_type == 'addon')
-			{
-				if($args->_elapsed_time < $config->slowlog->time_addon) return new Object();
 			}
 
 			$GLOBALS['profiler_Slowlog'][] = $args;
