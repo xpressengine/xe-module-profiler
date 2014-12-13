@@ -16,7 +16,7 @@
 	<conditions>
 		<condition operation="equal" column="slowlog_type.type" var="type" notnull="notnull"  />
 		<condition operation="equal" column="slowlog.type_hash_id" var="slowlog_type.hash_id" notnull="notnull" pipe="and" />
-		<condition operation="equal" column="slowlog.hahs_id" var="hash_id" pipe="and" />
+		<condition operation="equal" column="slowlog.hash_id" var="hash_id" pipe="and" />
 		<condition operation="more" column="slowlog.logged_timestamp" var="start" pipe="and" />
 		<condition operation="less" column="slowlog.logged_timestamp" var="end" pipe="and" />
 	</conditions>
