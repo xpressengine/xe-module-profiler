@@ -54,14 +54,9 @@
 </div>
 
 <script>
-(function($)
-{
-	$("#advanced").change(function()
-	{
+(function($) {
+	$("#advanced").change(function() {
 		window.location.href = "{getNotEncodedUrl('advanced', $advanced == 'Y' ? NULL : 'Y')}";
 	});
 })(jQuery);
 </script>
-
-<!--// FOOTER -->
-<include target="./_footer.html" />

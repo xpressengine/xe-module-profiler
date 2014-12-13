@@ -2,7 +2,7 @@
 <include target="./_header.html" />
 
 <!--// BODY -->
-<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/addonconfig/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/moduleConfig/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 
@@ -12,29 +12,25 @@
 	</caption>
 	<thead>
 		<tr>
-			<th class="nowr" scope="col">addon</th>
+			<th class="nowr" scope="col">{$lang->profiler_unit->module}</th>
 			<th class="nowr" scope="col">site_srl</th>
-			<th class="nowr" scope="col">is_used</th>
-			<th class="nowr" scope="col">is_used_m</th>
-			<th class="nowr" scope="col">extra_vars</th>
+			<th class="nowr" scope="col">config</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr loop="$addon_config_list=>$addon_config">
-			<td>{$addon_config->addon}</td>
-			<td>{$addon_config->site_srl}</td>
-			<td>{$addon_config->is_used}</td>
-			<td>{$addon_config->is_used_m}</td>
-			<td><pre style="margin-bottom:0">{$addon_config->extra_vars}</pre></td>
+		<tr loop="$module_config_list=>$module_config">
+			<td>{$module_config->module}</td>
+			<td>{$module_config->site_srl}</td>
+			<td><pre style="margin-bottom:0">{$module_config->config}</pre></td>
 		</tr>
-		<tr cond="!$addon_config_list">
-			<td>{$lang->msg_profiler_no_addon_config}</td>
+		<tr cond="!$module_config_list">
+			<td>{$lang->msg_profiler_no_module_config}</td>
 		</tr>
 	</tbody>
 </table>
 
 <div class="x_clearfix">
-	<form class="x_pagination x_pull-left" style="margin-top:0" action="{Context::getUrl('')}" method="post" no-error-return-url="true">
+	<form class="x_pagination x_pull-left" style="margin-top:0" action="{getUrl('')}" method="post" no-error-return-url="true">
 		<input loop="$param=>$key,$val" cond="!in_array($key, array('mid', 'vid', 'act'))" type="hidden" name="{$key}" value="{$val}" />
 		<ul>
 			<li class="x_disabled"|cond="$page == 1"><a href="{getUrl('page', '')}">&laquo; {$lang->first_page}</a></li>
@@ -46,10 +42,10 @@
 	</form>
 	<form class="x_pull-right" style="margin-top:0" action="{Context::getUrl('')}" method="post">
 		<input type="hidden" name="module" value="profiler" />
-		<input type="hidden" name="act" value="procProfilerAdminDeleteAddonConfig" />
-		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/addonconfig/1" />
+		<input type="hidden" name="act" value="procProfilerAdminDeleteModuleConfig" />
+		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/moduleConfig/1" />
 		<label class="x_inline" for="advanced"><input type="checkbox" name="advanced" id="advanced" value="Y" checked="checked"|cond="$advanced == 'Y'" /> {$lang->cmd_profiler_advanced}</label>
-		<button class="x_btn x_btn-primary" type="submit" disabled="disabled"|cond="!$addon_config_list">{$lang->cmd_delete}</button>
+		<button class="x_btn x_btn-primary" type="submit" disabled="disabled"|cond="!$module_config_list">{$lang->cmd_delete}</button>
 	</form>
 </div>
 
@@ -62,6 +58,3 @@
 	});
 })(jQuery);
 </script>
-
-<!--// FOOTER -->
-<include target="./_footer.html" />

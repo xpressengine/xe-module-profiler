@@ -55,26 +55,26 @@
 </table>
 <h2>{$lang->widget}</h2>
 <table class="x_table x_table-striped x_table-hover">
-        <thead>
-                <th>Caller</th>
-                <th>Called</th>
-                <th>Hit</th>
-                <th>Total time</th>
-                <th>Max</th>
-                <th>Min</th>
-                <th>Avg</th>
-        </thead>
-        <tbody>
-                <tr loop="$w_slowlog->data => $log">
-                        <td>{$log->caller}</td>
-                        <td>{$log->called}</td>
-                        <td>{$log->count_called}</td>
-                        <td>{number_format($log->total_time, 6)}</td>
-                        <td>{number_format($log->max_time, 6)}</td>
-                        <td>{number_format($log->min_time, 6)}</td>
-                        <td>{number_format($log->avg_time, 6)}</td>
-                </tr>
-        </tbody>
+	<thead>
+		<th>Caller</th>
+		<th>Called</th>
+		<th>Hit</th>
+		<th>Total time</th>
+		<th>Max</th>
+		<th>Min</th>
+		<th>Avg</th>
+	</thead>
+	<tbody>
+		<tr loop="$w_slowlog->data => $log">
+			<td>{$log->caller}</td>
+			<td>{$log->called}</td>
+			<td>{$log->count_called}</td>
+			<td>{number_format($log->total_time, 6)}</td>
+			<td>{number_format($log->max_time, 6)}</td>
+			<td>{number_format($log->min_time, 6)}</td>
+			<td>{number_format($log->avg_time, 6)}</td>
+		</tr>
+	</tbody>
 </table>
 
 <form class="x_pull-right" action="{getUrl('')}" method="post">
@@ -83,6 +83,3 @@
 	<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/slowlog/1" />
 	<button class="x_btn x_btn-primary" type="submit" disabled="disabled"|cond="!$a_slowlog->data && !$t_slowlog->data">{$lang->cmd_delete}</button>
 </form>
-
-<!--// FOOTER -->
-<include target="./_footer.html" />
