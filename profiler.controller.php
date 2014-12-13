@@ -85,6 +85,8 @@ class profilerController extends profiler
 					continue;
 				}
 			}
+			
+			unset($GLOBALS['profiler_Slowlog']);
 		}
 		else
 		{
