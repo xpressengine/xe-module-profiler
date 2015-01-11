@@ -131,7 +131,6 @@ class profilerAdminView extends profiler
 		Context::set('addon_config_list', $paging->data);
 		Context::set('page_navigation', $paging->page_navigation);
 	}
-
 }
 
 /* End of file profiler.admin.view.php */

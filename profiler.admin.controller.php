@@ -183,21 +183,6 @@ class profilerAdminController extends profiler
 
 		return new Object();
 	}
-
-	function procProfilerAdminGetTemporaryDocumentCount()
-	{
-	}
-
-	function procProfilerAdminDeleteTemporaryDocument()
-	{
-	}
-
-	/**
-	 * @brief
-	 */
-	function deleteTemporaryDocuments($document_type, $args = NULL)
-	{
-	}
 }
 
 /* End of file profiler.admin.controller.php */
