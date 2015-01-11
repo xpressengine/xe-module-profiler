@@ -57,13 +57,6 @@
 					<!--@else-->
 						{number_format($size / (1024 * 1024 * 1024))}GB
 					<!--@end-->
-					<!-- form cond="in_array('repair', $column_list)" class="x_inline" action="{getUrl('')}" method="post">
-						<input type="hidden" name="module" value="profiler" />
-						<input type="hidden" name="act" value="procProfilerAdminRepairTable" />
-						<input type="hidden" name="table_name" value="{$table_info->name}" />
-						<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/table/1" />
-						<button class="x_btn x_btn-mini" type="submit">{$lang->profiler_unit->repair}</button>
-					</form -->
 				</block>
 			</td>
 		</tr>
