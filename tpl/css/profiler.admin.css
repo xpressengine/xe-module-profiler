@@ -24,8 +24,14 @@
 }
 .slowlog:hover .x_nav-tabs2 li{
 	margin:0;
-	padding-left:10px;
 	list-style-type: none;
+}
+
+.slowlog .x_nav-tabs2 li a{
+	display:block;
+	height:20px;
+	line-height:20px;
+	text-decoration : none;
 }
 
 /* End of file */
