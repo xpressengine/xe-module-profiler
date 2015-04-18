@@ -74,6 +74,9 @@ class profilerAdminView extends profiler
 		$oProfilerAdminModel = getAdminModel('profiler');
 		$output = $oProfilerAdminModel->getStaticsSlowlog('widget');
 		$w_slowlog = $output->data;
+
+		$output2 = $oProfilerAdminModel->getStaticsSlowlogCount('widget', '5');
+		$w_slowlog2 = $output2->data;
 		$paging = $oProfilerAdminModel->getPageNavigation($w_slowlog, Context::get('page'));
 
 		Context::set('total_count', $paging->total_count);
@@ -83,7 +86,7 @@ class profilerAdminView extends profiler
 		Context::set('page_navigation', $paging->page_navigation);
 
 
-		Context::set('w_slowlog', $w_slowlog);
+		Context::set('w_slowlog', $w_slowlog2);
 	}
 
 	function dispProfilerAdminTrigger()
