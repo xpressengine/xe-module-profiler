@@ -336,17 +336,15 @@ class profilerAdminModel extends profiler
 			{
 				$addon_table_files = FileHandler::readDir($a_schemas_path, '/(\.xml)$/');
 
-				foreach($addon_table_files as $table_file)
+				foreach($addon_table_files as $a_table_file)
 				{
-					list($table_name) = explode('.', $table_file);
-					if($oDB->isTableExists($table_name))
+					list($a_table_name) = explode('.', $a_table_file);
+					if($oDB->isTableExists($a_table_name))
 					{
-						$valid_table_list[] = $table_name;
+						$valid_table_list[] = $a_table_name;
 					}
 				}
 			}
-
-			debugPrint($valid_table_list);
 		}
 
 		// 정리해야 할 테이블 목록
