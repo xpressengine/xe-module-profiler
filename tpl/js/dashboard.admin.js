@@ -93,6 +93,112 @@ jQuery(function($) {
 			pointFormat: "{series.name}: <strong>{point.y:.2f}" + xe.lang.unit_sec + "</strong>"
 		}
 	});
+	$('#slowlog-sub-trigger-graph').highcharts({
+		chart: {
+			plotBackgroundColor: null,
+			plotBorderWidth: null,
+			plotShadow: false
+		},
+		exporting: {
+			buttons: {
+				contextButton: {
+					enabled: false
+				}
+			}
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: "pointer",
+				dataLabels: {
+					enabled: false,
+				},
+				showInLegend: false
+			}
+		},
+		series: [{
+			type: "pie",
+			name: xe.lang.cmd_profiler_runtime,
+			data: profiler.tgd
+		}],
+		title: {
+			text: xe.lang.profiler_unit.trigger
+		},
+		tooltip: {
+			pointFormat: "{series.name}: <strong>{point.y:.2f}" + xe.lang.unit_sec + "</strong>"
+		}
+	});
+	$('#slowlog-sub-addon-graph').highcharts({
+		chart: {
+			plotBackgroundColor: null,
+			plotBorderWidth: null,
+			plotShadow: false
+		},
+		exporting: {
+			buttons: {
+				contextButton: {
+					enabled: false
+				}
+			}
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: "pointer",
+				dataLabels: {
+					enabled: false,
+				},
+				showInLegend: false
+			}
+		},
+		series: [{
+			type: "pie",
+			name: xe.lang.cmd_profiler_runtime,
+			data: profiler.agd
+		}],
+		title: {
+			text: xe.lang.profiler_unit.addon
+		},
+		tooltip: {
+			pointFormat: "{series.name}: <strong>{point.y:.2f}" + xe.lang.unit_sec + "</strong>"
+		}
+	});
+	$('#slowlog-sub-widget-graph').highcharts({
+		chart: {
+			plotBackgroundColor: null,
+			plotBorderWidth: null,
+			plotShadow: false
+		},
+		exporting: {
+			buttons: {
+				contextButton: {
+					enabled: false
+				}
+			}
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: "pointer",
+				dataLabels: {
+					enabled: false,
+				},
+				showInLegend: false
+			}
+		},
+		series: [{
+			type: "pie",
+			name: xe.lang.cmd_profiler_runtime,
+			data: profiler.agd
+		}],
+		title: {
+			text: xe.lang.profiler_unit.widget
+		},
+		tooltip: {
+			pointFormat: "{series.name}: <strong>{point.y:.2f}" + xe.lang.unit_sec + "</strong>"
+		}
+	});
+
 
 	setTimeout(function() {$(".dashboard-message").fadeOut(1000);}, 2500);
 });

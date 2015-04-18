@@ -16,6 +16,11 @@
 			<value xml:lang="ko"><![CDATA[모듈]]></value>
 			<value xml:lang="jp"><![CDATA[モジュール]]></value>
 		</item>
+		<item name="widget">
+			<value xml:lang="en"><![CDATA[Widget]]></value>
+			<value xml:lang="ko"><![CDATA[위젯]]></value>
+			<value xml:lang="jp"><![CDATA[]]></value>
+		</item>
 		<item name="trigger">
 			<value xml:lang="en"><![CDATA[Trigger]]></value>
 			<value xml:lang="ko"><![CDATA[트리거]]></value>

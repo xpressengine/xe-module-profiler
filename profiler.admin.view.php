@@ -34,12 +34,55 @@ class profilerAdminView extends profiler
 	function dispProfilerAdminSlowlog()
 	{
 		$oProfilerAdminModel = getAdminModel('profiler');
-		$a_slowlog = $oProfilerAdminModel->getStaticsSlowlog('addon');
-		$t_slowlog = $oProfilerAdminModel->getStaticsSlowlog('trigger');
-		$w_slowlog = $oProfilerAdminModel->getStaticsSlowlog('widget');
+		$output = $oProfilerAdminModel->getStaticsSlowlog('trigger');
+		$t_slowlog = $output->data;
 
-		Context::set('a_slowlog', $a_slowlog);
-		Context::set('t_slowlog', $t_slowlog);
+		$output2 = $oProfilerAdminModel->getStaticsSlowlogCount('trigger', '5');
+		$t_slowlog2 = $output2->data;
+		$paging = $oProfilerAdminModel->getPageNavigation($t_slowlog, Context::get('page'));
+
+		Context::set('total_count', $paging->total_count);
+		Context::set('total_page', $paging->total_page);
+		Context::set('page', $paging->page);
+		Context::set('trigger_slowlog', $paging->data);
+		Context::set('page_navigation', $paging->page_navigation);
+
+		Context::set('t_slowlog', $t_slowlog2);
+	}
+
+	function dispProfilerAdminAddonList()
+	{
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$output = $oProfilerAdminModel->getStaticsSlowlog('addon');
+		$a_slowlog = $output->data;
+
+		$output2 = $oProfilerAdminModel->getStaticsSlowlogCount('addon', '5');
+		$a_slowlog2 = $output2->data;
+		$paging = $oProfilerAdminModel->getPageNavigation($a_slowlog, Context::get('page'));
+
+		Context::set('total_count', $paging->total_count);
+		Context::set('total_page', $paging->total_page);
+		Context::set('page', $paging->page);
+		Context::set('addon_slowlog', $paging->data);
+		Context::set('page_navigation', $paging->page_navigation);
+
+		Context::set('a_slowlog', $a_slowlog2);
+	}
+
+	function dispProfilerAdminWidgetList()
+	{
+		$oProfilerAdminModel = getAdminModel('profiler');
+		$output = $oProfilerAdminModel->getStaticsSlowlog('widget');
+		$w_slowlog = $output->data;
+		$paging = $oProfilerAdminModel->getPageNavigation($w_slowlog, Context::get('page'));
+
+		Context::set('total_count', $paging->total_count);
+		Context::set('total_page', $paging->total_page);
+		Context::set('page', $paging->page);
+		Context::set('widget_slowlog', $paging->data);
+		Context::set('page_navigation', $paging->page_navigation);
+
+
 		Context::set('w_slowlog', $w_slowlog);
 	}
 

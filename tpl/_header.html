@@ -16,8 +16,19 @@
 	<li class="x_active"|cond="$act == 'dispProfilerAdminConfig'">
 		<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig')}">{$lang->cmd_profiler_config}</a>
 	</li>
-	<li class="x_active"|cond="$act == 'dispProfilerAdminSlowlog'">
+	<li class="slowlog"|cond="!in_array($act, array('dispProfilerAdminSlowlog', 'dispProfilerAdminAddonList', 'dispProfilerAdminWidgetList'))" class="x_active slowlog"|cond="in_array($act, array('dispProfilerAdminSlowlog', 'dispProfilerAdminAddonList', 'dispProfilerAdminWidgetList'))">
 		<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminSlowlog')}">{$lang->cmd_profiler_slowlog}</a>
+		<ul class="x_nav-tabs2">
+			<li class="active"|cond="$act == 'dispProfilerAdminSlowlog'">
+				<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminSlowlog')}">트리거</a>
+			</li>
+			<li class="active"|cond="$act == 'dispProfilerAdminAddonList'">
+				<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminAddonList')}">애드온</a>
+			</li>
+			<li class="active"|cond="$act == 'dispProfilerAdminWidgetList'">
+				<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminWidgetList')}">위젯</a>
+			</li>
+		</ul>
 	</li>
 	<li class="x_active"|cond="$act == 'dispProfilerAdminTrigger'">
 		<a href="{getUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTrigger')}">{$lang->cmd_profiler_arrange_triggers}</a>

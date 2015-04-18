@@ -6,6 +6,8 @@
 		<action name="dispProfilerAdminDashboard" type="view" menu_name="profiler" menu_index="true" admin_index="true" />
 		<action name="dispProfilerAdminConfig" type="view" menu_name="profiler" />
 		<action name="dispProfilerAdminSlowlog" type="view" menu_name="profiler" />
+		<action name="dispProfilerAdminWidgetList" type="view" menu_name="profiler" />
+		<action name="dispProfilerAdminAddonList" type="view" menu_name="profiler" />
 		<action name="dispProfilerAdminTrigger" type="view" menu_name="profiler" />
 		<action name="dispProfilerAdminModuleConfig" type="view" menu_name="profiler" />
 		<action name="dispProfilerAdminAddonConfig" type="view" menu_name="profiler" />

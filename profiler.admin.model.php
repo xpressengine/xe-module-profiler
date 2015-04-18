@@ -96,6 +96,32 @@ class profilerAdminModel extends profiler
 	}
 
 	/**
+	 * @brief Slowlog 데이터 반환
+	 * @param stdClass $args
+	 * @return array
+	 */
+	function getStaticsSlowlogCount($type, $count, $args = NULL)
+	{
+		$cond = new stdClass();
+		$cond->type = $type;
+		$cond->list_count = $count;
+
+		if(isset($args->hash_id, $args->start, $args->end))
+		{
+			$cond->hash_id = $args->hash_id;
+			$cond->start = $args->start;
+			$cond->end = $args->end;
+		}
+
+		// $cond->like_caller = $args->like_caller;
+		// $cond->like_called = $args->like_called;
+
+		$output = executeQueryArray('profiler.getStatisticSlowlogCount', $cond);
+
+		return $output;
+	}
+
+	/**
 	 * @brief 설치된 모듈 이름 목록 반환
 	 * @return array
 	 */

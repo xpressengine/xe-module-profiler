@@ -6,39 +6,33 @@
 <load target="./js/highcharts/themes/grid-light.js" />
 <load target="./js/dashboard.admin.js" />
 
-<script type="text/javascript"> 
-(function(global, $) {
-	var profiler = global.profiler = {},
-		tgd = profiler.tgd = [],
-		agd = profiler.agd = [],
-		lang = {
-			unit_sec: "{$lang->unit_sec}",
-			profiler_unit: {
-				trigger: "{$lang->profiler_unit->trigger}",
-				addon: "{$lang->profiler_unit->addon}"
-			},
-			cmd_profiler_runtime: "{$lang->cmd_profiler_runtime}"
-		}
-	<!--@foreach($t_slowlog as $log)-->
-		tgd.push(["{$log->called}", {$log->avg_time}]);
-	<!--@end-->
-		console.log(tgd);
-	$.extend(global.xe.lang, lang);
-})(this, jQuery);
-</script>
-
-<div id="slowlog-sub-trigger-graph" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
 <!--// BODY -->
 <div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/profiler/tpl/slowlog/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 
+<script type="text/javascript"> 
+(function(global, $) {
+	var profiler = global.profiler = {},
+		agd = profiler.agd = [],
+		lang = {
+			unit_sec: "{$lang->unit_sec}",
+			profiler_unit: {
+				addon: "{$lang->profiler_unit->addon}"
+			},
+			cmd_profiler_runtime: "{$lang->cmd_profiler_runtime}"
+		}
+	<!--@foreach($a_slowlog as $log)-->
+		agd.push(["{$log->called}", {$log->avg_time}]);
+	<!--@end-->
+		console.log(agd);
+	$.extend(global.xe.lang, lang);
+})(this, jQuery);
+</script>
 
+<div id="slowlog-sub-addon-graph" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-
-
-<h2>{$lang->profiler_unit->trigger}</h2>
+<h2>{$lang->profiler_unit->addon}</h2>
 <table class="x_table x_table-striped x_table-hover">
 	<thead>
 		<th>Caller</th>
@@ -50,7 +44,7 @@
 		<th>Avg</th>
 	</thead>
 	<tbody>
-		<tr loop="$trigger_slowlog => $log">
+		<tr loop="$addon_slowlog => $log">
 			<td>{$log->caller}</td>
 			<td>{$log->called}</td>
 			<td>{$log->count_called}</td>
@@ -61,7 +55,6 @@
 		</tr>
 	</tbody>
 </table>
-
 <div class="x_clearfix">
 	<form class="x_pagination x_pull-left" style="margin-top:0" action="{getUrl('')}" method="post" no-error-return-url="true">
 		<input loop="$param=>$key,$val" cond="!in_array($key, array('mid', 'vid', 'act'))" type="hidden" name="{$key}" value="{$val}" />
@@ -74,10 +67,3 @@
 		</ul>
 	</form>
 </div>
-
-<form class="x_pull-right" action="{getUrl('')}" method="post">
-	<input type="hidden" name="module" value="profiler" />
-	<input type="hidden" name="act" value="procProfilerAdminTruncateSlowlog" />
-	<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/slowlog/1" />
-	<button class="x_btn x_btn-primary" type="submit" disabled="disabled"|cond="!$a_slowlog && !$t_slowlog">{$lang->cmd_delete}</button>
-</form>

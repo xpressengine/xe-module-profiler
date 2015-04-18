@@ -1,0 +1,31 @@
+<query id="getStatisticSlowlogCount" action="select">
+	<tables>
+		<table name="profiler_slowlog_type" alias="slowlog_type" />
+		<table name="profiler_slowlog" alias="slowlog" />
+	</tables>
+	<columns>
+		<column name="slowlog_type.hash_id" />
+		<column name="slowlog_type.caller" />
+		<column name="slowlog_type.called" />
+		<column name="count(slowlog.id)" alias="count_called" />
+		<column name="sum(slowlog.elapsed_time)" alias="total_time" />
+		<column name="max(slowlog.elapsed_time)" alias="max_time" />
+		<column name="min(slowlog.elapsed_time)" alias="min_time" />
+		<column name="avg(slowlog.elapsed_time)" alias="avg_time" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="slowlog_type.type" var="type" notnull="notnull"  />
+		<condition operation="equal" column="slowlog.type_hash_id" var="slowlog_type.hash_id" notnull="notnull" pipe="and" />
+		<condition operation="equal" column="slowlog.hash_id" var="hash_id" pipe="and" />
+		<condition operation="more" column="slowlog.logged_timestamp" var="start" pipe="and" />
+		<condition operation="less" column="slowlog.logged_timestamp" var="end" pipe="and" />
+	</conditions>
+	<groups>
+		<group column="slowlog.type_hash_id" />
+	</groups>
+    <navigation>
+        <index var="sort_index" default="avg_time" order="desc" />
+        <list_count var="list_count" default="5" />
+    </navigation>
+
+</query>
