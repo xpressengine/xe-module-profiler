@@ -304,6 +304,8 @@ class profilerAdminModel extends profiler
 
 		// DB 상의 테이블 목록
 		$table_list = $this->getTableList();
+		$oAddonAdminModel = getAdminModel('addon');
+		$addon_list = $oAddonAdminModel->getAddonList();
 
 		// 실제 사용하고 있는 테이블 목록
 		$valid_table_list = array();
@@ -324,6 +326,27 @@ class profilerAdminModel extends profiler
 					}
 				}
 			}
+		}
+
+		foreach ($addon_list as $val)
+		{
+			$addon_path = $oAddonAdminModel->getAddonPath($val->addon_name);
+			$a_schemas_path = $addon_path . 'schemas';
+			if(file_exists(FileHandler::getRealPath($a_schemas_path)))
+			{
+				$addon_table_files = FileHandler::readDir($a_schemas_path, '/(\.xml)$/');
+
+				foreach($addon_table_files as $table_file)
+				{
+					list($table_name) = explode('.', $table_file);
+					if($oDB->isTableExists($table_name))
+					{
+						$valid_table_list[] = $table_name;
+					}
+				}
+			}
+
+			debugPrint($valid_table_list);
 		}
 
 		// 정리해야 할 테이블 목록
