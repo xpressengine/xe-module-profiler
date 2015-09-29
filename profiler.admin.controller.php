@@ -61,10 +61,9 @@ class profilerAdminController extends profiler
 		$invalid_trigger_list = $oProfilerAdminModel->getTriggersToBeDeleted($advanced);
 
 		// 트리거 삭제
-		$oModuleController = getController('module');
 		foreach($invalid_trigger_list as $trigger)
 		{
-			$output = $oModuleController->deleteTrigger($trigger->trigger_name, $trigger->module, $trigger->type, $trigger->called_method, $trigger->called_position);
+			$output = $this->deleteTrigger($trigger->trigger_name, $trigger->module, $trigger->type, $trigger->called_method, $trigger->called_position);
 			if(!$output->toBool())
 			{
 				return $output;
@@ -182,6 +181,32 @@ class profilerAdminController extends profiler
 		}
 
 		return new Object();
+	}
+
+	/**
+	 * @brief 트리거 삭제명령
+	 * @param string $table_name
+	 * @return $output
+	 */
+	function deleteTrigger($trigger_name, $module, $type, $called_method, $called_position)
+	{
+		$args = new stdClass();
+		$args->trigger_name = $trigger_name;
+		$args->module = $module;
+		$args->type = $type;
+		$args->called_method = $called_method;
+		$args->called_position = $called_position;
+		$output = executeQuery('module.deleteTrigger', $args);
+		//캐시파일도 함께 삭제.
+		$oCacheHandler = CacheHandler::getInstance('object', NULL, TRUE);
+		if($oCacheHandler->isSupport())
+		{
+			$oCacheHandler->invalidateGroupKey('triggers');
+		}
+		// 캐시파일 함께 삭제
+		FileHandler::removeFilesInDir('./files/cache/triggers');
+
+		return $output;
 	}
 }
 
