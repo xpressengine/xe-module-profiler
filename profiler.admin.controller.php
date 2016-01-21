@@ -152,7 +152,8 @@ class profilerAdminController extends profiler
 		$slowlog_files = array(
 			_XE_PATH_.'files/_slowlog_addon.php',
 			_XE_PATH_.'files/_slowlog_trigger.php',
-			_XE_PATH_.'files/_slowlog_widget.php'
+			_XE_PATH_.'files/_slowlog_widget.php',
+			_XE_PATH_.'files/_slowlog_query.php'
 		);
 
 		foreach($slowlog_files as $file)
