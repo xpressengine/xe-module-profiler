@@ -85,7 +85,6 @@ class profilerAdminView extends profiler
 		Context::set('widget_slowlog', $paging->data);
 		Context::set('page_navigation', $paging->page_navigation);
 
-
 		Context::set('w_slowlog', $w_slowlog2);
 	}
 

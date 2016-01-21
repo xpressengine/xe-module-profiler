@@ -125,7 +125,7 @@ class profilerAdminModel extends profiler
 	 * @brief DB의 기록된 트리거 목록을 가져옴
 	 * @return array
 	 */
-	function getTriggers()
+	function getTriggers($trigger_name, $called_position)
 	{
 		$triggers = false;
 		$oCacheHandler = CacheHandler::getInstance('object', NULL, TRUE);
