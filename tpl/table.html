@@ -28,6 +28,13 @@
 					{@$enable_delete = TRUE}
 					{$lang->notuse}
 				</label>
+				<form cond="$table_info->to_be_deleted" class="x_inline" action="{getUrl('')}" mothod="post">
+					<input type="hidden" name="module" value="profiler" />
+					<input type="hidden" name="act" value="procProfilerAdminDeleteTablePiece" />
+					<input type="hidden" name="table_name" value="{$table_info->name}" />
+					<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/table/1" />
+					<button class="x_btn x_btn-mini" type="submit">{$lang->profiler_unit->delete}</button>
+				</form>
 				{$table_info->name}
 			</td>
 			<td cond="in_array('type', $column_list)">{$table_info->type}</td>

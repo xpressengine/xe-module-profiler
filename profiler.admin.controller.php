@@ -19,7 +19,6 @@ class profilerAdminController extends profiler
 		$oProfilerModel = getModel('profiler');
 
 		$vars = Context::getRequestVars();
-		$section = $vars->_config_section;
 
 		$config = $oProfilerModel->getConfig();
 		if(!$config->slowlog)
@@ -33,19 +32,13 @@ class profilerAdminController extends profiler
 
 		$oModuleController->updateModuleConfig('profiler', $config);
 
-		$oInstallController = getController('install');
-		if(!$oInstallController->makeConfigFile())
-		{
-			return new Object(-1, 'msg_invalid_request');
-		}
-
 		$this->setMessage('success_updated');
 		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig'));
 	}
 
 	function procProfilerAdminTruncateSlowlog()
 	{
-		$output = executeQuery('profiler.truncateSlowlog');
+		executeQuery('profiler.truncateSlowlog');
 
 		$this->setMessage('msg_profiler_arranged');
 		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminSlowlog'));
@@ -61,10 +54,9 @@ class profilerAdminController extends profiler
 		$invalid_trigger_list = $oProfilerAdminModel->getTriggersToBeDeleted($advanced);
 
 		// 트리거 삭제
-		$oModuleController = getController('module');
 		foreach($invalid_trigger_list as $trigger)
 		{
-			$output = $oModuleController->deleteTrigger($trigger->trigger_name, $trigger->module, $trigger->type, $trigger->called_method, $trigger->called_position);
+			$output = $this->deleteTrigger($trigger->trigger_name, $trigger->module, $trigger->type, $trigger->called_method, $trigger->called_position);
 			if(!$output->toBool())
 			{
 				return $output;
@@ -144,6 +136,40 @@ class profilerAdminController extends profiler
 		$this->setRedirectUrl($success_return_url ? $success_return_url : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
 	}
 
+	function procProfilerAdminDeleteTablePiece()
+	{
+		$table_name = Context::get('table_name');
+		$oDB = DB::getInstance();
+		$oDB->dropTable(substr($table_name, strlen($oDB->prefix)));
+
+		$this->setMessage('msg_profiler_arranged');
+		$success_return_url = Context::get('success_return_url');
+		$this->setRedirectUrl($success_return_url ? $success_return_url : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
+	}
+
+	function procProfilerAdminDeleteLogFile()
+	{
+		$slowlog_files = array(
+			_XE_PATH_.'files/_slowlog_addon.php',
+			_XE_PATH_.'files/_slowlog_trigger.php',
+			_XE_PATH_.'files/_slowlog_widget.php',
+			_XE_PATH_.'files/_slowlog_query.php'
+		);
+
+		foreach($slowlog_files as $file)
+		{
+			$slowlog_file = FileHandler::exists($file);
+			if($slowlog_file === false)
+			{
+				continue;
+			}
+			FileHandler::removeFile($file);
+		}
+
+		$this->setMessage('msg_profiler_slowlog_file_arranged');
+		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig'));
+	}
+
 	/**
 	 * @brief 테이블 복구
 	 * @param string $table_name
@@ -182,6 +208,32 @@ class profilerAdminController extends profiler
 		}
 
 		return new Object();
+	}
+
+	/**
+	 * @brief 트리거 삭제명령
+	 * @param string $table_name
+	 * @return $output
+	 */
+	function deleteTrigger($trigger_name, $module, $type, $called_method, $called_position)
+	{
+		$args = new stdClass();
+		$args->trigger_name = $trigger_name;
+		$args->module = $module;
+		$args->type = $type;
+		$args->called_method = $called_method;
+		$args->called_position = $called_position;
+		$output = executeQuery('module.deleteTrigger', $args);
+		//캐시파일도 함께 삭제.
+		$oCacheHandler = CacheHandler::getInstance('object', NULL, TRUE);
+		if($oCacheHandler->isSupport())
+		{
+			$oCacheHandler->invalidateGroupKey('triggers');
+		}
+		// 캐시파일 함께 삭제
+		FileHandler::removeFilesInDir('./files/cache/triggers');
+
+		return $output;
 	}
 }
 

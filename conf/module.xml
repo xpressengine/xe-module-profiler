@@ -17,8 +17,9 @@
 		<action name="procProfilerAdminDeleteTrigger" type="controller" />
 		<action name="procProfilerAdminDeleteModuleConfig" type="controller" />
 		<action name="procProfilerAdminDeleteTable" type="controller" />
-		<action name="procProfilerAdminRepairTable" type="controller" />
+		<action name="procProfilerAdminDeleteTablePiece" type="controller" />
 		<action name="procProfilerAdminDeleteAddonConfig" type="controller" />
+		<action name="procProfilerAdminDeleteLogFile" type="controller" />
 	</actions>
 	<menus>
 		<menu name="profiler" type="all">

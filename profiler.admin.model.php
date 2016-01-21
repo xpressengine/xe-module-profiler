@@ -122,6 +122,38 @@ class profilerAdminModel extends profiler
 	}
 
 	/**
+	 * @brief DB의 기록된 트리거 목록을 가져옴
+	 * @return array
+	 */
+	function getTriggers($trigger_name, $called_position)
+	{
+		$triggers = false;
+		$oCacheHandler = CacheHandler::getInstance('object', NULL, TRUE);
+
+		if($oCacheHandler->isSupport())
+		{
+			$object_key = $trigger_name.'_'.$called_position;
+			$cache_key = $oCacheHandler->getGroupKey('triggers', $object_key);
+			$triggers = $oCacheHandler->get($cache_key);
+		}
+
+		if($triggers === false)
+		{
+			$args = new stdClass();
+			$args->trigger_name = $trigger_name;
+			$args->called_position = $called_position;
+			$output = executeQueryArray('module.getTriggers', $args);
+			$triggers = $output->data;
+			if($output->toBool() && $oCacheHandler->isSupport())
+			{
+				$oCacheHandler->put($cache_key, $triggers);
+			}
+		}
+
+		return $triggers;
+	}
+
+	/**
 	 * @brief 설치된 모듈 이름 목록 반환
 	 * @return array
 	 */
@@ -183,10 +215,8 @@ class profilerAdminModel extends profiler
 	 */
 	function getTriggersToBeDeleted($advanced = FALSE)
 	{
-		$oModuleModel = getModel('module');
-
 		// DB 상의 트리거 목록
-		$trigger_list = $oModuleModel->getTriggers();
+		$trigger_list = $this->getTriggers();
 
 		// 설치되어 있는 모듈 목록
 		$module_list = $this->getModuleList();
@@ -222,6 +252,7 @@ class profilerAdminModel extends profiler
 	 */
 	function getModuleConfigToBeDeleted($advanced = FALSE)
 	{
+		$oModuleModel = getModel('module');
 		// DB 상의 모듈 설정 목록
 		$output = executeQueryArray('profiler.getModuleConfig');
 		$module_config = $output->data;
@@ -271,6 +302,7 @@ class profilerAdminModel extends profiler
 
 		$module_list = $this->getModuleList();
 
+		$invalid_addon_config = array();
 		foreach($addon_config as $config)
 		{
 			$addons_j_list[] = $config->addon;
