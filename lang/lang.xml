@@ -172,6 +172,27 @@
 		<value xml:lang="ko"><![CDATA[슬로우로그를 기록할지 선택합니다.]]></value>
 		<value xml:lang="jp"><![CDATA[]]></value>
 	</item>
+	<item name="about_profiler_slowlog_file_deleted">
+		<value xml:lang="en"><![CDATA[]]></value>
+		<value xml:lang="ko"><![CDATA[
+		<div class="file">
+			<h1>슬로우로그 파일 삭제</h1>
+			<div class="file-item">
+				<p>
+					슬로우 로그으로 만들어졌던 파일들을 삭제 하게됩니다.
+					<br>XE설치경로에서 files 폴더 안에 다음 파일을 삭제 합니다.
+				</p>
+				<ul>
+					<li>_slowlog_addon.php</li>
+					<li>_slowlog_trigger.php</li>
+					<li>_slowlog_widget.php</li>
+				</ul>
+				<p>그 외 files 풀더 안의 다른 파일들을 건드리지 않습니다.</p>
+			</div>
+		</div>
+		]]></value>
+		<value xml:lang="jp"><![CDATA[]]></value>
+	</item>
 	<item name="msg_profiler_arranged">
 		<value xml:lang="en"><![CDATA[]]></value>
 		<value xml:lang="ko"><![CDATA[정리했습니다.]]></value>
@@ -200,6 +221,11 @@
 	<item name="msg_profiler_delete_table">
 		<value xml:lang="en"><![CDATA[]]></value>
 		<value xml:lang="ko"><![CDATA[사용하지 않는 테이블을 삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?]]></value>
+		<value xml:lang="jp"><![CDATA[]]></value>
+	</item>
+	<item name="msg_profiler_slowlog_file_arranged">
+		<value xml:lang="en"><![CDATA[]]></value>
+		<value xml:lang="ko"><![CDATA[슬로우로그 파일을 정리 하였습니다.]]></value>
 		<value xml:lang="jp"><![CDATA[]]></value>
 	</item>
 </lang>

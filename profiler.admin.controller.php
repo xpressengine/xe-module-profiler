@@ -154,6 +154,28 @@ class profilerAdminController extends profiler
 		$this->setRedirectUrl($success_return_url ? $success_return_url : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
 	}
 
+	function procProfilerAdminDeleteLogFile()
+	{
+		$slowlog_files = array(
+			_XE_PATH_.'files/_slowlog_addon.php',
+			_XE_PATH_.'files/_slowlog_trigger.php',
+			_XE_PATH_.'files/_slowlog_widget.php'
+		);
+
+		foreach($slowlog_files as $file)
+		{
+			$slowlog_file = FileHandler::exists($file);
+			if($slowlog_file === false)
+			{
+				continue;
+			}
+			FileHandler::removeFile($file);
+		}
+
+		$this->setMessage('msg_profiler_slowlog_file_arranged');
+		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig'));
+	}
+
 	/**
 	 * @brief 테이블 복구
 	 * @param string $table_name

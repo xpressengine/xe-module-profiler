@@ -35,4 +35,27 @@
 	text-decoration : none;
 }
 
+.file .file-item {
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin: 0 !important;
+	padding: 20px;
+	color: rgb(34, 34, 34);
+	font-size: 15px;
+	font-family: 'Roboto Condensed', Tauri, 'Hiragino Sans GB', 'Microsoft YaHei', STHeiti, SimSun, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'Segoe UI', AppleSDGothicNeo-Medium, 'Malgun Gothic', Verdana, Tahoma, sans-serif;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	background: rgb(255, 255, 255);
+}
+
+.file .file-item p {
+	margin: 1em 0;
+	word-wrap: break-word;
+}
+.file .file-item p br {
+	clear: both;
+}
+.file .file-item li {
+	display: list-item; line-height: 1.4em;
+}
 /* End of file */

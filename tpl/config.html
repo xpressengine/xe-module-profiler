@@ -59,4 +59,17 @@
 			</div>
 		</div>
 	</form>
+
+</section>
+<section class="section">
+	<h1></h1>
+	<form class="x_form-horizontal" action="{getUrl('')}" method="post">
+		<input type="hidden" name="module" value="profiler" />
+		<input type="hidden" name="act" value="procProfilerAdminDeleteLogFile" />
+		<input type="hidden" name="xe_validator_id" value="modules/profiler/tpl/config/1" />
+		{$lang->about_profiler_slowlog_file_deleted}
+
+		<button class="x_btn x_btn-primary" type="submit">{$lang->profiler_unit->delete}</button>
+
+	</form>
 </section>
