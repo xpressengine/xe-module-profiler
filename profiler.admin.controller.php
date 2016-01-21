@@ -45,7 +45,7 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminTruncateSlowlog()
 	{
-		$output = executeQuery('profiler.truncateSlowlog');
+		executeQuery('profiler.truncateSlowlog');
 
 		$this->setMessage('msg_profiler_arranged');
 		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminSlowlog'));
