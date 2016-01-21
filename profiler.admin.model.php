@@ -252,6 +252,7 @@ class profilerAdminModel extends profiler
 	 */
 	function getModuleConfigToBeDeleted($advanced = FALSE)
 	{
+		$oModuleModel = getModel('module');
 		// DB 상의 모듈 설정 목록
 		$output = executeQueryArray('profiler.getModuleConfig');
 		$module_config = $output->data;
@@ -301,6 +302,7 @@ class profilerAdminModel extends profiler
 
 		$module_list = $this->getModuleList();
 
+		$invalid_addon_config = array();
 		foreach($addon_config as $config)
 		{
 			$addons_j_list[] = $config->addon;
