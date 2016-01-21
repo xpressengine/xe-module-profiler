@@ -186,6 +186,7 @@
 					<li>_slowlog_addon.php</li>
 					<li>_slowlog_trigger.php</li>
 					<li>_slowlog_widget.php</li>
+					<li>_slowlog_query.php</li>
 				</ul>
 				<p>그 외 files 풀더 안의 다른 파일들을 건드리지 않습니다.</p>
 			</div>
