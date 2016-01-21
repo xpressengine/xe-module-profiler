@@ -28,7 +28,7 @@
 					{@$enable_delete = TRUE}
 					{$lang->notuse}
 				</label>
-				<form cond="$table_info->to_be_deleted" class="x_inline" action="{getUrl('')}" mothod="post">
+				<form cond="$table_info->to_be_deleted" class="x_inline" action="{Context::getUrl('')}"  method="post" onsubmit="if(!confirm('{$lang->msg_profiler_delete_table}')) return false">
 					<input type="hidden" name="module" value="profiler" />
 					<input type="hidden" name="act" value="procProfilerAdminDeleteTablePiece" />
 					<input type="hidden" name="table_name" value="{$table_info->name}" />

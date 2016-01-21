@@ -138,7 +138,8 @@ class profilerAdminController extends profiler
 
 	function procProfilerAdminDeleteTablePiece()
 	{
-		$table_name = Context::get('table_name');
+		$vars = Context::getRequestVars();
+		$table_name = $vars->table_name;
 		$oDB = DB::getInstance();
 		$oDB->dropTable(substr($table_name, strlen($oDB->prefix)));
 
