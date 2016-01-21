@@ -19,7 +19,6 @@ class profilerAdminController extends profiler
 		$oProfilerModel = getModel('profiler');
 
 		$vars = Context::getRequestVars();
-		$section = $vars->_config_section;
 
 		$config = $oProfilerModel->getConfig();
 		if(!$config->slowlog)
@@ -32,12 +31,6 @@ class profilerAdminController extends profiler
 		$config->slowlog->time_widget = ($vars->slowlog_time_widget > 0) ? $vars->slowlog_time_widget : NULL;
 
 		$oModuleController->updateModuleConfig('profiler', $config);
-
-		$oInstallController = getController('install');
-		if(!$oInstallController->makeConfigFile())
-		{
-			return new Object(-1, 'msg_invalid_request');
-		}
 
 		$this->setMessage('success_updated');
 		$this->setRedirectUrl(Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminConfig'));
