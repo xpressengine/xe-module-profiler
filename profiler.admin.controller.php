@@ -143,6 +143,17 @@ class profilerAdminController extends profiler
 		$this->setRedirectUrl($success_return_url ? $success_return_url : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
 	}
 
+	function procProfilerAdminDeleteTablePiece()
+	{
+		$table_name = Context::get('table_name');
+		$oDB = DB::getInstance();
+		$oDB->dropTable(substr($table_name, strlen($oDB->prefix)));
+
+		$this->setMessage('msg_profiler_arranged');
+		$success_return_url = Context::get('success_return_url');
+		$this->setRedirectUrl($success_return_url ? $success_return_url : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispProfilerAdminTable', 'page', Context::get('page')));
+	}
+
 	/**
 	 * @brief 테이블 복구
 	 * @param string $table_name
